@@ -1,0 +1,7 @@
+{
+  "name": "klasszone",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
