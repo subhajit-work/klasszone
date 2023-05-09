@@ -28,16 +28,55 @@
 .field-item {
     ion-input {
         background: #F5F5F5;
-        border-radius: 31px;
-        --padding-start: 10px;
-        --padding-end: 10px;
+        border-radius: 30px;
+        --padding-start: 20px;
+        --padding-end: 20px;
+        --highlight-color-focused: unset;
     }
+    ion-select {
+        background: #F5F5F5;
+        border-radius: 30px;
+        --padding-start: 20px;
+        --padding-end: 20px;
+        --highlight-color-focused: unset;
+    }
+    ion-segment {
+        background: #EEEEEE;
+        padding: 5px;
+        width: 80%;
+        border-radius: 30px;
+        margin: auto;
+        ion-segment-button {
+            border-radius: 30px;
+            --border-radius: 30px;
+            overflow: hidden;
+        }
+        ion-segment-button.segment-button-checked {
+            --indicator-color: #fff;
+            border-radius: 30px;
+            --indicator-height: 48px;
+            --color-checked: #000;
+            --color: #000;
+            --indicator-box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
+            --border-radius: 30px;
+        }
+    }
+    ng-otp-input {
+        display: flex;
+        justify-content: space-around;
+    }
+}
+.segment-button-indicator-background {
+    border-radius: 30px;
 }
 // login page design start
 .transparent-header {
     ion-toolbar {
         --background: transparent;
         color: #fff;
+    }
+    ion-back-button {
+        display: block;
     }
 }
 .transparent-header::after {
