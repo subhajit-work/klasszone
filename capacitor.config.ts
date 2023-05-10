@@ -6,6 +6,17 @@ const config: CapacitorConfig = {
   webDir: 'www',
   server: {
     androidScheme: 'https'
+  },
+  Splashscreen: {
+    launchAutoHide : true,
+    launchShowDuration : 0
+  },
+  cordova : {
+    preferences : {
+      LottieFullScreen : "true",
+      LottieHideAfterAnimationEnd : "true",
+      LottieAnimationLocation: "public/assets/splash.json"
+    }
   }
 };
 
