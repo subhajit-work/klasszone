@@ -28,7 +28,7 @@ export class AppComponent {
   // back button start
   backButtonEvent() {
     this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (this.router.url === '/auth') {
+      if (this.router.url === '/welcome') {
         this.presentAlertConfirm();
       }
     });

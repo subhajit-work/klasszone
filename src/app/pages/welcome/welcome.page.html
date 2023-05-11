@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <div class="login-screen">
+    <div class="login-header">
+      <img src="assets/logo.png">
+    </div>
+    <div class="login-inner">
+      <h2>Welcome</h2>
+      <p>We take the security and privacy of your information seriously, and we employ industry-standard measures to protect your data.</p>
+      <div class="footer-buttons">
+        <div class="custom-btn">
+          <ion-button [routerLink]="['/auth']" shape="round">
+            Sign In
+          </ion-button>
+        </div>
+        <div class="custom-btn">
+          <ion-button [routerLink]="['/register']" color="dark" shape="round">
+            Sign Up
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

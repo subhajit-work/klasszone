@@ -25,6 +25,9 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+img {
+    width: 100%;
+}
 .field-item {
     ion-input {
         background: #F5F5F5;
@@ -52,11 +55,11 @@
             overflow: hidden;
         }
         ion-segment-button.segment-button-checked {
-            --indicator-color: #fff;
+            --indicator-color: #11367a;
             border-radius: 30px;
             --indicator-height: 48px;
-            --color-checked: #000;
-            --color: #000;
+            --color-checked: #fff;
+            --color: #fff;
             --indicator-box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
             --border-radius: 30px;
         }
@@ -101,7 +104,7 @@
 }
 .custom-btn {
     ion-button {
-        --background: #11367a;
+        --background: #F47E2B;
         min-height: 50px;
     }
 }

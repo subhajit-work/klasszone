@@ -11,6 +11,15 @@ const config: CapacitorConfig = {
     launchAutoHide : true,
     launchShowDuration : 0
   },
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false,
+      androidScaleType: "CENTER_CROP",
+      showSpinner: true,
+      splashFullScreen: false,
+      splashImmersive: false
+    }
+  },
   cordova : {
     preferences : {
       LottieFullScreen : "true",
