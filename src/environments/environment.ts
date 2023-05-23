@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl:'https://www.innovintent.com/mobile_app_api', 
+  fileUrl:'https://www.innovintent.com/images'
 };
 
 /*

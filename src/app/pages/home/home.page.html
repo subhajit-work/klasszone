@@ -1,4 +1,5 @@
-<ion-content [fullscreen]="true">
+<ion-content>
+  <!-- banner start -->
   <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
     <swiper-slide>
       <img src="assets/banner1.jpg">
@@ -7,5 +8,241 @@
       <img src="assets/banner2.jpg">
     </swiper-slide>
   </swiper-container>
+  <!-- banner end -->
+
+  <!-- three card start -->
+  <div class="three-cards">
+    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
+      <swiper-slide>
+        <div class="card-item">
+          <div class="image">
+            <img src="https://klasszone.indinews24.com/assets/uploads/repeaters/8f21d-product-quality-pana.png" alt="">
+          </div>
+          <h1 class="title">Search Best Tutor</h1>
+          <div class="descption">
+            <p>Select your Tutor based on their skill-set, education qualification, experience, ratings received upon several parameters and reviews provided by various students.&nbsp;&nbsp;</p>
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="card-item">
+          <div class="image">
+            <img class="wow pulse animated" data-wow-duration="0.5s" data-wow-delay="0.5s" src="https://klasszone.indinews24.com/assets/uploads/repeaters/863fe-wepik-photo-mode-202292-111854.jpeg" alt="">
+          </div>
+          <h1 class="title wow animated fadeInLeft" data-wow-duration="2s" data-wow-delay="0.15s">
+            Schedule Classes              </h1>
+          <div class="descption wow animated fadeInRight" data-wow-duration="2s" data-wow-delay="0.15s">
+            <p>
+Schedule your Individual 1-to-1 Classes or Group/Batch classes either in Moring or Afternoon or Evening time as per your availiability and covienence.&nbsp;</p>
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="card-item">
+          <div class="image">
+            <img class="wow pulse animated" data-wow-duration="0.5s" data-wow-delay="0.5s" src="https://klasszone.indinews24.com/assets/uploads/repeaters/c4e4b-wepik-photo-mode-202292-112359.jpeg" alt="">
+          </div>
+          <h1 class="title wow animated fadeInLeft" data-wow-duration="2s" data-wow-delay="0.15s">
+            Ratings &amp; Reviews              </h1>
+          <div class="descption wow animated fadeInRight" data-wow-duration="2s" data-wow-delay="0.15s">
+            <p>
+Provide Star Ratings and Reviews of your Instructor on various parameter as per best of your knowledge. Also read reviews provided by other students to know more about Tutor.&nbsp;&nbsp;</p>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+  <!-- three card end -->
+
+  <!-- our_population start -->
+  <div class="our_population">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="top-bar">
+            <p>Our Popular Academic Classes</p>
+            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <div class="middle-bar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
+              <p class="title" >Class 1 Tuition</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
+              <p class="title" >Class 1 Tuition</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
+              <p class="title" >Class 1 Tuition</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
+              <p class="title" >Class 1 Tuition</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <!-- our_population end -->
+
+  <!-- coding start -->
+  <div class="coding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="top-bar">
+            <p>Coding with Fun</p>
+            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <div class="middle-bar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <!-- coding end -->
+
+  <!-- coding start -->
+  <div class="coding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="top-bar">
+            <p>Coding with Fun</p>
+            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <div class="middle-bar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="small-card">
+                <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
+                <p class="title text-center">Blockchain &amp; Crypto</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <!-- coding end -->
+
+  <!-- four-cards start  -->
+  <div class="four-cards">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="top-bar">
+            <p>Leave your Comfort Zone and Enter your Growth Zone</p>
+            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="middle-bar">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="card">
+              <p class="title">Best Tutor &amp; Instructor</p>
+              <div class="descption">
+	              <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="card">
+              <p class="title">Best Tutor &amp; Instructor</p>
+              <div class="descption">
+	              <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="card">
+              <p class="title">Best Tutor &amp; Instructor</p>
+              <div class="descption">
+	              <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" size-md="6" size-lg="3">
+            <div class="card">
+              <p class="title">Best Tutor &amp; Instructor</p>
+              <div class="descption">
+	              <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <!-- four-cards end  -->
 </ion-content>
-<common-footer></common-footer>
+<!-- <common-footer></common-footer> -->
