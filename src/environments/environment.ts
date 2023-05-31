@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl:'https://www.innovintent.com/mobile_app_api', 
-  fileUrl:'https://www.innovintent.com/images'
+  apiMaster:'1',
+  apiUrl:'http://192.168.1.5/klasszone/api', 
+  fileUrl:'http://192.168.1.5/klasszone/api'
 };
 
 /*

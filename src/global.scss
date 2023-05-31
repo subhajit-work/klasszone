@@ -262,6 +262,155 @@ img {
 }
 /* four-cards end */
 
+/* teachers start */
+.section_title {
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 300;
+    p {
+        line-height: initial;
+        margin-bottom: 10px;
+        font-size: 40px;
+        font-weight: 300;
+        color: #11367a;
+    }
+    .section_subtitle {
+        display: block;
+        font-size: 17px;
+        margin-top: 8px;
+        p {
+            display: block;
+            font-size: 17px;
+            margin-top: 8px;
+            color: #11367a;
+        }
+    }
+}
+.teachers {
+    background-color: #ffb400;
+    .heading {
+        font-size: 40px;
+        color: #000;
+        font-weight: 300;
+        margin-top: 30px;
+    }
+}
+/* teachers end */
+
+/* curricular start */
+.curricular {
+    .small-card {
+        margin-bottom: 20px;
+        img {
+            height: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
+        .title {
+            text-align: center;
+            margin-top: 6px;
+        }
+    }
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        ion-icon {
+            font-size: 24px;
+        }
+        p {
+            font-size: 20px;
+        }
+    }
+}
+/* curricular end */
+
+/* kids start */
+.kids {
+    padding: 30px 0;
+    background-size: cover;
+    background-image: url(assets/B2-1.jpg);
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        ion-icon {
+            font-size: 24px;
+        }
+        p {
+            font-size: 20px;
+            color: #fff;
+        }
+    }
+    .imageBox {
+        margin: 0px 20px;
+        position: relative;
+        img {
+            height: auto;
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .title {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            color: #ffffff;
+            position: absolute;
+            padding: 16px 10px;
+            color: #ffffff;
+            bottom: 0;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    }
+}
+/* kids end */
+
+/* consultant start */
+.consultant {
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        ion-icon {
+            font-size: 24px;
+        }
+        p {
+            font-size: 20px;
+        }
+    }
+    .imageBox {
+        position: relative;
+        margin-bottom: 15px;
+        img {
+            height: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
+        .title {
+            color: #fff;
+            position: absolute;
+            bottom: 0;
+            padding: 10px 15px;
+            width: 100%;
+            right: 0;
+            left: 0;
+            background: #11367A;
+            font-weight: bold;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            margin: 0;
+            text-align: left; 
+        }
+    }
+}
+/* consultant end */
+
 /*swiper style start*/
 swiper-container {
     --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);

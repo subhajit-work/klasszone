@@ -117,13 +117,13 @@ export class AuthPage implements OnInit {
           
           
           if (this.isLogin) {
-            authObs = this.authService.login('auth/login', form_data, '');
+            authObs = this.authService.login('login', form_data, '');
             
             this.formSubmitSubscribe = authObs.subscribe(
               resData => {
                 // console.log('resData =============))))))))))))))>', resData);
                 this.btnloader = false;
-                  this.router.navigateByUrl('/dashboard')
+                  this.router.navigateByUrl('/home')
                   // .then(() => {
                   //   window.location.reload();
                   // });
