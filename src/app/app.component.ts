@@ -37,6 +37,7 @@ export class AppComponent {
     private commonUtils: CommonUtils
   ) {
     this.backButtonEvent();
+    this.userInfoData();
   }
 
   // back button start
@@ -100,7 +101,7 @@ export class AppComponent {
         // menu data array
         this.menuPages = [];
 
-        this.http.get('common_details.php').subscribe(
+        this.http.get('test').subscribe(
           (res:any) => {
             this.userInfoLoading = false;
             console.log("view data  userinfo  res -------------------->", res.return_data);

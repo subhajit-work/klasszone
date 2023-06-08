@@ -73,7 +73,7 @@ export class AuthService {
   // auto login end
   
   // ================= login service call start ==================
-    login(_url:any, _data:any, _siteInfo:any) {
+    login(_url:any, _data:any) {
       return this.http.post(`${_url}`, _data).pipe(
         tap(this.setGlobalParams.bind(this)) //use for response value send
       );

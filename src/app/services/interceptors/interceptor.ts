@@ -55,21 +55,16 @@ export class InterceptorProvider implements HttpInterceptor {
     
     
     let get_global_params: any = this.authService.getTokenSessionMaster();
+    let authorizationData = 'Basic ' + btoa('admin' + ':' + '1234');
     
-    if (get_global_params == null || get_global_params.token == null) {
-      authorization = 'Bearer ';
-      // console.log('appkey false');
-    } else {
-      authorization = 'Bearer ' + get_global_params.token;
-    }
     
     // Clone the request with params instead of setParams
 
       const requestClone = request.clone({
         url: `${API_URL}/${request.url}`,
-        setHeaders: {
-          'Authorization': authorization,
-        }
+        // setHeaders: {
+        //   'Authorization': authorizationData,
+        // }
       });
 
       // return next.handle(requestClone);

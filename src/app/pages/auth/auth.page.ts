@@ -88,20 +88,23 @@ export class AuthPage implements OnInit {
   //---------------- login form submit start-----------------
     onSubmitForm(form:NgForm){
       this.isLoading = true;
-      // console.log('form >>', form.value);
+      
+      // get form value
+      let fd = new FormData();
+      for (let val in form.value) {
+        if(form.value[val] == undefined){
+          form.value[val] = '';
+        }
+        fd.append(val, form.value[val]);
+      };
+
+      console.log('value >', fd);
+
       if(!form.valid){
         return;
       }
-      const email = form.value.email;
-      const password = form.value.password;
 
-      if(this.isLogin){
-        // login server data send
-      }else{
-        // signup server data send
-      }
-
-      this.authenticate(form, form.value);
+      this.authenticate(form, fd);
       // form.reset();
 
     }
@@ -117,16 +120,19 @@ export class AuthPage implements OnInit {
           
           
           if (this.isLogin) {
-            authObs = this.authService.login('login', form_data, '');
+            authObs = this.authService.login('login', form_data);
             
             this.formSubmitSubscribe = authObs.subscribe(
               resData => {
-                // console.log('resData =============))))))))))))))>', resData);
+                console.log('resData =============))))))))))))))>', resData);
                 this.btnloader = false;
-                  this.router.navigateByUrl('/home')
-                  // .then(() => {
-                  //   window.location.reload();
-                  // });
+                if (resData.return_status > 0) {
+                  this.router.navigateByUrl('/home');
+                  this.commonUtils.presentToast('success', resData.return_message);
+                }else {
+                  this.commonUtils.presentToast('error', resData.return_message);
+                }
+                  
                   setTimeout(() => {
                     // this.commonUtils.presentToast('success', resData.message);
                   }, 500);
