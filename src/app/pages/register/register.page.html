@@ -17,74 +17,73 @@
       <div class="login-inner">
         <ion-grid>
           <ion-row>
+            <input type="hidden" required [(ngModel)]="OTPaction" name="action">
             <!-- Register as -->
             <ion-col size="12">
               <div class="field-item">
                 <p class="ion-text-center">Register As</p>
                 <ion-segment (ionChange)="segmentChanged($event)" value="student">
                   <ion-segment-button *ngFor="let item of countryCodeData?.groups" [value]="item?.id">
-                    <ion-label>{{item?.description}}</ion-label>
+                    <ion-label>{{item?.name}}</ion-label>
                   </ion-segment-button>
                 </ion-segment>
-                <input type="hidden" [(ngModel)]="segmentValue" name="center_id">
+                <input type="hidden" required [(ngModel)]="segmentValue" name="center_id">
               </div>
             </ion-col>
             <!-- First Name -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter your First Name" required></ion-input>
+                [(ngModel)]="model.first_name"
+                name="first_name" labelPlacement="stacked" placeholder="Enter your First Name" required></ion-input>
               </div>
             </ion-col>
             <!-- Last Name -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter your Last Name" required></ion-input>
+                [(ngModel)]="model.last_name"
+                name="last_name" labelPlacement="stacked" placeholder="Enter your Last Name"></ion-input>
               </div>
             </ion-col>
             <!-- email -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                [(ngModel)]="model.identity"
+                name="identity" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
               </div>
             </ion-col>
             <!-- password -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter your password" required></ion-input>
+                [(ngModel)]="model.password"
+                name="password" labelPlacement="stacked" placeholder="Enter your password" required></ion-input>
               </div>
             </ion-col>
             <!-- Confirm password -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter Confirm password" required></ion-input>
+                [(ngModel)]="model.confirm_password"
+                name="confirm_password" labelPlacement="stacked" placeholder="Enter Confirm password" required></ion-input>
               </div>
             </ion-col>
             <!-- Referral code -->
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.fname"
-                name="fname" labelPlacement="stacked" placeholder="Enter your Referral code"></ion-input>
+                [(ngModel)]="model.referral_code"
+                name="referral_code" labelPlacement="stacked" placeholder="Enter your Referral code"></ion-input>
               </div>
             </ion-col>
             <!-- Phone code -->
             <ion-col size="12">
               <div class="field-item">
-                <ion-select [(ngModel)]="model.fname"
-                name="fname" interface="action-sheet" placeholder="Select Phone code">
-                  <ion-select-option value="apples">Apples</ion-select-option>
-                  <ion-select-option value="oranges">Oranges</ion-select-option>
-                  <ion-select-option value="bananas">Bananas</ion-select-option>
+                <ion-select [(ngModel)]="model.phone_code"
+                name="phone_code" interface="action-sheet" placeholder="Select Phone code">
+                  <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.id">{{item?.name}}</ion-select-option>
                 </ion-select>
               </div>
             </ion-col>
@@ -92,8 +91,8 @@
             <ion-col size="12">
               <div class="field-item">
                 <ion-input type="text"
-                [(ngModel)]="model.phone"
-                name="phone" labelPlacement="stacked" placeholder="Enter your Phone Number"></ion-input>
+                [(ngModel)]="model.mobile"
+                name="mobile" labelPlacement="stacked" placeholder="Enter your Phone Number"></ion-input>
               </div>
             </ion-col>
             <ion-col size="12">

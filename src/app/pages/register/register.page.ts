@@ -48,6 +48,7 @@ export class RegisterPage implements OnInit {
   parms_action_name: any;
   parms_action_id: any;
   countryCodeUrl: any;
+  OTPaction = 'generate';
 
   ngOnInit() {
     // menu hide
@@ -134,6 +135,22 @@ export class RegisterPage implements OnInit {
   onSubmit(form: NgForm) {
     console.log("add form submit >", form.value);
 
+    localStorage.setItem('registerData', JSON.stringify({
+      'center_id': form.value.center_id,
+      'first_name': form.value.first_name,
+      'last_name': form.value.last_name,
+      'identity': form.value.identity,
+      'password': form.value.password,
+      'confirm_password': form.value.confirm_password,
+      'mobile': form.value.mobile,
+      'phone_code': form.value.phone_code,
+      'referral_code': form.value.referral_code
+    }));
+
+    console.log('registerData',localStorage.getItem('registerData'));
+
+    // this.router.navigateByUrl('/send-otp');
+
     if (this.clickButtonTypeCheck == 'Register') {
       this.form_submit_text_save = 'Please wait';
     } else {
@@ -158,53 +175,17 @@ export class RegisterPage implements OnInit {
       return;
     }
 
-    this.formSubmitSubscribe = this.http.post("student/signup?master=1", fd).subscribe(
+    this.formSubmitSubscribe = this.http.post("otp", fd).subscribe(
       (response: any) => {
 
-        if (this.clickButtonTypeCheck == 'Register') {
-          this.form_submit_text_save = 'Register';
-        } else {
-          this.form_submit_text_save_another = 'Save & Add Another';
-        }
-
-        // this.authService.getTokenSessionMaster();
-
         console.log("add form response >", response);
-
         if (response.return_status > 0) {
-
-          this.form_submit_text = 'Register';
-
-          this.router.navigateByUrl(`verification-email/${response.return_data.user_id}`);
-
-          // user details set
-          if (response.return_data.user) {
-            this.commonUtils.onClicksigninCheck(response.return_data.user);
-          }
-          // this.commonUtils.presentToast(response.return_message);
+          this.router.navigateByUrl('/send-otp');
           this.commonUtils.presentToast('success', response.return_message);
-
-          if (this.clickButtonTypeCheck == 'Register') {
-
-            // this.router.navigate(['/student-list']);
-
-          }
-
-          // this.notifier.notify( type, 'aa' );
-
-          if (this.parms_action_name == 'add') {
-            // form.reset();
-            this.model = {};
-            this.model = {
-              enable: 'true',
-              sms: 'true',
-              emailcheck: 'true'
-            };
-          }
-
-        } else {
-          this.form_submit_text = 'Register';
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
         }
+        
       },
       errRes => {
         if (this.clickButtonTypeCheck == 'Register') {

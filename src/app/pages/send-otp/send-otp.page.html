@@ -13,28 +13,43 @@
       <h2>Send OTP</h2>
       <p>We take the security and privacy of your information seriously, and we employ industry-standard measures to protect your data.</p>
     </div>
-    <div class="login-inner">
-      <ion-grid>
-        <ion-row>
-          <!-- email -->
-          <ion-col size="12">
-            <div class="field-item">
-              <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" *ngIf="showOtpComponent" [config]="config"></ng-otp-input>
-            </div>
-          </ion-col>
-          <ion-col size="12">
-            <ion-label class="ion-float-right" [routerLink]="['/forgot-password']">Forgot Password?</ion-label>
-          </ion-col>
-          <!-- Button -->
-          <ion-col size="12">
-            <div class="custom-btn">
-              <ion-button expand="block" shape="round">
-                Create an account
-              </ion-button>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+    <form #userAddForm="ngForm" (ngSubmit)="onSubmit(userAddForm)" (keyup.enter)="onSubmit(userAddForm)">
+      <div class="login-inner">
+        <ion-grid>
+          <ion-row>
+            <!-- Hidden data start -->
+            <input type="hidden" [(ngModel)]="registrationData.center_id" name="center_id">
+            <input type="hidden" [(ngModel)]="registrationData.first_name" name="first_name">
+            <input type="hidden" [(ngModel)]="registrationData.last_name" name="last_name">
+            <input type="hidden" [(ngModel)]="registrationData.identity" name="identity">
+            <input type="hidden" [(ngModel)]="registrationData.password" name="password">
+            <input type="hidden" [(ngModel)]="registrationData.confirm_password" name="confirm_password">
+            <input type="hidden" [(ngModel)]="registrationData.mobile" name="mobile">
+            <input type="hidden" [(ngModel)]="registrationData.phone_code" name="phone_code">
+            <input type="hidden" [(ngModel)]="registrationData.referral_code" name="referral_code">
+            <input type="hidden" [(ngModel)]="otp" name="otp">
+            <!-- Hidden data end -->
+            <!-- OTP -->
+            <ion-col size="12">
+              <div class="field-item">
+                <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" *ngIf="showOtpComponent" [config]="config"></ng-otp-input>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-label class="ion-float-right" [routerLink]="['/forgot-password']">Forgot Password?</ion-label>
+            </ion-col>
+            <!-- Button -->
+            <ion-col size="12">
+              <div class="custom-btn">
+                <ion-button type="submit" 
+                [disabled]="!userAddForm.valid" expand="block" shape="round">
+                  Create an account
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </form>
   </div>
 </ion-content>
