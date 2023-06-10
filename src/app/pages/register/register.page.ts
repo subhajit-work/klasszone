@@ -134,7 +134,7 @@ export class RegisterPage implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log("add form submit >", form.value);
-
+    localStorage.removeItem('registerData');
     localStorage.setItem('registerData', JSON.stringify({
       'center_id': form.value.center_id,
       'first_name': form.value.first_name,
@@ -182,6 +182,7 @@ export class RegisterPage implements OnInit {
         if (response.return_status > 0) {
           this.router.navigateByUrl('/send-otp');
           this.commonUtils.presentToast('success', response.return_message);
+          form.reset();
         }else {
           this.commonUtils.presentToast('error', response.return_message);
         }

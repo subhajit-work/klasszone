@@ -59,7 +59,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.password"
-                name="password" labelPlacement="stacked" placeholder="Enter your password" required></ion-input>
+                name="password" #password="ngModel" labelPlacement="stacked" placeholder="Enter your password" required></ion-input>
               </div>
             </ion-col>
             <!-- Confirm password -->
@@ -67,7 +67,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.confirm_password"
-                name="confirm_password" labelPlacement="stacked" placeholder="Enter Confirm password" required></ion-input>
+                name="confirm_password" #confirmPassword="ngModel" labelPlacement="stacked" placeholder="Enter Confirm password" required></ion-input>
               </div>
             </ion-col>
             <!-- Referral code -->

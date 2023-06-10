@@ -18,16 +18,16 @@
         <ion-grid>
           <ion-row>
             <!-- Hidden data start -->
-            <input type="hidden" [(ngModel)]="registrationData.center_id" name="center_id">
+            <input type="hidden" [(ngModel)]="registrationData.center_id" name="user_belongs_group">
             <input type="hidden" [(ngModel)]="registrationData.first_name" name="first_name">
             <input type="hidden" [(ngModel)]="registrationData.last_name" name="last_name">
             <input type="hidden" [(ngModel)]="registrationData.identity" name="identity">
             <input type="hidden" [(ngModel)]="registrationData.password" name="password">
             <input type="hidden" [(ngModel)]="registrationData.confirm_password" name="confirm_password">
-            <input type="hidden" [(ngModel)]="registrationData.mobile" name="mobile">
+            <input type="hidden" [(ngModel)]="registrationData.mobile" name="phone_number">
             <input type="hidden" [(ngModel)]="registrationData.phone_code" name="phone_code">
             <input type="hidden" [(ngModel)]="registrationData.referral_code" name="referral_code">
-            <input type="hidden" [(ngModel)]="otp" name="otp">
+            <input type="hidden" maxlength="4" minlength="4" required [(ngModel)]="otp" name="otp">
             <!-- Hidden data end -->
             <!-- OTP -->
             <ion-col size="12">

@@ -51,7 +51,7 @@ export class SendOtpPage implements OnInit {
 
   config = {
     allowNumbersOnly: false,
-    length: 5,
+    length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
     placeholder: '',
@@ -175,6 +175,9 @@ export class SendOtpPage implements OnInit {
         console.log("add form response >", response);
 
         if (response.return_status > 0) {
+          localStorage.removeItem('registerData');
+          this.registrationData = {};
+          form.reset();
           this.router.navigateByUrl('/auth');
           this.commonUtils.presentToast('success', response.return_message);
         }else {
