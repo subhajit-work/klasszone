@@ -531,6 +531,69 @@ img {
 }
 /* imageslide end */
 
+/* Profile page start */
+.profile-header {
+    padding: 1.8em;
+    color: #fff;
+    background: linear-gradient(45deg, #02a3cf 0%, rgba(2, 163, 207, 0) 70%), linear-gradient(135deg, #00d67d 10%, rgba(0, 214, 125, 0) 80%), linear-gradient(225deg, #01d062 10%, rgba(1, 208, 98, 0) 80%), linear-gradient(315deg, #038ed3 100%, rgba(3, 142, 211, 0) 70%);
+    .header-image {
+        text-align: center;
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: white;
+        }
+    }
+    .header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        ion-button {
+            --background: transparent;
+            --box-shadow: none;
+            --background: transparent;
+            --box-shadow: none;
+            font-size: 20px;
+            margin: 0px;
+            --padding: 0px;
+        }
+    }
+}
+.dashboard {
+    margin-bottom: 50px;
+    .card-item {
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-weight: 700;
+        background-image: -webkit-linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+        .card-wrapper {
+            h2 {
+                margin: 20px 0;
+                font-weight: 700;
+                color: #ffffff;
+                font-size: 40px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                span {
+                    color: #ffffff;
+                    font-weight: 700;
+                    text-decoration: underline;
+                    font-size: 14px;
+                }
+            }
+            p {
+                margin: 20px 0;
+                color: #ffffff;
+                opacity: .8;
+                font-weight: 700;
+            }
+        }
+    }
+}
+/* Profile page end */
+
 /*swiper style start*/
 swiper-container {
     --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);

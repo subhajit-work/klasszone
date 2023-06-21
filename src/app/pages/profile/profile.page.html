@@ -1,0 +1,118 @@
+<ion-content [fullscreen]="true">
+  <!-- Profile header start -->
+  <div class="profile-header">
+    <div class="header-wrapper">
+      <ion-button size="small" (click)="openRightMenu()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <div class="header-image">
+      <img src="https://klasszone.indinews24.com/assets/uploads/profiles/default-tutor-female.jpg">
+      <h3 class="name"></h3>
+      <p>Net KlassCoins: <b>3218.00</b></p>
+      <p>Per KlassCoin Value: <b>₹1</b></p>
+    </div>
+  </div>
+  <!-- Profile header end -->
+  <!-- breadcumb start -->
+  <ion-breadcrumbs>
+    <ion-breadcrumb href="#home">
+      Home
+      <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+    </ion-breadcrumb>
+    <ion-breadcrumb href="#electronics">
+      Dashboard
+      <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+    </ion-breadcrumb>
+  </ion-breadcrumbs>
+  <!-- breadcumb end -->
+
+  <!-- dashboard start -->
+  <div class="dashboard">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="4" size-lg="2">
+          <ion-card class="card-item">
+            <div class="card-wrapper">
+              <h2>
+                11
+                <span>View</span>
+              </h2>
+              <p>Total Enrollment</p>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </div>
+  <!-- dashboard end -->
+
+  <ion-menu side="end" menuId="rightMenu" contentId="rightMenu">
+    <ion-accordion-group>
+      <ion-item lines="none">
+        <ion-icon slot="start" name="speedometer-outline"></ion-icon>
+        <ion-label>Anchor Item</ion-label>
+      </ion-item>
+      <ion-accordion value="classenrollments">
+        <ion-item slot="header" color="light">
+          <ion-icon slot="start" name="calendar-outline"></ion-icon>
+          <ion-label>Class Enrollments</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>All</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Approved </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Session Initiated</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Completed</ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Cancelled </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Claim For Admin Intervention </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Closed </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
+            <ion-label>Expired </ion-label>
+          </ion-item>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="managecourses">
+        <ion-item slot="header" color="light">
+          <ion-icon slot="start" name="cog-outline"></ion-icon>
+          <ion-label>Manage Courses</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">Second Content</div>
+      </ion-accordion>
+      <ion-accordion value="manageevents">
+        <ion-item slot="header" color="light">
+          <ion-icon slot="start" name="apps-outline"></ion-icon>
+          <ion-label>Manage Events</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">Third Content</div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-menu>
+  <ion-router-outlet id="rightMenu"></ion-router-outlet>
+</ion-content>
+<common-footer></common-footer>
