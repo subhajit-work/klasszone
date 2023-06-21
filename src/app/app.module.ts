@@ -11,6 +11,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { InterceptorProvider } from './services/interceptors/interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomModalPageModule } from './custom-modal/custom-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,9 +20,11 @@ import { InterceptorProvider } from './services/interceptors/interceptor';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
     SharedModule,
+    CustomModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
