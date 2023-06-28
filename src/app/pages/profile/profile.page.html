@@ -5,14 +5,14 @@
       <ion-button size="small" (click)="openRightMenu()">
         <ion-icon name="grid-outline"></ion-icon>
       </ion-button>
-      <ion-button size="small">
+      <ion-button size="small" (click)="logOutUser()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </div>
     <div class="header-image">
       <img src="https://klasszone.indinews24.com/assets/uploads/profiles/default-tutor-female.jpg">
-      <h3 class="name"></h3>
-      <p>Net KlassCoins: <b>3218.00</b></p>
+      <h3 class="name">{{userData?.user_data?.username}}</h3>
+      <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
       <p>Per KlassCoin Value: <b>₹1</b></p>
     </div>
   </div>
@@ -34,22 +34,21 @@
   <div class="dashboard">
     <ion-grid>
       <ion-row>
-        <ion-col size="6" size-md="4" size-lg="2">
+        <!-- <ion-col size="6" size-md="4" size-lg="2">
           <ion-card class="card-item crystalClear">
             <div class="card-wrapper">
               <h2>
-                11
-                <span>View</span>
+                {{userData?.user_data?.net_credits}}
               </h2>
-              <p>Total Enrollment</p>
+              <p>Net KlassCoins</p>
             </div>
           </ion-card>
-        </ion-col>
+        </ion-col> -->
         <ion-col size="6" size-md="4" size-lg="2">
           <ion-card class="card-item sunkist">
             <div class="card-wrapper">
               <h2>
-                11
+                {{userData?.user_data?.teaching_experience}}
                 <span>View</span>
               </h2>
               <p>Total Enrollment</p>
@@ -60,10 +59,10 @@
           <ion-card class="card-item coal">
             <div class="card-wrapper">
               <h2>
-                11
+                {{userData?.user_data?.teaching_experience}}
                 <span>View</span>
               </h2>
-              <p>Total Enrollment</p>
+              <p>Active Enrollment</p>
             </div>
           </ion-card>
         </ion-col>
@@ -71,10 +70,10 @@
           <ion-card class="card-item mini">
             <div class="card-wrapper">
               <h2>
-                11
+                {{userData?.user_data?.teaching_experience}}
                 <span>View</span>
               </h2>
-              <p>Total Enrollment</p>
+              <p>Enrollment Completed</p>
             </div>
           </ion-card>
         </ion-col>
@@ -82,10 +81,10 @@
           <ion-card class="card-item shalala">
             <div class="card-wrapper">
               <h2>
-                11
+                {{userData?.user_data?.teaching_experience}}
                 <span>View</span>
               </h2>
-              <p>Total Enrollment</p>
+              <p>Enrollment Closed</p>
             </div>
           </ion-card>
         </ion-col>
@@ -93,10 +92,43 @@
           <ion-card class="card-item purplepine">
             <div class="card-wrapper">
               <h2>
-                11
+                {{userData?.user_data?.teaching_experience}}
                 <span>View</span>
               </h2>
-              <p>Total Enrollment</p>
+              <p>Total Tutoring Courses</p>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" size-md="4" size-lg="2">
+          <ion-card class="card-item mini">
+            <div class="card-wrapper">
+              <h2>
+                {{userData?.user_data?.teaching_experience}}
+                <span>View</span>
+              </h2>
+              <p>Total Tutoring Events/Workshop</p>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" size-md="4" size-lg="2">
+          <ion-card class="card-item shalala">
+            <div class="card-wrapper">
+              <h2>
+                {{userData?.user_data?.teaching_experience}}
+                <span>View</span>
+              </h2>
+              <p>Event/Workshop Enrollment</p>
+            </div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" size-md="4" size-lg="2">
+          <ion-card class="card-item purplepine">
+            <div class="card-wrapper">
+              <h2>
+                {{userData?.user_data?.teaching_experience}}
+                <span>View</span>
+              </h2>
+              <p>Total Reviews</p>
             </div>
           </ion-card>
         </ion-col>

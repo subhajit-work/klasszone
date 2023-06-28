@@ -33,6 +33,8 @@ export class AuthService {
     return this._globalparamsData.value;
   }
 
+  public userId:any;
+
   constructor(
     private storage: Storage, 
     private plt: Platform,
@@ -49,14 +51,15 @@ export class AuthService {
       
       return from(this.storage.get('setStroageGlobalParamsData')).pipe(
         map(storData => {
-          if(!storData || !storData.token){
+          console.log('storData @@@@@@@>>>>>', storData);
+          if(!storData){
             return null;
+          }else {
+            this.userId = storData.id;
           }
           const storeauth:any = {
-            'token': storData.token,
-            'username': storData.username,
-            'uid': storData.uid,
-            'authority': storData.authority,
+            'id': storData.id,
+            'user_type': storData.user_type,
           }
           return storeauth;
         }),
@@ -78,24 +81,37 @@ export class AuthService {
         tap(this.setGlobalParams.bind(this)) //use for response value send
       );
     }
+
+    /* User details api start */
+    userDetails() {
+      return this.http.get(`user_dashboard/${this.userId}`).pipe(
+        // tap(this.setUserGlobalParams.bind(this)) //use for response value send
+      );
+    }
+
     // ---setGlobalParams function defination----
     private setGlobalParams(resData:any){
-      localStorage.setItem('userdata', resData.authority);
+      console.log('resData', resData);
+
+      localStorage.setItem('userId', resData.return_data);
+
+      
+      console.log('userDetails>>',  localStorage.getItem('userId'));
+      
+
       if(resData.status > 200){
         this.commonUtils.presentToast('success', resData.message);
       }
-      this._globalparamsData.next(null); 
+      // this._globalparamsData.next(null); 
       this.storeAuthData(resData);
     }
     //--- storeAuthData function defination---
     private storeAuthData(_data:any) {
-      // console.log('data>>>>>>>>>>>>>>>>>>>>>>>>', _data);
+      console.log('data>>>>>>>>>>>>>>>>>>>>>>>>', _data);
       // set stroage data
       this.storage.set('setStroageGlobalParamsData',  {
-        'token': _data.token,
-        'username': _data.username,
-        'uid': _data.uid,
-        'authority': _data.authority,
+        'id': _data.return_data,
+        'user_type': _data.user_type,
       });
       
       // Plugins.Storage.set({ key: 'authData', value: data });
@@ -103,35 +119,20 @@ export class AuthService {
   //login service call end
 
   //======================= logout functionlity start ==============
-    logout() {
-      this.storage.clear().then(() => {
-        // console.log('all stroage data cleared');
-        
-        // this.router.navigateByUrl('/auth');
-        
-        // .then(() => {
-          window.location.reload();
-        // });
+  logout() {
+    this.storage.clear().then(() => {
+      console.log('all stroage data cleared');
+      // this.router.navigateByUrl('/auth');
 
-        this._globalparamsData = new BehaviorSubject(null);
-        
-        /* this.router.routeReuseStrategy.shouldReuseRoute = function () {
-          return false;
-        }; */
+      this._globalparamsData = new BehaviorSubject(null);
+      window.location.reload(); //working
+      // this.router.navigateByUrl('/auth');
+      this.router.navigate(['auth'], {replaceUrl: true});
 
-        // location.reload();
 
-        // window.location.replace('/auth');
-
-        // location.reload();
-        setTimeout(() => {
-          // window.location.reload(); //working
-        }, 1000);
-         this.commonUtils.presentToast('success',"Logout successfully")
-
-      });
-      // this._globalparamsData = null;
-    }
+    });
+    // this._globalparamsData = null;
+  }
   // logout functionlity end
  
 }

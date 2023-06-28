@@ -8,10 +8,12 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
+import { SafeHtmlPipe } from '../pipe/safe-html.pipe';
 
 @NgModule({
   declarations: [
-    CommonFooterComponent
+    CommonFooterComponent,
+    SafeHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    SafeHtmlPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

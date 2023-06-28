@@ -42,20 +42,16 @@ export class AuthPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.formSubmitSubscribe =  this.authService.globalparamsData.subscribe(res => {
-      // console.log('authService',res);
-      
+    this.menuCtrl.enable(false);
+
+    this.authService.globalparamsData.subscribe(res => {
+      console.log('auth res >>>>>>>>', res);
       if(res && res != null && res != undefined && res != ''){
-        // if(res.token != undefined ){
-        //   this.router.navigateByUrl('/dashboard');
-        // }
+        
+          this.router.navigateByUrl('/home');
+        
       }
     });
-
-    // get Site Info
-    this.formSubmitSubscribe = this.commonUtils.getSiteInfoObservable.subscribe(res =>{
-      this.siteInfo = res;
-    })
   }
  
   ionViewWillEnter() {

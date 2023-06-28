@@ -1,11 +1,8 @@
 <ion-content>
   <!-- banner start -->
   <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
-    <swiper-slide>
-      <img src="assets/banner1.jpg">
-    </swiper-slide>
-    <swiper-slide>
-      <img src="assets/banner2.jpg">
+    <swiper-slide *ngFor="let item of viewData?.home_page_main_banners">
+      <img title="{{item?.name}}" alt="{{item?.name}}" src="{{file_url}}/{{item?.path}}/{{item?.image}}">
     </swiper-slide>
   </swiper-container>
   <!-- banner end -->
@@ -13,47 +10,13 @@
   <!-- three card start -->
   <div class="three-cards">
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
-      <swiper-slide>
+      <swiper-slide *ngFor="let item of viewData?.home_page_advantages">
         <div class="card-item">
           <div class="image">
-            <img src="https://klasszone.indinews24.com/assets/uploads/repeaters/8f21d-product-quality-pana.png" alt="">
+            <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="">
           </div>
-          <h1 class="title">Search Best Tutor</h1>
-          <div class="descption">
-            <p>Select your Tutor based on their skill-set, education qualification, experience, ratings received upon
-              several parameters and reviews provided by various students.&nbsp;&nbsp;</p>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="card-item">
-          <div class="image">
-            <img class="wow pulse animated" data-wow-duration="0.5s" data-wow-delay="0.5s"
-              src="https://klasszone.indinews24.com/assets/uploads/repeaters/863fe-wepik-photo-mode-202292-111854.jpeg"
-              alt="">
-          </div>
-          <h1 class="title wow animated fadeInLeft" data-wow-duration="2s" data-wow-delay="0.15s">
-            Schedule Classes </h1>
-          <div class="descption wow animated fadeInRight" data-wow-duration="2s" data-wow-delay="0.15s">
-            <p>
-              Schedule your Individual 1-to-1 Classes or Group/Batch classes either in Moring or Afternoon or Evening
-              time as per your availiability and covienence.&nbsp;</p>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="card-item">
-          <div class="image">
-            <img class="wow pulse animated" data-wow-duration="0.5s" data-wow-delay="0.5s"
-              src="https://klasszone.indinews24.com/assets/uploads/repeaters/c4e4b-wepik-photo-mode-202292-112359.jpeg"
-              alt="">
-          </div>
-          <h1 class="title wow animated fadeInLeft" data-wow-duration="2s" data-wow-delay="0.15s">
-            Ratings &amp; Reviews </h1>
-          <div class="descption wow animated fadeInRight" data-wow-duration="2s" data-wow-delay="0.15s">
-            <p>
-              Provide Star Ratings and Reviews of your Instructor on various parameter as per best of your knowledge.
-              Also read reviews provided by other students to know more about Tutor.&nbsp;&nbsp;</p>
+          <h1 class="title">{{item?.category_name}}</h1>
+          <div class="descption" [innerHTML]="item?.short_description | safeHtml">
           </div>
         </div>
       </swiper-slide>
@@ -68,12 +31,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Our Popular Academic </b> Classes
-              </p>
-              <span class="section_subtitle">
-                Academic Classes CBSE/ICSE/State/Other Board
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.academic_details?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.academic_details?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -84,28 +43,10 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.academic_classes" size="6" size-md="6" size-lg="3">
             <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
+              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <p class="title">{{item?.name}}</p>
             </div>
           </ion-col>
         </ion-row>
@@ -121,12 +62,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Coding </b> with Fun
-              </p>
-              <span class="section_subtitle">
-                For Age-6 to 14 Years
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.coding_with_fun?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.coding_with_fun?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -137,28 +74,10 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.coding_with_fun" size="6" size-md="6" size-lg="3">
             <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
+              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <p class="title text-center">{{item?.name}}</p>
             </div>
           </ion-col>
         </ion-row>
@@ -174,12 +93,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                Kids <b>Technology </b>
-              </p>
-              <span class="section_subtitle">
-                Age 9 to 16 Years
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.kids_technology?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.kids_technology?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -190,28 +105,10 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.kids_technology" size="6" size-md="6" size-lg="3">
             <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a8a64-blockchain.jpg" alt="">
-              <p class="title text-center">Blockchain &amp; Crypto</p>
+              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <p class="title text-center">{{item?.name}}</p>
             </div>
           </ion-col>
         </ion-row>
@@ -242,35 +139,11 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.make_world_your_comfort_zone" size="6" size-md="6" size-lg="3">
             <div class="card">
-              <p class="title">Best Tutor &amp; Instructor</p>
-              <div class="descption">
-                <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
-              </div>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="card">
-              <p class="title">Best Tutor &amp; Instructor</p>
-              <div class="descption">
-                <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
-              </div>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="card">
-              <p class="title">Best Tutor &amp; Instructor</p>
-              <div class="descption">
-                <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
-              </div>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="card">
-              <p class="title">Best Tutor &amp; Instructor</p>
-              <div class="descption">
-                <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe>
+              <p class="title">{{item?.name}}</p>
+              <div class="descption" [innerHTML]="item?.short_description | safeHtml">
+                <!-- <iframe height="150" src="https://www.youtube.com//embed/7GSqIOHdxW8"></iframe> -->
               </div>
             </div>
           </ion-col>
@@ -329,12 +202,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Extra Curricular</b> Activities
-              </p>
-              <span class="section_subtitle">
-                  Extracurriculars Matter — To You and To School &amp; Colleges
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.extra_curricular_activities?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.extra_curricular_activities?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -345,28 +214,10 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.extra_curricular" size="6" size-md="6" size-lg="3">
             <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
-            </div>
-          </ion-col>
-          <ion-col size="6" size-md="6" size-lg="3">
-            <div class="small-card">
-              <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/99c6c-class_1.jpg" alt="">
-              <p class="title">Class 1 Tuition</p>
+              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <p class="title">{{item?.name}}</p>
             </div>
           </ion-col>
         </ion-row>
@@ -382,12 +233,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Edge </b> Technologies
-              </p>
-              <span class="section_subtitle">
-                Trending Cutting Edge Technologies Classes
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.edge_technologies?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.edge_technologies?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -395,16 +242,10 @@
       </ion-row>
     </ion-grid>
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
-      <swiper-slide>
+      <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.edge_technology">
         <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/2bd77-big_data.jpeg" alt="">
-          <div class="title">Big Data</div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/4ab4c-quantum_technology.jpeg" alt="">
-          <div class="title">Quantum Computing </div>
+          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>
     </swiper-container>
@@ -418,12 +259,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Test</b> Preparation & <b>Competitive </b>Exams
-              </p>
-              <span class="section_subtitle">
-                International Test Preparation, Competitive and Entrance Examinations
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.competitive_exams?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.competitive_exams?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -432,28 +269,10 @@
     </ion-grid>
     <ion-grid>
       <ion-row>
-        <ion-col size="4" size-lg="4">
+        <ion-col *ngFor="let item of viewData?.popular_courses?.data?.competitive_exams" size="4" size-lg="4">
           <div class="imageBox">
-            <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/2bd77-big_data.jpeg" alt="">
-            <div class="title">Big Data</div>
-          </div>
-        </ion-col>
-        <ion-col size="4" size-lg="4">
-          <div class="imageBox">
-            <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/2bd77-big_data.jpeg" alt="">
-            <div class="title">Big Data</div>
-          </div>
-        </ion-col>
-        <ion-col size="4" size-lg="4">
-          <div class="imageBox">
-            <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/2bd77-big_data.jpeg" alt="">
-            <div class="title">Big Data</div>
-          </div>
-        </ion-col>
-        <ion-col size="4" size-lg="4">
-          <div class="imageBox">
-            <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/2bd77-big_data.jpeg" alt="">
-            <div class="title">Big Data</div>
+            <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+            <div class="title">{{item?.name}}</div>
           </div>
         </ion-col>
       </ion-row>
@@ -534,12 +353,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Foreign Languages </b>
-              </p>
-              <span class="section_subtitle">
-                Most Popular Foreign Languages
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.foreign_languages?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.foreign_languages?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -547,16 +362,10 @@
       </ion-row>
     </ion-grid>
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
-      <swiper-slide>
+      <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.foreign_languages">
         <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/a7922-japenese.jpeg" alt="">
-          <div class="title">Japanese</div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/c807f-germany.jpeg" alt="">
-          <div class="title">German</div>
+          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>
     </swiper-container>
@@ -569,12 +378,8 @@
         <ion-col>
           <div class="top-bar">
             <h2 class="section_title">
-              <p>
-                <b>Foreign Languages </b>
-              </p>
-              <span class="section_subtitle">
-                Most Popular Foreign Languages
-              </span>
+              <p [innerHTML]="viewData?.popular_courses?.soft_skills?.title | safeHtml"></p>
+              <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.soft_skills?.sub_title | safeHtml"></span>
             </h2>
             <ion-icon name="chevron-forward-circle-outline"></ion-icon>
           </div>
@@ -582,16 +387,10 @@
       </ion-row>
     </ion-grid>
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
-      <swiper-slide>
+      <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.soft_skills">
         <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/f296c-personal_skills.jpeg" alt="">
-          <div class="title">Personal Skills</div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="imageBox">
-          <img src="https://klasszone.indinews24.com/assets/uploads/sub_categories/68d51-communication.jpeg" alt="">
-          <div class="title">Communication Skills</div>
+          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>
     </swiper-container>

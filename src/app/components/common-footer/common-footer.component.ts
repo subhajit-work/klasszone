@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 
 @Component({
   selector: 'common-footer',
@@ -7,13 +9,25 @@ import { MenuController, NavController } from '@ionic/angular';
   styleUrls: ['./common-footer.component.scss'],
 })
 export class CommonFooterComponent  implements OnInit {
+  private userInfoDataSubscribe: Subscription | undefined;
+  userDetails:any;
 
   constructor(
     public menuCtrl: MenuController,
     private navCtrl : NavController,
+    private commonUtils : CommonUtils,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userInfoDataSubscribe = this.commonUtils.userInfoDataObservable.subscribe((res:any) => {
+      console.log(' =========== HEADER  userdata observable  >>>>>>>>>>>', res);
+      if(res){
+        this.userDetails = res.return_data.user_data;
+      }else{
+        this.userDetails = '';
+      }
+    });
+  }
 
   openMenu() {
     console.log('Clicked');

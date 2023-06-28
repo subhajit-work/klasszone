@@ -71,7 +71,7 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       this.commonUtils.getPathNameFun(this.router.url.split('/')[1]);
 
       // form submit api add
-      this.form_api = `login`;
+      this.form_api = `forgot_password`;
 
       setInterval(() => {
         this.curentDate = new Date();

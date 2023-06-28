@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
 import { AlertController, Platform } from '@ionic/angular';
-import { take } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommonUtils } from './services/common-utils/common-utils';
 import { AuthService } from './services/auth/auth.service';
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,7 +28,8 @@ export class AppComponent {
   userInfoLoading:any;
   menuPages = [];
   userInfoDataall:any;
-
+  userDetailsApi:any;
+  private userDetailsSubscribe: Subscription | undefined;
   
   constructor(
     private platform: Platform,
@@ -34,10 +37,11 @@ export class AppComponent {
     private alertController : AlertController,
     private authService : AuthService,
     private http: HttpClient,
-    private commonUtils: CommonUtils
+    private commonUtils: CommonUtils,
+    private storage: Storage,
   ) {
     this.backButtonEvent();
-    this.userInfoData();
+    this.initializeApp();
   }
 
   // back button start
@@ -88,53 +92,30 @@ export class AppComponent {
     });
   }
 
+  initializeApp() {
+    
+    this.platform.ready().then(() => {
+      this.loginCheck();
+    });
+  }
+
   // user info
   userInfoData(){
-    // this.authService.globalparamsData.pipe(
-    //   take(1)
-    // ).subscribe(res => {
-    //   console.log('componet.ts Toke store >>>>>>>>>>>>>>>111', res);
-    console.log('Ready________updateAlertConfirm()___');
-      // if(res){
-        this.userInfoLoading = true;
+    let userObs: Observable<any>;
+    userObs = this.authService.userDetails();
 
-        // menu data array
-        this.menuPages = [];
-
-        this.http.get('test').subscribe(
-          (res:any) => {
-            this.userInfoLoading = false;
-            console.log("view data  userinfo  res -------------------->", res.return_data);
-            if(res.return_status > 0){
-              this.userInfoDataall = res.return_data;
-
-              
-
-              // update observable service data
-              this.commonUtils.getUserInfoService(res.return_data);
-
-              // console.log('menu_data',res.return_data.menu_data);
-              // this.menuPages = res.return_data.menu_data.list;
-
-
-              // menu data show array
-              if(res.return_data.menu_data){
-
-                this.menuPages = res.return_data.menu_data;
-
-                console.log('Menu data >>>', this.menuPages);
-                
-              }
-
-            }
-          },
-          errRes => {
-            this.userInfoLoading = false;
-          }
-        );
-      // }
-
-    // });
+    this.userDetailsSubscribe = userObs.subscribe(
+      resData => {
+        console.log('userDetails', resData);
+        if(resData.return_status > 0){
+          this.userInfoDataall = resData.return_data;
+          this.commonUtils.getUserInfoService(resData);
+        }
+        
+      },
+      errRes => {
+      }
+      );
   }
 
   // logout functionlity
@@ -187,4 +168,6 @@ export class AppComponent {
     });
     await alert.present(); 
   }
+
+  
 }
