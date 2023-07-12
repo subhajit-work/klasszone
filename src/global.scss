@@ -88,7 +88,7 @@ img {
     width: 100%;
 }
 .page-inner {
-    padding-bottom: 50px;
+    padding-bottom: 50px; 
 }
 .field-item {
     ion-input {
@@ -130,6 +130,47 @@ img {
         display: flex;
         justify-content: space-around;
     }
+    .radio-box {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0px;
+        padding: 0px 20px;
+        ion-radio-group {
+            ion-radio:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
+    li-ionic4-datepicker {
+        input {
+            font-size: 14px !important;
+            background: #F5F5F5;
+            border-radius: 30px !important;
+            border: none !important;
+            padding: 20px !important;
+        }
+    }
+    .datePicker {
+        li-ionic4-datepicker {
+            input {
+                font-size: 14px !important;
+                background: #F5F5F5;
+                border-radius: 30px !important;
+                border: none !important;
+                padding: 20px !important;
+            }
+        }
+        // li-ionic4-datepicker:before {
+        //     content: "Date of Birth"; 
+        //     display: inline-block;
+        //     position: absolute;
+        //     left: 20px;
+        //     top: 0;
+        // }
+        // li-ionic4-datepicker.ng-dirty:before{
+        //     content: unset;
+        // }
+    } 
 }
 .segment-button-indicator-background {
     border-radius: 30px;
@@ -184,11 +225,11 @@ img {
         background-color: #00a6dd;
         padding: 20px;
         padding-top: 25px;
-        padding-bottom: 60px;
+        padding-bottom: 25px;
         border-radius: 10px;
         margin-bottom: 20px;
-        margin-right: 22px;
-        margin-left: 22px;
+        margin-right: 40px;
+        margin-left: 40px;
         .image {
             width: 76px;
             background-color: #fff;
@@ -257,26 +298,27 @@ img {
         }
         .title {
             text-align: center;
-            color: #ffffff;
+            color: #ffffff !important;
             margin-top: 6px;
         }
     }
     .top-bar {
-        color: #fff;
+        color: #fff !important;
         display: flex;
         align-items: center;
         justify-content: space-between;
         ion-icon {
-            font-size: 24px;
+            font-size: 40px;
+            color: #fff;
         }
         p {
             font-size: 20px;
-            color: #fff;
+            color: #fff !important;
         }
         .section_subtitle {
             color: #fff !important;
             p {
-                color: #fff;
+                color: #fff !important;
             }
         }
     }
@@ -286,17 +328,6 @@ img {
 /* coding start*/
 .coding {
     padding-top: 10px;
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-icon {
-            font-size: 24px;
-        }
-        p {
-            font-size: 20px;
-        }
-    }
     .small-card {
         .title {
             text-align: center;
@@ -307,17 +338,6 @@ img {
 /* four-cards start */
 .four-cards {
     padding-top: 10px;
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-icon {
-            font-size: 24px;
-        }
-        p {
-            font-size: 20px;
-        }
-    }
     .card {
         background-color: #00a6dd;
         padding: 10px;
@@ -326,6 +346,10 @@ img {
             border-radius: 10px;
             text-align: center;
             color: #fff;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
         .descption {
             iframe {
@@ -337,29 +361,40 @@ img {
 /* four-cards end */
 
 /* teachers start */
-.section_title {
-    margin-bottom: 20px;
-    font-size: 40px;
-    font-weight: 300;
-    p {
-        line-height: initial;
-        margin-bottom: 10px;
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ion-icon {
         font-size: 40px;
-        font-weight: 300;
         color: #11367a;
     }
-    .section_subtitle {
-        display: block;
-        font-size: 17px;
-        margin-top: 8px;
+    .section_title {
+        margin-bottom: 20px;
+        font-size: 40px;
+        font-weight: 300;
+        flex-basis: fit-content;
         p {
+            line-height: initial;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: 300;
+            color: #11367a;
+        }
+        .section_subtitle {
             display: block;
             font-size: 17px;
             margin-top: 8px;
-            color: #11367a;
+            p {
+                display: block;
+                font-size: 17px;
+                margin-top: 8px;
+                color: #000;
+            }
         }
     }
 }
+
 .teachers {
     background-color: #ffb400;
     .heading {
@@ -385,17 +420,6 @@ img {
             margin-top: 6px;
         }
     }
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-icon {
-            font-size: 24px;
-        }
-        p {
-            font-size: 20px;
-        }
-    }
 }
 /* curricular end */
 
@@ -410,11 +434,12 @@ img {
         justify-content: space-between;
         color: #fff;
         ion-icon {
-            font-size: 24px;
+            font-size: 40px;
+            color: #fff;
         }
         p {
-            font-size: 20px;
-            color: #fff;
+            font-size: 20px !important;
+            color: #fff !important;
         }
     }
     .imageBox {
@@ -447,17 +472,6 @@ img {
 
 /* consultant start */
 .consultant {
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-icon {
-            font-size: 24px;
-        }
-        p {
-            font-size: 20px;
-        }
-    }
     .imageBox {
         position: relative;
         margin-bottom: 15px;
@@ -512,17 +526,6 @@ img {
 /* Counter end */
 /* languages start */
 .languages {
-    .top-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-icon {
-            font-size: 24px;
-        }
-        p {
-            font-size: 20px;
-        }
-    }
     .imageBox {
         margin: 0px 20px;
         position: relative;
@@ -550,7 +553,7 @@ img {
         align-items: center;
         justify-content: space-between;
         ion-icon {
-            font-size: 24px;
+            font-size: 40px;
         }
         p {
             font-size: 20px;
@@ -577,11 +580,52 @@ img {
     background: linear-gradient(to left, #24243e, #11367A, #0f0c29);
     .header-image {
         text-align: center;
-        img {
+        .image-box {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background-color: white;
+            margin: auto;
+            position: relative;
+            outline: 5px solid #000;
+            padding: 1px;
+            img {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background-color: white;
+            }
+            .image-edit {
+                position: absolute;
+                bottom: 0;
+                right: 1px;
+                background: #E4E6EB;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #000;
+            }
+            input {
+                width: 120px;
+                height: 120px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+            }
+        }
+        .name {
+            margin-top: 4px !important;
+        }
+        p {
+            margin-top: 4px;
+        }
+        ion-button {
+            margin-top: 10px;
+            color: #fff;
+            --background: #F47E2B;
         }
     }
     .header-wrapper {
@@ -634,6 +678,84 @@ img {
 }
 /* Profile page end */
 
+/* Profile card start*/
+.profile-card {
+    border: 2px solid #4444;
+    border-radius: 20px;
+    padding: 12px;
+    .profile-top {
+        display: grid;
+        grid-auto-flow: column;
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            margin: auto;
+            border: 1px solid #4444;
+            border-radius: 50%;
+            overflow: hidden;
+            img {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto;
+                border-radius: 50%;
+                object-fit: contain;
+            }
+        }
+        .profile-details {
+            padding-left: 10px;
+            .name {
+                font-weight: 700;
+                color: #11367a;
+            }
+            .designation {
+                font-size: 12px;
+            }
+        }
+    }
+    .profile-bottom {
+        display: grid;
+        grid-auto-flow: column;
+        margin-top: 10px;
+        .reward {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            mat-icon {
+                width: 18px;
+                height: 18px;
+                font-size: 18px;
+            }
+            span {
+                margin-left: 5px;
+            }
+        }
+        .rating {
+            .rating-bar {
+                text-align: right;
+                color: #E7711B;
+            }
+        }
+    }
+}
+/* Profile card end*/
+
+/* Course filter start */
+.courseFilter {
+    padding: 55px 20px;
+    overflow: auto;
+    .filter-item {
+        .filter-tittle {
+            font-weight: 700;
+        }
+        .filter-box {
+            ion-checkbox {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
+/* Course filter end */
+
 /*swiper style start*/
 swiper-container {
     --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
@@ -668,3 +790,126 @@ swiper-container {
     max-height: 100%;
   }
 /*swiper style start*/
+
+/* -----ionic date picker style start----- */
+  
+.li-ionic4-datePicker,.li-ionic-timepicker {
+    .modal-wrapper {
+      height: 75%;
+      width: 310px !important;
+      border-radius: 0px;
+      @media (min-width: 768px) {
+        width: 350px;
+        height: 65%;
+      }
+    }
+}
+li-ionic4-datepicker {
+    .clearButton {
+        top: -1px;
+        right: 25px !important;
+    }
+}
+// time
+.li-ionic-timepicker {
+    .modal-wrapper {
+        max-height: 276px;
+        width: 310px;
+        min-height: 0;
+        border-radius: 0px; 
+    }
+}
+
+  li-ionic4-datepicker-modal.ion-page ion-header ion-toolbar, li-ionic-timepicker-modal.ion-page ion-header ion-toolbar {
+    --background: var(--ion-color-blue) !important;
+  }
+  li-ionic4-datepicker-modal.ion-page ion-content ion-grid ion-row ion-col,li-ionic-timepicker-modal.ion-page ion-content ion-grid ion-row ion-col {
+    border-bottom-color: var(--ion-color-blue) !important;
+   }
+  li-ionic4-datepicker-modal.ion-page ion-content ion-grid ion-row ion-col ion-button,li-ionic-timepicker-modal.ion-page ion-content ion-grid ion-row ion-col ion-button {
+   color: var(--ion-color-blue) !important;
+  }
+  li-ionic4-datepicker-modal.ion-page ion-content ion-grid ion-row ion-col ion-button,li-ionic-timepicker-modal.ion-page ion-content ion-grid ion-row ion-col ion-button ion-icon{
+    color: var(--ion-color-blue) !important;
+   }
+  li-ionic4-datepicker-modal.ion-page ion-footer ion-toolbar ion-grid ion-row ion-col ion-button ,li-ionic-timepicker-modal.ion-page ion-footer ion-toolbar ion-grid ion-row ion-col ion-button{
+    --background: var(--ion-color-blue) !important;
+  }
+  li-ionic4-datepicker-modal.ion-page ion-header ion-toolbar ion-title,li-ionic-timepicker-modal.ion-page ion-header ion-toolbar ion-title {
+    font-size: 14px !important;
+  }
+  .ionic_datepicker_modal_content .dp-selecteddate,.ionic_timepicker_modal_content .dp-selecteddate {
+    background:  var(--ion-color-blue) !important;
+  }
+  .ionic_datepicker_modal_content .dp-today,.ionic_timepicker_modal_content .dp-today {
+    border-color: var(--ion-color-blue) !important;
+  }
+  ion-slide.tp-default-slide.ng-star-inserted.md.swiper-slide.swiper-zoom-container.hydrated.swiper-slide-active{
+    color: var(--ion-color-blue) !important;
+  }
+  li-ionic4-datepicker {
+    input {
+        margin: 0 !important;
+        border: 1px solid var(--ion-color-medium) !important;
+        padding: 8px !important;
+        border-radius: 4px !important;
+        font-size: 13px !important;
+    }
+    .clearButton {
+      top: -1px;
+    }
+  }
+  li-ionic-timepicker {
+    input {
+        margin: 0 !important;
+        border: 1px solid var(--ion-color-medium) !important;
+        padding: 8px !important;
+        border-radius: 4px !important;
+        font-size: 13px !important;
+    }
+    .clearButton {
+      top: -1px;
+    }
+  }
+  li-ionic4-datepicker:after {
+    content: "\f073"; 
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    right: 50px;
+    top: 0;
+  }
+  .li-ionic4-datePicker .modal-wrapper {
+        height:75%;
+    }
+
+    @media screen and (min-width : 320px) and (max-width : 539px) {
+        li-ionic4-datepicker-modal.ion-page ion-header {
+            height: 40px !important;
+        }
+        li-ionic4-datepicker-modal.ion-page ion-footer {
+            height: 48px !important;
+        }
+        li-ionic4-datepicker-modal.ion-page ion-footer ion-toolbar ion-grid ion-row ion-col {
+            height: 40px !important;
+        }
+        li-ionic4-datepicker-modal.ion-page ion-footer ion-toolbar ion-grid ion-row ion-col ion-button {
+            height: 40px !important;
+        }
+    }
+/* ionic date picker end */
+
+/* header start */
+ion-header {
+    ion-toolbar {
+        ion-title {
+            ion-icon {
+                float: right;
+                margin-top: 2px;
+            }
+        }
+    }
+}

@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonicSlides } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { register } from 'swiper/element/bundle';
 
-register();
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-class-list',
+  templateUrl: './class-list.page.html',
+  styleUrls: ['./class-list.page.scss'],
 })
-export class HomePage implements OnInit {
+export class ClassListPage implements OnInit {
   // server api
   api_url = environment.apiUrl;
   file_url = environment.fileUrl;
@@ -20,34 +18,20 @@ export class HomePage implements OnInit {
   viewData:any;
   listing_view_url:any;
   private viewPageDataSubscribe: Subscription | undefined;
-
-  
-
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400,
-    autoplay: true,
-    loop: true,
-  };
-
-  multiSlideOpts = {
-    initialSlide: 2,
-    speed: 400,
-    autoplay: true,
-    loop: true,
-  };
-
-  swiperModules = [IonicSlides];
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
+  model: any = {}
+  parms_slug:any;
 
   constructor(
     private http : HttpClient,
+    private activatedRoute : ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.listing_view_url = 'home-page';
-      this.viewPageData();
+    this.parms_slug = this.activatedRoute.snapshot.paramMap.get('slug');
+    console.log('parms_slug', this.parms_slug);
+    
+    this.listing_view_url = 'view-all/'+this.parms_slug;
+    this.viewPageData();
   }
 
   // ================== view data fetch start =====================
@@ -71,13 +55,5 @@ export class HomePage implements OnInit {
     );
   }
   // view data fetch end
-
-  // ----------- destroy subscription start ---------
-  ngOnDestroy() {
-    if(this.viewPageDataSubscribe !== undefined){
-      this.viewPageDataSubscribe.unsubscribe();
-    }
-  }
-// destroy subscription end
 
 }

@@ -2,7 +2,7 @@
   <!-- banner start -->
   <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
     <swiper-slide *ngFor="let item of viewData?.home_page_main_banners">
-      <img title="{{item?.name}}" alt="{{item?.name}}" src="{{file_url}}/{{item?.path}}/{{item?.image}}">
+      <img onError="this.src='assets/default-banner.png'" title="{{item?.name}}" alt="{{item?.name}}" src="{{file_url}}/{{item?.path}}/{{item?.image}}">
     </swiper-slide>
   </swiper-container>
   <!-- banner end -->
@@ -34,7 +34,7 @@
               <p [innerHTML]="viewData?.popular_courses?.academic_details?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.academic_details?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.academic_details?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -43,9 +43,9 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.academic_classes" size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.academic_classes" size="4" size-md="4" size-lg="3">
             <div class="small-card">
-              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title">{{item?.name}}</p>
             </div>
           </ion-col>
@@ -65,7 +65,7 @@
               <p [innerHTML]="viewData?.popular_courses?.coding_with_fun?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.coding_with_fun?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.coding_with_fun?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -74,9 +74,9 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.coding_with_fun" size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.coding_with_fun" size="4" size-md="4" size-lg="3">
             <div class="small-card">
-              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title text-center">{{item?.name}}</p>
             </div>
           </ion-col>
@@ -96,7 +96,7 @@
               <p [innerHTML]="viewData?.popular_courses?.kids_technology?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.kids_technology?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.kids_technology?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -105,9 +105,9 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.kids_technology" size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.kids_technology" size="4" size-md="4" size-lg="3">
             <div class="small-card">
-              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title text-center">{{item?.name}}</p>
             </div>
           </ion-col>
@@ -205,7 +205,7 @@
               <p [innerHTML]="viewData?.popular_courses?.extra_curricular_activities?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.extra_curricular_activities?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.extra_curricular_activities?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -214,9 +214,9 @@
     <div class="middle-bar">
       <ion-grid>
         <ion-row>
-          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.extra_curricular" size="6" size-md="6" size-lg="3">
+          <ion-col *ngFor="let item of viewData?.popular_courses?.data?.extra_curricular" size="4" size-md="4" size-lg="3">
             <div class="small-card">
-              <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title">{{item?.name}}</p>
             </div>
           </ion-col>
@@ -236,15 +236,15 @@
               <p [innerHTML]="viewData?.popular_courses?.edge_technologies?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.edge_technologies?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.edge_technologies?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
+    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.edge_technology">
         <div class="imageBox">
-          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>
@@ -262,7 +262,7 @@
               <p [innerHTML]="viewData?.popular_courses?.competitive_exams?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.competitive_exams?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.competitive_exams?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
@@ -271,7 +271,7 @@
       <ion-row>
         <ion-col *ngFor="let item of viewData?.popular_courses?.data?.competitive_exams" size="4" size-lg="4">
           <div class="imageBox">
-            <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+            <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
             <div class="title">{{item?.name}}</div>
           </div>
         </ion-col>
@@ -356,15 +356,15 @@
               <p [innerHTML]="viewData?.popular_courses?.foreign_languages?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.foreign_languages?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.foreign_languages?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
+    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.foreign_languages">
         <div class="imageBox">
-          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>
@@ -372,7 +372,7 @@
   </div>
   <!-- languages end -->
   <!-- imageslide start -->
-  <div class="imageslide">
+  <div class="imageslide" style="margin-bottom: 40px;">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -381,15 +381,15 @@
               <p [innerHTML]="viewData?.popular_courses?.soft_skills?.title | safeHtml"></p>
               <span class="section_subtitle" [innerHTML]="viewData?.popular_courses?.soft_skills?.sub_title | safeHtml"></span>
             </h2>
-            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+            <ion-icon [routerLink]="['/class-list/'+ viewData?.popular_courses?.soft_skills?.slug ]" name="chevron-forward-circle-outline"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
+    <swiper-container [config]="multiSlideOpts" #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.soft_skills">
         <div class="imageBox">
-          <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+          <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
       </swiper-slide>

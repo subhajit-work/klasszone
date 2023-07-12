@@ -44,6 +44,14 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: () => import('./pages/list/list.module').then( m => m.ListPageModule)
+  },
+  {
+    path: 'class-list/:slug',
+    loadChildren: () => import('./pages/class-list/class-list.module').then( m => m.ClassListPageModule)
+  },
+  {
+    path: 'teacher-list',
+    loadChildren: () => import('./pages/teacher-list/teacher-list.module').then( m => m.TeacherListPageModule)
   }
 ];
 

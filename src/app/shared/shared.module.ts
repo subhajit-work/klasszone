@@ -9,6 +9,12 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 import { SafeHtmlPipe } from '../pipe/safe-html.pipe';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule} from '@angular/material/core';
+import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,13 @@ import { SafeHtmlPipe } from '../pipe/safe-html.pipe';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    Ionic4DatepickerModule,
   ],
   exports: [
     CommonFooterComponent,
@@ -33,7 +45,13 @@ import { SafeHtmlPipe } from '../pipe/safe-html.pipe';
     MatIconModule,
     MatSelectModule,
     MatDividerModule,
-    SafeHtmlPipe
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    SafeHtmlPipe,
+    Ionic4DatepickerModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

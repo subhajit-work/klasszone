@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Academic Classes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-inner">
+    <div class="consultant">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="top-bar">
+              <h2 class="section_title">
+                <p [innerHTML]="viewData?.category_details?.title | safeHtml"></p>
+                <span class="section_subtitle" [innerHTML]="viewData?.category_details?.sub_title | safeHtml"></span>
+              </h2>
+            </div>
+          </ion-col> 
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let item of viewData?.courses" size="4" size-lg="4">
+            <div class="imageBox">
+              <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
+              <div class="title">{{item?.name}}</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
