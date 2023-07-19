@@ -1,3 +1,4 @@
+
 <ion-content [fullscreen]="true">
   <!-- Profile header start -->
   <div class="profile-header">
@@ -5,22 +6,26 @@
       <ion-button size="small" (click)="openRightMenu()">
         <ion-icon name="grid-outline"></ion-icon>
       </ion-button>
+      <!-- <ion-buttons slot="start">
+        <ion-menu-button autoHide="false" menu="rightMenu"></ion-menu-button>
+      </ion-buttons> -->
       <ion-button size="small" (click)="logOutUser()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </div>
     <div class="header-image">
       <div class="image-box">
-        <img src="https://klasszone.indinews24.com/assets/uploads/profiles/default-tutor-female.jpg">
+        <img onError="this.src='assets/default-user.jpg'" src="{{file_url}}/{{userData?.user_data?.path}}/{{userData?.user_data?.photo}}">
         <span class="image-edit">
           <ion-icon name="camera"></ion-icon>
         </span>
-        <input type="file" [(ngModel)]="model.photo" name="photo" (change)="changeProfileImage($event)">
+        <input type="file" (change)="changeProfileImage($event)">
       </div>
-      <ion-button size="small" shape="round">Edit Profile</ion-button>
+      <ion-button *ngIf="parms_slug !== 'edit-profile'" [routerLink]="['/user/edit-profile']" size="small" shape="round">Edit Profile</ion-button>
       <h3 class="name">{{userData?.user_data?.username}}</h3>
       <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
-      <p>Per KlassCoin Value: <b>₹1</b></p>
+      <!-- <p>Per KlassCoin Value: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p> -->
+      <p>Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
     </div>
   </div>
   <!-- Profile header end -->
@@ -31,14 +36,14 @@
       <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
     </ion-breadcrumb>
     <ion-breadcrumb href="#electronics">
-      Dashboard
+      {{pageName}}
       <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
     </ion-breadcrumb>
   </ion-breadcrumbs>
   <!-- breadcumb end -->
 
   <!-- dashboard start -->
-  <div class="dashboard ion-hide">
+  <div class="dashboard" *ngIf="parms_slug == 'dashboard'">
     <ion-grid>
       <ion-row>
         <!-- <ion-col size="6" size-md="4" size-lg="2">
@@ -146,7 +151,7 @@
   <!-- dashboard end -->
 
   <!-- profile edit start -->
-  <div class="profile-edit">
+  <div class="profile-edit" *ngIf="parms_slug == 'edit-profile'">
     <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)" (keyup.enter)="onSubmit(profileEditForm)">
       <ion-grid>
         <ion-row>
@@ -214,68 +219,215 @@
   </div>
   <!-- profile edit end -->
 
-  <ion-menu side="end" menuId="rightMenu" contentId="rightMenu">
+  <!-- table data start -->
+  <div class="page-inner" >
+    <ion-grid>
+      <ion-row>
+        <!-- klassCoins-history start -->
+        <ion-col size="12" *ngIf="parms_slug == 'klassCoins-history'">
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="list_product">
+          
+              <!-- credits Column -->
+              <ng-container matColumnDef="credits">
+                <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
+                <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+              </ng-container>
+          
+              <!-- action Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+              </ng-container>
+          
+              <!-- purpose Column -->
+              <ng-container matColumnDef="purpose">
+                <th mat-header-cell *matHeaderCellDef> Purpose </th>
+                <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+              </ng-container>
+          
+              <!-- Date of action Column -->
+              <ng-container matColumnDef="date_of_action">
+                <th mat-header-cell *matHeaderCellDef> Date of action </th>
+                <td mat-cell *matCellDef="let element"> {{element.date_of_action}} </td>
+              </ng-container>
+        
+              <!-- Action Column -->
+              <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon>home</mat-icon>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+        </ion-col>
+        <!-- klassCoins-history end -->
+
+        <!-- klassCoins-history start -->
+        <ion-col size="12" *ngIf="parms_slug == 'all-enrolement'">
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="list_product">
+          
+              <!-- Tutor Name Column -->
+              <ng-container matColumnDef="s1ba55b7f">
+                <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+              </ng-container>
+          
+              <!-- Event Column -->
+              <ng-container matColumnDef="event_id">
+                <th mat-header-cell *matHeaderCellDef> Event </th>
+                <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+              </ng-container>
+          
+              <!-- Category Column -->
+              <ng-container matColumnDef="sea134da7">
+                <th mat-header-cell *matHeaderCellDef> Category </th>
+                <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
+              </ng-container>
+          
+              <!-- Event date Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Event date </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+              </ng-container>
+
+              <!-- Start time Column -->
+              <ng-container matColumnDef="start_time">
+                <th mat-header-cell *matHeaderCellDef> Start time </th>
+                <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+              </ng-container>
+          
+              <!-- End time Column -->
+              <ng-container matColumnDef="end_time">
+                <th mat-header-cell *matHeaderCellDef> End time </th>
+                <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+              </ng-container>
+          
+              <!-- Fee (In KlassCoins) Column -->
+              <ng-container matColumnDef="increased_fee">
+                <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
+                <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+              </ng-container>
+          
+              <!-- Event description Column -->
+              <ng-container matColumnDef="content">
+                <th mat-header-cell *matHeaderCellDef> Event description </th>
+                <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
+              </ng-container>
+
+              <!-- Status Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+              </ng-container>
+        
+              <!-- Action Column -->
+              <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon>home</mat-icon>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+        </ion-col>
+        <!-- klassCoins-history end -->
+
+        <!-- rewards-points start -->
+        <ion-col size="12" *ngIf="parms_slug == 'rewards-points'">
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="list_product">
+          
+              <!-- credits Column -->
+              <ng-container matColumnDef="credits">
+                <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
+                <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+              </ng-container>
+          
+              <!-- action Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+              </ng-container>
+          
+              <!-- purpose Column -->
+              <ng-container matColumnDef="purpose">
+                <th mat-header-cell *matHeaderCellDef> Purpose </th>
+                <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+              </ng-container>
+          
+              <!-- Date of action Column -->
+              <ng-container matColumnDef="date_of_action">
+                <th mat-header-cell *matHeaderCellDef> Date of action </th>
+                <td mat-cell *matCellDef="let element"> {{element.date_of_action}} </td>
+              </ng-container>
+        
+              <!-- Action Column -->
+              <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon>fullscreen</mat-icon>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+        </ion-col>
+        <!-- rewards-points end -->
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- table data end -->
+  
+</ion-content>
+<common-footer></common-footer>
+
+<!-- <ion-split-pane contentId="rightMenu"> -->
+  <ion-menu side="end" menuId="rightMenu" contentId="rightMenu" class="profile-menu">
     <ion-accordion-group>
-      <ion-item lines="none">
-        <ion-icon slot="start" name="speedometer-outline"></ion-icon>
-        <ion-label>Anchor Item</ion-label>
-      </ion-item>
-      <ion-accordion value="classenrollments">
-        <ion-item slot="header" color="light">
-          <ion-icon slot="start" name="calendar-outline"></ion-icon>
-          <ion-label>Class Enrollments</ion-label>
+      <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
+        <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" color="light" class="no-subMenu">
+          <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+          <ion-label>{{menu?.name}}</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content">
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>All</ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Approved </ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Session Initiated</ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Completed</ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Cancelled </ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Claim For Admin Intervention </ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Closed </ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-icon slot="start" name="chevron-forward-outline"></ion-icon>
-            <ion-label>Expired </ion-label>
+        <ion-item *ngIf="menu?.subPages" slot="header" color="light" >
+          <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+          <ion-label>{{menu?.name}}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+          <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+            <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+            <ion-label>{{submenu?.name}}</ion-label>
           </ion-item>
         </div>
-      </ion-accordion>
-      <ion-accordion value="managecourses">
-        <ion-item slot="header" color="light">
-          <ion-icon slot="start" name="cog-outline"></ion-icon>
-          <ion-label>Manage Courses</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">Second Content</div>
-      </ion-accordion>
-      <ion-accordion value="manageevents">
-        <ion-item slot="header" color="light">
-          <ion-icon slot="start" name="apps-outline"></ion-icon>
-          <ion-label>Manage Events</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">Third Content</div>
       </ion-accordion>
     </ion-accordion-group>
   </ion-menu>
   <ion-router-outlet id="rightMenu"></ion-router-outlet>
-</ion-content>
-<common-footer></common-footer>
+<!-- </ion-split-pane> -->
+

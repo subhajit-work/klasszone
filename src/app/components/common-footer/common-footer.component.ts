@@ -22,7 +22,7 @@ export class CommonFooterComponent  implements OnInit {
     this.userInfoDataSubscribe = this.commonUtils.userInfoDataObservable.subscribe((res:any) => {
       console.log(' =========== HEADER  userdata observable  >>>>>>>>>>>', res);
       if(res){
-        this.userDetails = res.return_data.user_data;
+        this.userDetails = res;
       }else{
         this.userDetails = '';
       }

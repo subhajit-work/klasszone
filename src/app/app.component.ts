@@ -42,6 +42,7 @@ export class AppComponent {
   ) {
     this.backButtonEvent();
     this.initializeApp();
+    this.loginCheck();
   }
 
   // back button start
@@ -95,7 +96,7 @@ export class AppComponent {
   initializeApp() {
     
     this.platform.ready().then(() => {
-      this.loginCheck();
+      // this.loginCheck();
     });
   }
 
@@ -109,7 +110,7 @@ export class AppComponent {
         console.log('userDetails', resData);
         if(resData.return_status > 0){
           this.userInfoDataall = resData.return_data;
-          this.commonUtils.getUserInfoService(resData);
+          this.commonUtils.getUserInfoService(resData.return_data);
         }
         
       },

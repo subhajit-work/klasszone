@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonicSlides } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import { register } from 'swiper/element/bundle';
 
@@ -41,13 +43,21 @@ export class HomePage implements OnInit {
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined;
 
+  private userDetailsSubscribe: Subscription | undefined;
+
   constructor(
     private http : HttpClient,
+    private authService:AuthService,
+    private commonUtils: CommonUtils,
   ) { }
 
   ngOnInit() {
     this.listing_view_url = 'home-page';
       this.viewPageData();
+      setTimeout(() => {
+        this.userInfoData();
+      }, 500);
+      
   }
 
   // ================== view data fetch start =====================
@@ -71,6 +81,25 @@ export class HomePage implements OnInit {
     );
   }
   // view data fetch end
+
+  /* ----------userInfoData start---------- */
+  userInfoData(){
+    let userObs: Observable<any>;
+    userObs = this.authService.userDetails();
+
+    this.userDetailsSubscribe = userObs.subscribe(
+      resData => {
+        console.log('userDetails', resData);
+        if(resData.return_status > 0){
+          this.commonUtils.getUserInfoService(resData.return_data);
+        }
+        
+      },
+      errRes => {
+      }
+      );
+  }
+  /* userInfoData end */
 
   // ----------- destroy subscription start ---------
   ngOnDestroy() {

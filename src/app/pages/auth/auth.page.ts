@@ -125,6 +125,7 @@ export class AuthPage implements OnInit {
                 if (resData.return_status > 0) {
                   this.router.navigateByUrl('/home');
                   this.commonUtils.presentToast('success', resData.return_message);
+                  
                 }else {
                   this.commonUtils.presentToast('error', resData.return_message);
                 }
@@ -136,7 +137,7 @@ export class AuthPage implements OnInit {
                   setTimeout(() => {
                     _form.reset();
                     loadingEl.dismiss();
-  
+                    // window.location.reload();
                   }, 2000);
                   
                   
@@ -164,6 +165,8 @@ export class AuthPage implements OnInit {
         });
     }
   // login form submit end
+
+  
 
     private showAlert(message: string) {
       this.alertCtrl

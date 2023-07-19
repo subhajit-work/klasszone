@@ -1,8 +1,11 @@
-ion-router-outlet {
+ion-router-outlet, ion-split-pane {
     height: 0px;
 }
 ion-breadcrumbs {
     margin-top: 10px;
+    ion-breadcrumb {
+        text-transform: capitalize;
+    }
 }
 .crystalClear {
     background: #159957;  /* fallback for old browsers */

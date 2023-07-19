@@ -20,6 +20,7 @@ export class ClassListPage implements OnInit {
   private viewPageDataSubscribe: Subscription | undefined;
   model: any = {}
   parms_slug:any;
+  pageName:any;
 
   constructor(
     private http : HttpClient,
@@ -29,6 +30,7 @@ export class ClassListPage implements OnInit {
   ngOnInit() {
     this.parms_slug = this.activatedRoute.snapshot.paramMap.get('slug');
     console.log('parms_slug', this.parms_slug);
+    this.pageName = this.parms_slug.replace(/-/g, " ");
     
     this.listing_view_url = 'view-all/'+this.parms_slug;
     this.viewPageData();
