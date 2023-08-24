@@ -45,6 +45,18 @@ export class HomePage implements OnInit {
 
   private userDetailsSubscribe: Subscription | undefined;
 
+  skeletonArray = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+
   constructor(
     private http : HttpClient,
     private authService:AuthService,

@@ -50,7 +50,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/class-list/class-list.module').then( m => m.ClassListPageModule)
   },
   {
-    path: 'teacher-list',
+    path: 'teacher-list/:department/:class',
     loadChildren: () => import('./pages/teacher-list/teacher-list.module').then( m => m.TeacherListPageModule)
   }
 ];

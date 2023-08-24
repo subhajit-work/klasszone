@@ -20,100 +20,120 @@
               Please specific with your selection:
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="filter-inner">
-            <form #filterForm="ngForm" (ngSubmit)="onSubmitFilter(filterForm)" (keyup.enter)="onSubmitFilter(filterForm)">
-              <ion-grid>
-                <ion-row>
-                  <!-- Subject -->
-                  <ion-col size="12">
-                    <div class="field-item">
-                      <ion-select interface="action-sheet" placeholder="Subject">
-                        <ion-select-option value="apple">Apple</ion-select-option>
-                        <ion-select-option value="banana">Banana</ion-select-option>
-                        <ion-select-option value="orange">Orange</ion-select-option>
-                      </ion-select>
-                    </div>
-                  </ion-col>
-                  <!-- Class -->
-                  <ion-col size="12">
-                    <div class="field-item">
-                      <ion-select interface="action-sheet" placeholder="Class">
-                        <ion-select-option value="apple">Apple</ion-select-option>
-                        <ion-select-option value="banana">Banana</ion-select-option>
-                        <ion-select-option value="orange">Orange</ion-select-option>
-                      </ion-select>
-                    </div>
-                  </ion-col>
-                  <!-- Board -->
-                  <ion-col size="12">
-                    <div class="field-item">
-                      <ion-select interface="action-sheet" placeholder="Board">
-                        <ion-select-option value="apple">Apple</ion-select-option>
-                        <ion-select-option value="banana">Banana</ion-select-option>
-                        <ion-select-option value="orange">Orange</ion-select-option>
-                      </ion-select>
-                    </div>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </form>
-          </div>
-          <mat-action-row>
-            <button mat-button color="warn">Clear</button>
-            <button mat-button color="primary">Search</button>
-          </mat-action-row>
+          <form #filterForm="ngForm" (ngSubmit)="onSubmitFilter(filterForm)" (keyup.enter)="onSubmitFilter(filterForm)">
+            <div class="filter-inner">
+              
+                <ion-grid>
+                  <ion-row>
+                    <!-- Department -->
+                    <ion-col size="12">
+                      <div class="field-item">
+                        <ion-select interface="action-sheet" placeholder="Department" name="department" [(ngModel)]="model.department" (ionChange)="onChangeDepartment($event)">
+                          <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
+                        </ion-select>
+                      </div>
+                    </ion-col>
+                    <!-- Class -->
+                    <ion-col size="12" *ngIf="model.department">
+                      <div class="field-item">
+                        <ion-select interface="action-sheet" placeholder="Class" name="class" [(ngModel)]="model.class" (ionChange)="onChangeClass($event)">
+                          <ion-select-option *ngFor="let item of classAllData" [value]="item">{{item?.name}}</ion-select-option>
+                        </ion-select>
+                      </div>
+                    </ion-col>
+                    <!-- Board -->
+                    <ion-col size="12" *ngIf="model.class">
+                      <div class="field-item">
+                        <ion-select interface="action-sheet" placeholder="Board" name="board" [(ngModel)]="model.board" (ionChange)="onChangeBoard($event)">
+                          <ion-select-option *ngFor="let item of boardAllData" [value]="item">{{item?.name}}</ion-select-option>
+                        </ion-select>
+                      </div>
+                    </ion-col>
+                    <!-- Subject -->
+                    <ion-col size="12" *ngIf="model.board">
+                      <div class="field-item">
+                        <ion-select interface="action-sheet" placeholder="Subject" name="categories" [(ngModel)]="model.subject" (ionChange)="onChangeSubject($event)">
+                          <ion-select-option *ngFor="let item of subjectAllData" [value]="item">{{item?.name}}</ion-select-option>
+                        </ion-select>
+                      </div>
+                    </ion-col>
+                    <!-- Tutor -->
+                    <ion-col size="12" *ngIf="model.subject">
+                      <div class="field-item">
+                        <ion-select interface="action-sheet" placeholder="Tutor" name="tutor" [(ngModel)]="model.tutor" (ionChange)="onChangetutor($event)">
+                          <ion-select-option *ngFor="let item of tutorAllData" [value]="item">{{item?.name}}</ion-select-option>
+                        </ion-select>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+            </div>
+            <mat-action-row>
+              <button type="reset" mat-button color="warn">Clear</button>
+              <button type="submit" mat-button color="primary">Search</button>
+            </mat-action-row>
+          </form>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div class="section-item">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <div class="top-bar">
-              <h2 class="section_title">
-                <p>Class 12 Tuition</p>
-                <span class="section_subtitle">CBSE</span>
-              </h2>
-              <ion-icon name="chevron-forward-circle-outline"></ion-icon>
-            </div>
-            <mat-divider></mat-divider>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" size-md="6" size-lg="4">
-            <div class="profile-card">
-              <div class="profile-top">
-                <div class="profile-img">
-                  <img src="assets/default-student-male.png">
-                </div>
-                <div class="profile-details">
-                  <p class="name">Pamela Verma</p>
-                  <p class="designation">CBSE-Science-Grade-7 - One-to-One Class - 20% Off</p>
-                </div>
+    <div *ngIf="teacherAllData?.courses instanceof Array">
+      <div class="section-item" *ngFor="let courseItem of teacherAllData?.courses">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="top-bar">
+                <h2 class="section_title">
+                  <p>{{courseItem?.name}}</p>
+                  <!-- <span class="section_subtitle">CBSE</span> -->
+                </h2>
+                <ion-icon name="chevron-forward-circle-outline"></ion-icon>
               </div>
-              <div class="profile-bottom">
-                <div class="reward">
-                  <mat-icon>account_balance_wallet</mat-icon>
-                  <span>540 KlassCoin</span>
-                </div>
-                <div class="rating">
-                  <div class="rating-bar">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-half-outline"></ion-icon>
+              <mat-divider></mat-divider>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of courseItem?.tutors">
+              <div class="profile-card">
+                <div class="profile-top">
+                  <div class="profile-img">
+                    <img src="assets/default-student-male.png">
+                  </div>
+                  <div class="profile-details">
+                    <p class="name">{{tutorItem?.username}}</p>
+                    <p class="designation">{{tutorItem?.course_title}}</p>
                   </div>
                 </div>
+                <div class="profile-bottom">
+                  <div class="reward">
+                    <mat-icon>account_balance_wallet</mat-icon>
+                    <span>{{tutorItem?.increased_fee}} KlassCoin</span>
+                  </div>
+                  <div class="rating">
+                    <div class="rating-bar">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star-half-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
-              
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      
+            </ion-col>
+            <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0 || courseItem?.tutors == false">
+              <p class="ion-text-center">Tutor(s) not available.</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+      </div>
+    </div>
+    
+    <div class="section-item" *ngIf="teacherAllData?.courses == false">
+      <p class="ion-text-center">Tutor(s) not available.</p>
     </div>
   </div>
 
@@ -123,8 +143,8 @@
       <div class="filter-item">
         <p class="filter-tittle">Mode of Class</p>
         <div class="filter-box">
-          <ion-checkbox labelPlacement="end">One-to-One Class</ion-checkbox>
-          <ion-checkbox labelPlacement="end">Group Class</ion-checkbox>
+          <ion-checkbox (click)="onFilterTeacher(model.individual,'class')" name="individual" [(ngModel)]="model.individual" labelPlacement="end">One-to-One Class</ion-checkbox>
+          <ion-checkbox (click)="onFilterTeacher(model.batch,'class')" name="batch" [(ngModel)]="model.batch" labelPlacement="end">Group Class</ion-checkbox>
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -132,8 +152,8 @@
       <div class="filter-item">
         <p class="filter-tittle">Avg. Student Review</p>
         <div class="filter-box">
-          <ion-radio-group [allowEmptySelection]="true" value="five">
-            <ion-radio value="five" labelPlacement="end">
+          <ion-radio-group (click)="onFilterTeacher(model.star,'review')" name="star" [(ngModel)]="model.star" [allowEmptySelection]="true">
+            <ion-radio value="4-star-and-above" labelPlacement="end">
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star"></ion-icon>
@@ -141,7 +161,7 @@
               <ion-icon name="star-outline"></ion-icon>
               & Up
             </ion-radio><br />
-            <ion-radio value="four" labelPlacement="end">
+            <ion-radio value="3-star-and-above" labelPlacement="end">
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star"></ion-icon>
@@ -149,7 +169,7 @@
               <ion-icon name="star-outline"></ion-icon>
               & Up
             </ion-radio><br />
-            <ion-radio value="three" labelPlacement="end">
+            <ion-radio value="2-star-and-above" labelPlacement="end">
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
@@ -157,7 +177,7 @@
               <ion-icon name="star-outline"></ion-icon>
               & Up
             </ion-radio><br />
-            <ion-radio value="two" labelPlacement="end">
+            <ion-radio value="1-star-and-above" labelPlacement="end">
               <ion-icon name="star"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
               <ion-icon name="star-outline"></ion-icon>
@@ -173,10 +193,10 @@
       <div class="filter-item">
         <p class="filter-tittle">Price</p>
         <div class="filter-box">
-          <ion-checkbox labelPlacement="end">Under ₹500</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">₹500 - ₹1000</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">₹1000 - ₹2000</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">₹2000 - ₹3000</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.under500,'price')" name="under500" [(ngModel)]="model.under500" labelPlacement="end">Under ₹500</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.between500,'price')" name="between500" [(ngModel)]="model.between500" labelPlacement="end">₹500 - ₹1000</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.between1000,'price')" name="between1000" [(ngModel)]="model.between1000" labelPlacement="end">₹1000 - ₹2000</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.between2000,'price')" name="between2000" [(ngModel)]="model.between2000" labelPlacement="end">₹2000 - ₹3000</ion-checkbox><br />
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -184,11 +204,11 @@
       <div class="filter-item">
         <p class="filter-tittle">Discount</p>
         <div class="filter-box">
-          <ion-checkbox labelPlacement="end">10% Off or more</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">20% Off or more</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">30% Off or more</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">40% Off or more</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">50% Off or more</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.discount10,'discount')" name="discount10" [(ngModel)]="model.discount10" labelPlacement="end">10% Off or more</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.discount20,'discount')" name="discount20" [(ngModel)]="model.discount20" labelPlacement="end">20% Off or more</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.discount30,'discount')" name="discount30" [(ngModel)]="model.discount30" labelPlacement="end">30% Off or more</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.discount40,'discount')" name="discount40" [(ngModel)]="model.discount40" labelPlacement="end">40% Off or more</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.discount50,'discount')" name="discount50" [(ngModel)]="model.discount50" labelPlacement="end">50% Off or more</ion-checkbox><br />
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -196,9 +216,9 @@
       <div class="filter-item">
         <p class="filter-tittle">Class Availability</p>
         <div class="filter-box">
-          <ion-checkbox labelPlacement="end">Morning Slot</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">Afternoon Slot</ion-checkbox><br />
-          <ion-checkbox labelPlacement="end">Evening Slot</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.morning,'availability')" name="morning" [(ngModel)]="model.morning" labelPlacement="end">Morning Slot</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.afternoon,'availability')" name="afternoon" [(ngModel)]="model.afternoon" labelPlacement="end">Afternoon Slot</ion-checkbox><br />
+          <ion-checkbox (click)="onFilterTeacher(model.evening,'availability')" name="evening" [(ngModel)]="model.evening" labelPlacement="end">Evening Slot</ion-checkbox><br />
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -206,7 +226,7 @@
       <div class="filter-item">
         <p class="filter-tittle">Lesson Given Hour</p>
         <div class="filter-box">
-          <ion-radio-group [allowEmptySelection]="true" >
+          <ion-radio-group (click)="onFilterTeacher(model.hour,'hour')" name="hour" [(ngModel)]="model.hour" [allowEmptySelection]="true" >
             <ion-radio value="low-to-high" labelPlacement="end">
               Low to High
             </ion-radio><br />
@@ -221,7 +241,7 @@
       <div class="filter-item">
         <p class="filter-tittle">Student Interacted</p>
         <div class="filter-box">
-          <ion-radio-group [allowEmptySelection]="true" >
+          <ion-radio-group (click)="onFilterTeacher(model.interacted,'interacted')" name="interacted" [(ngModel)]="model.interacted" [allowEmptySelection]="true" >
             <ion-radio value="low-to-high" labelPlacement="end">
               Low to High
             </ion-radio><br />
@@ -236,7 +256,7 @@
       <div class="filter-item">
         <p class="filter-tittle">Price Sort</p>
         <div class="filter-box">
-          <ion-radio-group [allowEmptySelection]="true" >
+          <ion-radio-group (click)="onFilterTeacher(model.price,'price')" name="price" [(ngModel)]="model.price" [allowEmptySelection]="true" >
             <ion-radio value="low-to-high" labelPlacement="end">
               Low to High
             </ion-radio><br />
@@ -250,3 +270,4 @@
   </ion-menu>
   <ion-router-outlet id="filterMenu"></ion-router-outlet>
 </ion-content>
+<common-footer></common-footer>

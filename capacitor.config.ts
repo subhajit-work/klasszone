@@ -7,10 +7,6 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https'
   },
-  Splashscreen: {
-    launchAutoHide : true,
-    launchShowDuration : 0
-  },
   plugins: {
     SplashScreen: {
       launchAutoHide: false,
@@ -18,13 +14,6 @@ const config: CapacitorConfig = {
       showSpinner: true,
       splashFullScreen: false,
       splashImmersive: false
-    }
-  },
-  cordova : {
-    preferences : {
-      LottieFullScreen : "true",
-      LottieHideAfterAnimationEnd : "true",
-      LottieAnimationLocation: "public/assets/splash.json"
     }
   }
 };

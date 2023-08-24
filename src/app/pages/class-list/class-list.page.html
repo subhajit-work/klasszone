@@ -27,7 +27,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of viewData?.courses" size="4" size-lg="4">
-            <div class="imageBox">
+            <div class="imageBox" [routerLink]="['/teacher-list/'+ parms_slug +'/'+ item?.slug ]">
               <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <div class="title">{{item?.name}}</div>
             </div>

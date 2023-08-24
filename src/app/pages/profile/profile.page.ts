@@ -51,42 +51,42 @@ export class ProfilePage implements OnInit {
       subPages : [
         {
           name: 'All',
-          url: 'enrolement',
+          url: 'all-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Approved',
-          url: 'approved',
+          url: 'approved-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Session Initiated',
-          url: 'session-initiated',
+          url: 'session-initiated-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Completed',
-          url: 'completed',
+          url: 'completed-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Cancelled ',
-          url: 'cancelled ',
+          url: 'cancelled-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Claim For Admin Intervention ',
-          url: 'intervention',
+          url: 'intervention-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Closed',
-          url: 'closed',
+          url: 'closed-enrolement-classes',
           icon: 'send',
         },
         {
           name: 'Expired',
-          url: 'expired',
+          url: 'expired-enrolement-classes',
           icon: 'send',
         }
       ],
@@ -180,6 +180,9 @@ export class ProfilePage implements OnInit {
     @ViewChild(MatPaginator)
   private paginator!: MatPaginator;  // <-- STEP (3)
 
+  private klassCoinDataSubscribe: Subscription | undefined;
+  klassCoin_url:any;
+  klassCoinList:any;
 
   constructor(
     private menuCtrl: MenuController,
@@ -189,7 +192,9 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private commonUtils: CommonUtils,
     private activatedRoute : ActivatedRoute,
-  ) { }
+  ) { 
+    this.menuCtrl.enable(true,'rightMenu');
+  }
 
   ngOnInit() {
     this.commonUtils.userInfoDataObservable.subscribe(res =>{
@@ -207,7 +212,11 @@ export class ProfilePage implements OnInit {
     this.form_api = 'student_profile_update/';
     this.menuCtrl.enable(true,'rightMenu');
 
-    
+    // klass Coin List
+    if (this.parms_slug == 'klassCoins-packages') {
+      this.klassCoin_url = 'list_packages';
+      this.klassCoinPackageList(); 
+    }
     
   }
 
@@ -286,6 +295,9 @@ export class ProfilePage implements OnInit {
           }else if (this.parms_slug == 'rewards-points') {
             this.tableListData_url = 'creditcoins_transactions_history?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['credits', 'action', 'purpose', 'date_of_action','actions'];
+          }else if (this.parms_slug == 'all-enrolement-classes') {
+            this.tableListData_url = 'enquiries?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'booking_id','actions'];
           }
           this.tableListData();
           
@@ -367,6 +379,20 @@ export class ProfilePage implements OnInit {
   }
   /* profile picture upload end */
 
+  /* Klasscoin package start */
+  klassCoinPackageList(){
+    this.klassCoinDataSubscribe = this.http.get(this.klassCoin_url).subscribe(
+      (res:any) => {
+        this.klassCoinList = res.return_data;
+
+        console.log('this.klassCoinList', this.klassCoinList);
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Klasscoin package end */
+
   /* ======================== form submit start =================== */
   clickButtonTypeCheck = '';
   form_submit_text_save = 'Register';
@@ -423,6 +449,9 @@ export class ProfilePage implements OnInit {
     }
     if(this.tableListDataSubscribe !== undefined){
       this.tableListDataSubscribe.unsubscribe();
+    }
+    if (this.klassCoinDataSubscribe !== undefined) {
+      this.klassCoinDataSubscribe.unsubscribe();
     }
   }
   // destroy subscription end

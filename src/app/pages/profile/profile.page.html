@@ -3,7 +3,7 @@
   <!-- Profile header start -->
   <div class="profile-header">
     <div class="header-wrapper">
-      <ion-button size="small" (click)="openRightMenu()">
+      <ion-button menuToggle size="small" (click)="openRightMenu()">
         <ion-icon name="grid-outline"></ion-icon>
       </ion-button>
       <!-- <ion-buttons slot="start">
@@ -149,6 +149,40 @@
     
   </div>
   <!-- dashboard end -->
+
+  <!-- klassCoins-packages start -->
+  <div class="klassCoins-packages">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let item of klassCoinList?.package_data">
+          <div class="card">
+            <div class="info">
+              <div class="sub">{{item?.package_name}}</div>
+              <ul>
+                <li>
+                  <mat-icon>toll</mat-icon>
+                  {{item?.credits}} KlassCoin
+                </li>
+                <li>
+                  <mat-icon>local_offer</mat-icon>
+                  {{item?.discount}}% Off
+                </li>
+                <li>
+                  <mat-icon>money</mat-icon>
+                  <del>₹{{item?.package_cost}}</del>&nbsp; ₹{{(item?.package_cost)-(item?.package_cost*item?.discount/100)}}
+                </li>
+              </ul>
+              <!-- <button class="btn">Buy</button> -->
+            </div>
+            <div class="image">
+              <mat-icon>shield</mat-icon>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- klassCoins-packages end -->
 
   <!-- profile edit start -->
   <div class="profile-edit" *ngIf="parms_slug == 'edit-profile'">
@@ -399,6 +433,85 @@
           </div>
         </ion-col>
         <!-- rewards-points end -->
+
+        <!-- all-enrolement-classes start -->
+        <ion-col size="12" *ngIf="parms_slug == 'all-enrolement-classes'">
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="list_product">
+          
+              <!-- Course title Column -->
+              <ng-container matColumnDef="course_title">
+                <th mat-header-cell *matHeaderCellDef> Course title </th>
+                <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+              </ng-container>
+          
+              <!-- Start Date Column -->
+              <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+              </ng-container>
+          
+              <!-- Weekly Schedule Column -->
+              <ng-container matColumnDef="course_id">
+                <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+              </ng-container>
+          
+              <!-- Tutor Name Column -->
+              <ng-container matColumnDef="s1ba55b7f">
+                <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+              </ng-container>
+
+              <!-- Completed class Column -->
+              <ng-container matColumnDef="course_level">
+                <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+              </ng-container>
+          
+              <!-- Duration (In months) Column -->
+              <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+              </ng-container>
+          
+              <!-- Fee per class (In KlassCoins) Column -->
+              <ng-container matColumnDef="increased_fee">
+                <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+              </ng-container>
+          
+              <!-- Class Type Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+              </ng-container>
+
+              <!-- Booking status Column -->
+              <ng-container matColumnDef="booking_id">
+                <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                <td mat-cell *matCellDef="let element"> {{element.booking_id}} </td>
+              </ng-container>
+        
+              <!-- Action Column -->
+              <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon>home</mat-icon>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+        </ion-col>
+        <!-- all-enrolement-classes end -->
       </ion-row>
     </ion-grid>
   </div>
@@ -409,24 +522,26 @@
 
 <!-- <ion-split-pane contentId="rightMenu"> -->
   <ion-menu side="end" menuId="rightMenu" contentId="rightMenu" class="profile-menu">
-    <ion-accordion-group>
-      <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
-        <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" color="light" class="no-subMenu">
-          <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
-          <ion-label>{{menu?.name}}</ion-label>
-        </ion-item>
-        <ion-item *ngIf="menu?.subPages" slot="header" color="light" >
-          <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
-          <ion-label>{{menu?.name}}</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
-          <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
-            <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
-            <ion-label>{{submenu?.name}}</ion-label>
+    <ion-content>
+      <ion-accordion-group>
+        <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
+          <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" color="light" class="no-subMenu">
+            <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+            <ion-label>{{menu?.name}}</ion-label>
           </ion-item>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
+          <ion-item *ngIf="menu?.subPages" slot="header" color="light" >
+            <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+            <ion-label>{{menu?.name}}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+            <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+              <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+              <ion-label>{{submenu?.name}}</ion-label>
+            </ion-item>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-content>
   </ion-menu>
   <ion-router-outlet id="rightMenu"></ion-router-outlet>
 <!-- </ion-split-pane> -->

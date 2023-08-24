@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, MenuController, Platform } from '@ionic/angular';
 import { Observable, Subscription, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommonUtils } from './services/common-utils/common-utils';
@@ -30,6 +30,11 @@ export class AppComponent {
   userInfoDataall:any;
   userDetailsApi:any;
   private userDetailsSubscribe: Subscription | undefined;
+
+  private departmentDataSubscribe: Subscription | undefined;
+  departmentLoadData:any;
+  department_url:any;
+  departmentAllData:any;
   
   constructor(
     private platform: Platform,
@@ -39,6 +44,7 @@ export class AppComponent {
     private http: HttpClient,
     private commonUtils: CommonUtils,
     private storage: Storage,
+    private menuCtrl: MenuController,
   ) {
     this.backButtonEvent();
     this.initializeApp();
@@ -93,8 +99,13 @@ export class AppComponent {
     });
   }
 
+  subMenuClick(){
+    this.menuCtrl.enable(false);
+  }
+
   initializeApp() {
-    
+    this.department_url = 'fetch_categories';
+    this.departmentData();
     this.platform.ready().then(() => {
       // this.loginCheck();
     });
@@ -118,6 +129,23 @@ export class AppComponent {
       }
       );
   }
+
+  /* --------Department start-------- */
+  departmentData(){
+    this.departmentLoadData = true;
+    this.departmentDataSubscribe = this.http.get(this.department_url).subscribe(
+      (res:any) => {
+        this.departmentLoadData = false;
+        this.departmentAllData = res.return_data;
+
+        console.log('this.departmentAllData>>', this.departmentAllData);
+      },
+      errRes => {
+        this.departmentLoadData = false;
+      }
+    );
+  }
+  /* Department end */
 
   // logout functionlity
   logoutLoading:any;

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="!viewLoadData">
   <!-- banner start -->
   <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
     <swiper-slide *ngFor="let item of viewData?.home_page_main_banners">
@@ -44,7 +44,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of viewData?.popular_courses?.data?.academic_classes" size="4" size-md="4" size-lg="3">
-            <div class="small-card">
+            <div class="small-card" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.academic_details?.slug +'/'+ item?.slug ]">
               <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title">{{item?.name}}</p>
             </div>
@@ -75,7 +75,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of viewData?.popular_courses?.data?.coding_with_fun" size="4" size-md="4" size-lg="3">
-            <div class="small-card">
+            <div class="small-card" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.coding_with_fun?.slug +'/'+ item?.slug ]">
               <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title text-center">{{item?.name}}</p>
             </div>
@@ -106,7 +106,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of viewData?.popular_courses?.data?.kids_technology" size="4" size-md="4" size-lg="3">
-            <div class="small-card">
+            <div class="small-card" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.kids_technology?.slug +'/'+ item?.slug ]">
               <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title text-center">{{item?.name}}</p>
             </div>
@@ -215,7 +215,7 @@
       <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of viewData?.popular_courses?.data?.extra_curricular" size="4" size-md="4" size-lg="3">
-            <div class="small-card">
+            <div class="small-card" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.extra_curricular_activities?.slug +'/'+ item?.slug ]">
               <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
               <p class="title">{{item?.name}}</p>
             </div>
@@ -243,7 +243,7 @@
     </ion-grid>
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.edge_technology">
-        <div class="imageBox">
+        <div class="imageBox" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.edge_technologies?.slug +'/'+ item?.slug ]">
           <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
@@ -270,7 +270,7 @@
     <ion-grid>
       <ion-row>
         <ion-col *ngFor="let item of viewData?.popular_courses?.data?.competitive_exams" size="4" size-lg="4">
-          <div class="imageBox">
+          <div class="imageBox" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.competitive_exams?.slug +'/'+ item?.slug ]">
             <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
             <div class="title">{{item?.name}}</div>
           </div>
@@ -363,7 +363,7 @@
     </ion-grid>
     <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.foreign_languages">
-        <div class="imageBox">
+        <div class="imageBox" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.foreign_languages?.slug +'/'+ item?.slug ]">
           <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
@@ -388,7 +388,7 @@
     </ion-grid>
     <swiper-container [config]="multiSlideOpts" #swiper [modules]="swiperModules" [slidesPerView]="2" [loop]="true" [autoplay]="true">
       <swiper-slide *ngFor="let item of viewData?.popular_courses?.data?.soft_skills">
-        <div class="imageBox">
+        <div class="imageBox" [routerLink]="['/teacher-list/'+ viewData?.popular_courses?.soft_skills?.slug +'/'+ item?.slug ]">
           <img onError="this.src='assets/default-course-img.jpg'" src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="{{item?.name}}">
           <div class="title">{{item?.name}}</div>
         </div>
@@ -396,5 +396,47 @@
     </swiper-container>
   </div>
   <!-- imageslide end -->
+</ion-content>
+<ion-content *ngIf="viewLoadData" class="loading-animation">
+  <!-- banner -->
+  <div class="banner">
+    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+  </div>
+  <!-- cards -->
+  <div class="cards">
+    <div class="card-inner">
+      <div class="card-img">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </div>
+      <p class="card-title"><ion-skeleton-text [animated]="true"></ion-skeleton-text></p>
+      <p class="card-description">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </p>
+    </div>
+  </div>
+  <div class="heading">
+    <div class="title">
+      <ion-skeleton-text class="main" [animated]="true"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+    </div>
+    <div class="button-icon">
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+    </div>
+  </div>
+  <div class="image-boxes">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let item of skeletonArray" size="4" size-md="4" size-lg="3">
+            <div class="small-card">
+              <ion-skeleton-text class="image" [animated]="true"></ion-skeleton-text>
+              <p class="title"><ion-skeleton-text [animated]="true"></ion-skeleton-text></p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </div>
+  <div style="height: 90px;"></div>
 </ion-content>
 <common-footer></common-footer>
