@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonUtils } from './services/common-utils/common-utils';
 import { AuthService } from './services/auth/auth.service';
 import { Storage } from '@ionic/storage';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,10 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  // server api
+  api_url = environment.apiUrl;
+  file_url = environment.fileUrl;
+  
   public appPages = [
     { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
@@ -130,25 +135,7 @@ export class AppComponent {
       );
   }
 
-  /* --------Department start-------- */
-  departmentData(){
-    this.departmentLoadData = true;
-    this.departmentDataSubscribe = this.http.get(this.department_url).subscribe(
-      (res:any) => {
-        this.departmentLoadData = false;
-        this.departmentAllData = res.return_data;
-
-        console.log('this.departmentAllData>>', this.departmentAllData);
-      },
-      errRes => {
-        this.departmentLoadData = false;
-      }
-    );
-  }
-  /* Department end */
-
-  // logout functionlity
-  logoutLoading:any;
+  /* logout functionlity start */
   async logOutUser(){
     const alert = await this.alertController.create({
       header: 'Log Out',
@@ -166,37 +153,30 @@ export class AppComponent {
           text: 'Okay',
           handler: () => {
             console.log('Confirm Okay');
-            // this.authService.logout();
-            this.logoutLoading = true;
-            //logout data call
-
-            this.authService.globalparamsData.pipe(
-              take(1)
-            ).subscribe(res => {
-            console.log('componet.ts Toke store 2222 >>>>>>>>>>>>>>>111', res);
-            this.http.get('login_register.php?action=logout').subscribe(
-              (res:any) => {
-                this.logoutLoading = false;
-                console.log("Edit data  res >", res.return_data);
-                if(res.return_status > 0){
-                  this.authService.logout();
-
-                  // user menu call
-                  // this.appComponent.userInfoData();
-
-                }
-              },
-              errRes => {
-                this.logoutLoading = false;
-              }
-            );
-            });
+            
+            this.authService.logout();
           }
         }
       ]
     });
     await alert.present(); 
   }
+  /* logout functionlity end */
 
-  
+  /* --------Department start-------- */
+  departmentData(){
+    this.departmentLoadData = true;
+    this.departmentDataSubscribe = this.http.get(this.department_url).subscribe(
+      (res:any) => {
+        this.departmentLoadData = false;
+        this.departmentAllData = res.return_data;
+
+        console.log('this.departmentAllData>>', this.departmentAllData);
+      },
+      errRes => {
+        this.departmentLoadData = false;
+      }
+    );
+  }
+  /* Department end */
 }

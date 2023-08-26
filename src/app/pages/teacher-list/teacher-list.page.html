@@ -123,7 +123,7 @@
                 
               </div>
             </ion-col>
-            <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0 || courseItem?.tutors == false">
+            <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0">
               <p class="ion-text-center">Tutor(s) not available.</p>
             </ion-col>
           </ion-row>
@@ -132,7 +132,7 @@
       </div>
     </div>
     
-    <div class="section-item" *ngIf="teacherAllData?.courses == false">
+    <div class="section-item" *ngIf="teacherAllData?.courses.length == 0">
       <p class="ion-text-center">Tutor(s) not available.</p>
     </div>
   </div>

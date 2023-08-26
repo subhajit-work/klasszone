@@ -123,6 +123,16 @@
                 </div>
               </ion-accordion>
             </ion-accordion-group>
+
+            <ion-item class="profile-box" *ngIf="checkAuthentication">
+              <ion-avatar slot="start">
+                <img alt="Silhouette of a person's head" onError="this.src='assets/default-user.jpg'" src="{{file_url}}/{{userInfoDataall?.userData?.user_data?.path}}/{{userInfoDataall?.userData?.user_data?.photo}}" />
+              </ion-avatar>
+              <ion-label> {{userInfoDataall?.user_data?.first_name}} {{userInfoDataall?.user_data?.last_name}}</ion-label>
+              <ion-button (click)="logOutUser()" color="danger" shape="round" slot="end">
+                <ion-icon slot="icon-only" name="power-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
           </div>
         </div>
       </ion-content>

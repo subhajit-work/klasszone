@@ -117,3 +117,16 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+.profile-box {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  ion-button {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    ion-icon {
+      color: #fff !important;
+    }
+  }
+}

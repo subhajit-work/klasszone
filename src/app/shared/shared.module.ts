@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 @NgModule({
@@ -35,6 +37,8 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSidenavModule,
+    MatListModule,
     Ionic4DatepickerModule,
   ],
   exports: [
@@ -50,6 +54,8 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSidenavModule,
+    MatListModule,
     SafeHtmlPipe,
     Ionic4DatepickerModule,
   ],

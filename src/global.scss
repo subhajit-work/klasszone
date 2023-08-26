@@ -634,18 +634,18 @@ img {
             --background: #F47E2B;
         }
     }
-    .header-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        ion-button {
-            --background: transparent;
-            --box-shadow: none;
-            --background: transparent;
-            --box-shadow: none;
-            font-size: 20px;
-            margin: 0px;
-            --padding: 0px;
+}
+.example-container {
+    table {
+        td {
+            p {
+                line-height: 1.6rem;
+                overflow: hidden;
+                display: -webkit-box; 
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                max-height: 3.2rem;
+            }
         }
     }
 }
@@ -683,6 +683,9 @@ img {
     }
 }
 // profile menu start
+mat-sidenav {
+    width: 300px;
+}
 .profile-menu {
     ion-accordion-group {
         ion-accordion {

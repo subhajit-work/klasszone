@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, DatetimeChangeEventDetail, MenuController } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
@@ -174,6 +175,9 @@ export class ProfilePage implements OnInit {
     },
   ];
   userSavedInfo:any;
+  
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   public list_product = new MatTableDataSource<any>([]);  // <-- STEP (1)
     displayedColumns:any;
@@ -192,8 +196,14 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private commonUtils: CommonUtils,
     private activatedRoute : ActivatedRoute,
+    changeDetectorRef: ChangeDetectorRef, 
+    media: MediaMatcher
   ) { 
     this.menuCtrl.enable(true,'rightMenu');
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit() {
@@ -297,7 +307,28 @@ export class ProfilePage implements OnInit {
             this.displayedColumns = ['credits', 'action', 'purpose', 'date_of_action','actions'];
           }else if (this.parms_slug == 'all-enrolement-classes') {
             this.tableListData_url = 'enquiries?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'booking_id','actions'];
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'approved-enrolement-classes') {
+            this.tableListData_url = 'enquiries/approved?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'session-initiated-enrolement-classes') {
+            this.tableListData_url = 'enquiries/session_initiated?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'completed-enrolement-classes') {
+            this.tableListData_url = 'enquiries/completed?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'cancelled-enrolement-classes') {
+            this.tableListData_url = 'enquiries/cancelled?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'intervention-enrolement-classes') {
+            this.tableListData_url = 'enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'closed-enrolement-classes') {
+            this.tableListData_url = 'enquiries/closed?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'expired-enrolement-classes') {
+            this.tableListData_url = 'enquiries/expired?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
           }
           this.tableListData();
           
@@ -318,33 +349,7 @@ export class ProfilePage implements OnInit {
   }
   /* User detasils get end */
 
-  /* logout functionlity start */
-  async logOutUser(){
-    const alert = await this.alertController.create({
-      header: 'Log Out',
-      message: 'Are you sure you want to Log Out?',
-      cssClass: 'custom-alert',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'cancelBtn',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-            
-            this.authService.logout();
-          }
-        }
-      ]
-    });
-    await alert.present(); 
-  }
-  /* logout functionlity end */
+  
 
   /* profile picture upload start */
   changeProfileImage(image:any) {
@@ -453,6 +458,7 @@ export class ProfilePage implements OnInit {
     if (this.klassCoinDataSubscribe !== undefined) {
       this.klassCoinDataSubscribe.unsubscribe();
     }
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   // destroy subscription end
 
