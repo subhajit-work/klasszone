@@ -16,12 +16,18 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
+import { StringReplacePipe } from '../pipe/string-replace.pipe';
+import { RatingComponent } from '../components/rating/rating.component';
 
 @NgModule({
   declarations: [
     CommonFooterComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    StringReplacePipe,
+    RatingComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +45,8 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
+    MatTabsModule,
+    MatBadgeModule,
     Ionic4DatepickerModule,
   ],
   exports: [
@@ -56,7 +64,11 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
+    MatTabsModule,
     SafeHtmlPipe,
+    StringReplacePipe,
+    RatingComponent,
+    MatBadgeModule,
     Ionic4DatepickerModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

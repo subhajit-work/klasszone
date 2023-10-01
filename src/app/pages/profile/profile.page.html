@@ -1,84 +1,84 @@
-
-
 <ion-content [fullscreen]="true" [class.example-is-mobile]="mobileQuery.matches">
   <ion-header [translucent]="true" class="profile-head">
-    
-      <!-- breadcumb start -->
-      <div class="head-inner">
-        <ion-breadcrumbs>
-          <ion-breadcrumb href="#home">
-            Home
-            <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb href="#electronics">
-            {{pageName}}
-            <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
-          </ion-breadcrumb>
-        </ion-breadcrumbs>
-        <ion-button menuToggle size="small" (click)="snav.toggle()">
-          <ion-icon name="grid-outline"></ion-icon>
-        </ion-button>
-      </div>
-      <!-- breadcumb end -->
-    
-  </ion-header>
-  
 
-  
-<mat-sidenav-container class="example-sidenav-container">
-  <!-- side menu start -->
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                [fixedInViewport]="mobileQuery.matches" >
-    <mat-nav-list class="profile-menu">
-      
-      <ion-accordion-group>
-        <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
-          <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
-            <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
-            <ion-label>{{menu?.name}}</ion-label>
-          </ion-item>
-          <ion-item *ngIf="menu?.subPages" slot="header">
-            <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
-            <ion-label>{{menu?.name}}</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
-            <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
-              <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
-              <ion-label>{{submenu?.name}}</ion-label>
-            </ion-item>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </mat-nav-list>
-  </mat-sidenav>
-  <!-- side menu end -->
-
-  <mat-sidenav-content>
-    <!-- Profile header start -->
-    <div class="profile-header" *ngIf="parms_slug == 'dashboard'">
-        
-      <div class="header-image">
-        <div class="image-box">
-          <img onError="this.src='assets/default-user.jpg'" src="{{file_url}}/{{userData?.user_data?.path}}/{{userData?.user_data?.photo}}">
-          <span class="image-edit">
-            <ion-icon name="camera"></ion-icon>
-          </span>
-          <input type="file" (change)="changeProfileImage($event)">
-        </div>
-        <ion-button *ngIf="parms_slug !== 'edit-profile'" [routerLink]="['/user/edit-profile']" size="small" shape="round">Edit Profile</ion-button>
-        <h3 class="name">{{userData?.user_data?.username}}</h3>
-        <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
-        <!-- <p>Per KlassCoin Value: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p> -->
-        <p>Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
-      </div>
+    <!-- breadcumb start -->
+    <div class="head-inner">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">
+          Home
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          {{pageName}}
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+      <ion-button menuToggle size="small" (click)="snav.toggle()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
     </div>
-    <!-- Profile header end -->
+    <!-- breadcumb end -->
 
-    <!-- dashboard start -->
-    <div class="dashboard" *ngIf="parms_slug == 'dashboard'">
-      <ion-grid>
-        <ion-row>
-          <!-- <ion-col size="6" size-md="4" size-lg="2">
+  </ion-header>
+
+
+
+  <mat-sidenav-container class="profile-sidenav-container example-sidenav-container">
+    <!-- side menu start -->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+      <mat-nav-list class="profile-menu">
+
+        <ion-accordion-group>
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
+            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="menu?.subPages" slot="header">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+                <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+                <ion-label>{{submenu?.name}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </mat-nav-list>
+    </mat-sidenav>
+    <!-- side menu end -->
+
+    <mat-sidenav-content>
+      <!-- Profile header start -->
+      <div class="profile-header" *ngIf="parms_slug == 'dashboard'">
+
+        <div class="header-image">
+          <div class="image-box">
+            <img onError="this.src='assets/default-user.jpg'"
+              src="{{file_url}}/{{userData?.user_data?.path}}/{{userData?.user_data?.photo}}">
+            <span class="image-edit">
+              <ion-icon name="camera"></ion-icon>
+            </span>
+            <input type="file" (change)="changeProfileImage($event)">
+          </div>
+          <ion-button *ngIf="parms_slug !== 'edit-profile'" [routerLink]="['/user/edit-profile']" size="small"
+            shape="round">Edit Profile</ion-button>
+          <h3 class="name">{{userData?.user_data?.username}}</h3>
+          <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
+          <!-- <p>Per KlassCoin Value: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p> -->
+          <p>Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
+        </div>
+      </div>
+      <!-- Profile header end -->
+
+      <!-- dashboard start -->
+      <div class="dashboard" *ngIf="parms_slug == 'dashboard'">
+        <ion-grid>
+          <!-- teacher -->
+          <ion-row *ngIf="userType == 'tutor'">
+            <!-- <ion-col size="6" size-md="4" size-lg="2">
             <ion-card class="card-item crystalClear">
               <div class="card-wrapper">
                 <h2>
@@ -98,1247 +98,1802 @@
               </div>
             </ion-card>
           </ion-col> -->
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item sunkist">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Total Enrollment</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item coal">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Active Enrollment</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item mini">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Enrollment Completed</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item shalala">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Enrollment Closed</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item purplepine">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Total Tutoring Courses</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item mini">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Total Tutoring Events/Workshop</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item shalala">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Event/Workshop Enrollment</p>
-              </div>
-            </ion-card>
-          </ion-col>
-          <ion-col size="6" size-md="4" size-lg="2">
-            <ion-card class="card-item purplepine">
-              <div class="card-wrapper">
-                <h2>
-                  {{userData?.user_data?.teaching_experience}}
-                  <span>View</span>
-                </h2>
-                <p>Total Reviews</p>
-              </div>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      
-    </div>
-    <!-- dashboard end -->
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item sunkist">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Enrollment</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item coal">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Active Enrollment</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item mini">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Enrollment Completed</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item shalala">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Enrollment Closed</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item purplepine">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Tutoring Courses</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item mini">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Tutoring Events/Workshop</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item shalala">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Event/Workshop Enrollment</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item purplepine">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.teaching_experience}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Reviews</p>
+                </div>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <!-- student -->
+          <ion-row *ngIf="userType !== 'tutor'">
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item sunkist">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.net_credits}}
+                  </h2>
+                  <p>Net KlassCoin</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2">
+              <ion-card class="card-item coal">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.user_data?.net_creditcoins}}
+                  </h2>
+                  <p>Net Rewards Points</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/all-enrolement-classes']">
+              <ion-card class="card-item mini">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.total_bookings}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Bookings</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/session-initiated-enrolement-classes']">
+              <ion-card class="card-item shalala">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.session_initiated_bookings}}
+                    <span>View</span>
+                  </h2>
+                  <p>Bookings Running</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/completed-enrolement-classes']">
+              <ion-card class="card-item purplepine">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.completed_bookings}}
+                    <span>View</span>
+                  </h2>
+                  <p>Bookings Completed</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/closed-enrolement-classes']">
+              <ion-card class="card-item mini">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.closed_bookings}}
+                    <span>View</span>
+                  </h2>
+                  <p>Bookings Closed</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/all-enrolement']">
+              <ion-card class="card-item shalala">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.total_event_bookings}}
+                    <span>View</span>
+                  </h2>
+                  <p>Total Events Enrolled</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/klassCoins-history']">
+              <ion-card class="card-item purplepine">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.total_credit_transactions}}
+                    <span>View</span>
+                  </h2>
+                  <p>KlassCoin History</p>
+                </div>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/rewards-points']">
+              <ion-card class="card-item sunkist">
+                <div class="card-wrapper">
+                  <h2>
+                    {{userData?.dashbord_data?.total_creditcoin_transactions}}
+                    <span>View</span>
+                  </h2>
+                  <p>Rewards Points History</p>
+                </div>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
-    <!-- klassCoins-packages start -->
-    <div class="klassCoins-packages">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" size-md="6" size-lg="4" *ngFor="let item of klassCoinList?.package_data">
-            <div class="card">
-              <div class="info">
-                <div class="sub">{{item?.package_name}}</div>
-                <ul>
-                  <li>
-                    <mat-icon>toll</mat-icon>
-                    {{item?.credits}} KlassCoin
-                  </li>
-                  <li>
-                    <mat-icon>local_offer</mat-icon>
-                    {{item?.discount}}% Off
-                  </li>
-                  <li>
-                    <mat-icon>money</mat-icon>
-                    <del>₹{{item?.package_cost}}</del>&nbsp; ₹{{(item?.package_cost)-(item?.package_cost*item?.discount/100)}}
-                  </li>
-                </ul>
-                <!-- <button class="btn">Buy</button> -->
-              </div>
-              <div class="image">
-                <mat-icon>shield</mat-icon>
-              </div>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-    <!-- klassCoins-packages end -->
+      </div>
+      <!-- dashboard end -->
 
-    <!-- profile edit start -->
-    <div class="profile-edit" *ngIf="parms_slug == 'edit-profile'">
-      <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)" (keyup.enter)="onSubmit(profileEditForm)">
+      <!-- klassCoins-packages start -->
+      <div class="klassCoins-packages">
         <ion-grid>
           <ion-row>
-            <!-- First Name -->
-            <ion-col size="12">
-              <div class="field-item">
-                <ion-input type="text"
-                [(ngModel)]="model.first_name"
-                name="first_name" labelPlacement="stacked" placeholder="Enter your First Name" required></ion-input>
-              </div>
-            </ion-col>
-            <!-- Middle Name -->
-            <ion-col size="12">
-              <div class="field-item">
-                <ion-input type="text"
-                [(ngModel)]="model.middle_name"
-                name="middle_name" labelPlacement="stacked" placeholder="Enter your Middle Name"></ion-input>
-              </div>
-            </ion-col>
-            <!-- Last Name -->
-            <ion-col size="12">
-              <div class="field-item">
-                <ion-input type="text"
-                [(ngModel)]="model.last_name"
-                name="last_name" labelPlacement="stacked" placeholder="Enter your Last Name"></ion-input>
-              </div>
-            </ion-col>
-            <!-- Gender -->
-            <ion-col size="12">
-              <div class="field-item">
-                <div class="radio-box">
-                  <ion-label>Gender</ion-label>
-                  <ion-radio-group value="model.gender" name="gender" [(ngModel)]="model.gender">
-                    <ion-radio value="Male" labelPlacement="end">Male</ion-radio>
-                    <ion-radio value="Female" labelPlacement="end">Female</ion-radio>
-                  </ion-radio-group>
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let item of klassCoinList?.package_data">
+              <div class="card">
+                <div class="info">
+                  <div class="sub">{{item?.package_name}}</div>
+                  <ul>
+                    <li>
+                      <mat-icon>toll</mat-icon>
+                      {{item?.credits}} KlassCoin
+                    </li>
+                    <li>
+                      <mat-icon>local_offer</mat-icon>
+                      {{item?.discount}}% Off
+                    </li>
+                    <li>
+                      <mat-icon>money</mat-icon>
+                      <del>₹{{item?.package_cost}}</del>&nbsp;
+                      ₹{{(item?.package_cost)-(item?.package_cost*item?.discount/100)}}
+                    </li>
+                  </ul>
+                  <!-- <button class="btn">Buy</button> -->
+                </div>
+                <div class="image">
+                  <mat-icon>shield</mat-icon>
                 </div>
               </div>
             </ion-col>
-            <!-- Date of birth -->
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- klassCoins-packages end -->
+
+      <!-- profile edit start -->
+      <div class="profile-edit" *ngIf="parms_slug == 'edit-profile' && userType !== 'tutor'">
+        <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)"
+          (keyup.enter)="onSubmit(profileEditForm)">
+          <ion-grid>
+            <ion-row>
+              <!-- First Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
+                    placeholder="Enter your First Name" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Middle Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="stacked"
+                    placeholder="Enter your Middle Name"></ion-input>
+                </div>
+              </ion-col>
+              <!-- Last Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
+                    placeholder="Enter your Last Name"></ion-input>
+                </div>
+              </ion-col>
+              <!-- Gender -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="radio-box">
+                    <ion-label>Gender</ion-label>
+                    <ion-radio-group value="model.gender" name="gender" [(ngModel)]="model.gender">
+                      <ion-radio value="Male" labelPlacement="end">Male</ion-radio>
+                      <ion-radio value="Female" labelPlacement="end">Female</ion-radio>
+                    </ion-radio-group>
+                  </div>
+                </div>
+              </ion-col>
+              <!-- Date of birth -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="datePicker">
+                    <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
+                      [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
+                  </div>
+                </div>
+              </ion-col>
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" [disabled]="!profileEditForm.valid" expand="block" shape="round">
+                    Save
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+
+      <div class="profile-edit" *ngIf="parms_slug == 'edit-profile' && userType == 'tutor'">
+        <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)"
+          (keyup.enter)="onSubmit(profileEditForm)">
+          <ion-grid>
+            <ion-row>
+              <!-- First Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
+                    placeholder="Enter your First Name" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Middle Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="stacked"
+                    placeholder="Enter your Middle Name"></ion-input>
+                </div>
+              </ion-col>
+              <!-- Last Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
+                    placeholder="Enter your Last Name"></ion-input>
+                </div>
+              </ion-col>
+              <!-- email -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text"
+                  [(ngModel)]="model.identity"
+                  name="identity" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Gender -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="radio-box">
+                    <ion-label>Gender</ion-label>
+                    <ion-radio-group value="model.gender" name="gender" [(ngModel)]="model.gender">
+                      <ion-radio value="Male" labelPlacement="end">Male</ion-radio>
+                      <ion-radio value="Female" labelPlacement="end">Female</ion-radio>
+                    </ion-radio-group>
+                  </div>
+                </div>
+              </ion-col>
+              <!-- Date of birth -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="datePicker">
+                    <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
+                      [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <!-- Communication -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Communication:</ion-card-title>
+              </ion-card-header>
+                
+              <ion-card-content>
+                <ion-row>
+                  <!-- Languages Known: -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.language"
+                      name="language" interface="action-sheet" placeholder="Select Languages">
+                        <ion-select-option *ngFor="let item of model?.languages" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Listening & questioning skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.lSkills"
+                      name="lSkills" interface="action-sheet" placeholder="Select Listening skills">
+                        <ion-select-option *ngFor="let item of model?.listening_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Reading Skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.rSkills"
+                      name="rSkills" interface="action-sheet" placeholder="Select Reading Skills">
+                        <ion-select-option *ngFor="let item of model?.reading_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Writing skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.wSkills"
+                      name="wSkills" interface="action-sheet" placeholder="Select Writing skills">
+                        <ion-select-option *ngFor="let item of model?.writing_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Presentation skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.pSkills"
+                      name="pSkills" interface="action-sheet" placeholder="Select Presentation skills">
+                        <ion-select-option *ngFor="let item of model?.presentation_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+            
+            <!-- Social Details -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Social Details:</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-row>
+                  <!-- Blog/Website -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.website" name="website" labelPlacement="stacked"
+                        placeholder="Enter Blog/Website" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Facebook Profile -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.facebook" name="facebook" labelPlacement="stacked"
+                        placeholder="Enter Facebook Profile" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Twitter Profile -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.twitter" name="twitter" labelPlacement="stacked"
+                        placeholder="Enter Twitter Profile" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Linkedin Profile -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.linkedin" name="linkedin" labelPlacement="stacked"
+                        placeholder="Enter Linkedin Profile" required></ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+            <!-- Bank Details -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Bank Details</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-row>
+                  <!-- Account Holder Name -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.accountName" name="accountName" labelPlacement="stacked"
+                        placeholder="Account Holder Name" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Account No. -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.aNumber" name="aNumber" labelPlacement="stacked"
+                        placeholder="Account No." required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- IFSC Code -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.ifsc" name="ifsc" labelPlacement="stacked"
+                        placeholder="IFSC Code" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Bank Name -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.bName" name="bName" labelPlacement="stacked"
+                        placeholder="Bank Name" required></ion-input>
+                    </div>
+                  </ion-col>
+                  <!-- Bank Branch Name -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.branchName" name="branchName" labelPlacement="stacked"
+                        placeholder="Bank Branch Name" required></ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+            <ion-row>
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" [disabled]="!profileEditForm.valid" expand="block" shape="round">
+                    Save
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+      <!-- profile edit end -->
+
+      <!-- View booking details start -->
+      <div class="view-booking"  *ngIf="parms_slug == 'booking-view'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Course Title:</div>
+                  <div class="data">Kidzz</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Tutor:</div>
+                  <div class="data">Smitha Gopal</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course page :</div>
+                  <div class="data">Open Course</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Category :</div>
+                  <div class="data">Edge Technologies</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Subcategory :</div>
+                  <div class="data">Blockchain Applications</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Sub subcategory :</div>
+                  <div class="data"></div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course Booked :</div>
+                  <div class="data"></div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- View booking details end  -->
+
+      <!-- rate & review start -->
+      <div class="rate-review" *ngIf="parms_slug == 'rate-tutor'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Tutor Self-Confidence</ion-label>
+                <app-rating [rating]='0' [itemId]='1' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Presentation skills</ion-label>
+                <app-rating [rating]='0' [itemId]='2' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Punctuality & Regularity</ion-label>
+                <app-rating [rating]='0' [itemId]='3' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Teaching Technique</ion-label>
+                <app-rating [rating]='0' [itemId]='4' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Course/Syllabus Coverage</ion-label>
+                <app-rating [rating]='0' [itemId]='5' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Focus in Syllabus</ion-label>
+                <app-rating [rating]='0' [itemId]='6' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Course/Syllabus Completeness</ion-label>
+                <app-rating [rating]='0' [itemId]='7' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Innovative Teaching Method</ion-label>
+                <app-rating [rating]='0' [itemId]='8' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Course Content Delivery</ion-label>
+                <app-rating [rating]='0' [itemId]='9' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Helping Student Attitude</ion-label>
+                <app-rating [rating]='0' [itemId]='10' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Communication Skills</ion-label>
+                <app-rating [rating]='0' [itemId]='11' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Effective Class Control</ion-label>
+                <app-rating [rating]='0' [itemId]='12' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="rate-item">
+                <ion-label>Overall Rating</ion-label>
+                <app-rating [rating]='0' [itemId]='13' (ratingClick)='ratingComponentClick($event)'></app-rating>
+              </div>
+            </ion-col>
+            <!-- Add a headline -->
             <ion-col size="12">
               <div class="field-item">
-                <div class="datePicker">
-                  <li-ionic4-datepicker 
-                    name="dob" 
-                    [(ngModel)]="model.dob"
-                    placeholder="Date of Birth"
-                    [inputDateConfig]="datePickerObj" 
-                ></li-ionic4-datepicker>
-                </div>
+                <ion-input type="text" [(ngModel)]="model.headline" name="headline" labelPlacement="stacked"
+                  placeholder="Add a headline"></ion-input>
+              </div>
+            </ion-col>
+            <!-- Add a written review -->
+            <ion-col size="12">
+              <div class="field-item">
+                <ion-textarea [(ngModel)]="model.review" name="review" labelPlacement="stacked" placeholder="Add a written review"></ion-textarea>
               </div>
             </ion-col>
             <!-- Button -->
             <ion-col size="12">
               <div class="custom-btn">
-                <ion-button type="submit" 
-                [disabled]="!profileEditForm.valid" expand="block" shape="round">
-                  Save
+                <ion-button type="submit" expand="block" shape="round">
+                  Submit
                 </ion-button>
               </div>
             </ion-col>
           </ion-row>
         </ion-grid>
-      </form>
-    </div>
-    <!-- profile edit end -->
+      </div>
+      <!-- rate & review end -->
 
-    <!-- table data start -->
-    <div class="page-inner" >
-      <ion-grid>
-        <ion-row>
-          <!-- klassCoins-history start -->
-          <ion-col size="12" *ngIf="parms_slug == 'klassCoins-history'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
+      <!-- table data start -->
+      <div class="page-inner">
+        <ion-grid>
+          <ion-row>
             
-                <!-- credits Column -->
-                <ng-container matColumnDef="credits">
-                  <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
-                  <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
-                </ng-container>
-            
-                <!-- action Column -->
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                </ng-container>
-            
-                <!-- purpose Column -->
-                <ng-container matColumnDef="purpose">
-                  <th mat-header-cell *matHeaderCellDef> Purpose </th>
-                  <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
-                </ng-container>
-            
-                <!-- Date of action Column -->
-                <ng-container matColumnDef="date_of_action">
-                  <th mat-header-cell *matHeaderCellDef> Date of action </th>
-                  <td mat-cell *matCellDef="let element"> {{element.date_of_action}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-          </ion-col>
-          <!-- klassCoins-history end -->
+            <!-- My Enrolled Classes start -->
+            <!-- all-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'all-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
 
-          <!-- klassCoins-history start -->
-          <ion-col size="12" *ngIf="parms_slug == 'all-enrolement'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
-            
-                <!-- Event Column -->
-                <ng-container matColumnDef="event_id">
-                  <th mat-header-cell *matHeaderCellDef> Event </th>
-                  <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
-                </ng-container>
-            
-                <!-- Category Column -->
-                <ng-container matColumnDef="sea134da7">
-                  <th mat-header-cell *matHeaderCellDef> Category </th>
-                  <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
-                </ng-container>
-            
-                <!-- Event date Column -->
-                <ng-container matColumnDef="date">
-                  <th mat-header-cell *matHeaderCellDef> Event date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-                </ng-container>
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="see4f574b" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
 
-                <!-- Start time Column -->
-                <ng-container matColumnDef="start_time">
-                  <th mat-header-cell *matHeaderCellDef> Start time </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
-                </ng-container>
-            
-                <!-- End time Column -->
-                <ng-container matColumnDef="end_time">
-                  <th mat-header-cell *matHeaderCellDef> End time </th>
-                  <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
-                </ng-container>
-            
-                <!-- Fee (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Event description Column -->
-                <ng-container matColumnDef="content">
-                  <th mat-header-cell *matHeaderCellDef> Event description </th>
-                  <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
-                </ng-container>
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
 
-                <!-- Status Column -->
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-          </ion-col>
-          <!-- klassCoins-history end -->
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
 
-          <!-- rewards-points start -->
-          <ion-col size="12" *ngIf="parms_slug == 'rewards-points'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- credits Column -->
-                <ng-container matColumnDef="credits">
-                  <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
-                  <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
-                </ng-container>
-            
-                <!-- action Column -->
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                </ng-container>
-            
-                <!-- purpose Column -->
-                <ng-container matColumnDef="purpose">
-                  <th mat-header-cell *matHeaderCellDef> Purpose </th>
-                  <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
-                </ng-container>
-            
-                <!-- Date of action Column -->
-                <ng-container matColumnDef="date_of_action">
-                  <th mat-header-cell *matHeaderCellDef> Date of action </th>
-                  <td mat-cell *matCellDef="let element"> {{element.date_of_action}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-          </ion-col>
-          <!-- rewards-points end -->
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
 
-          <!-- all-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'all-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-            <ion-text color="tertiary">
-              <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-            </ion-text>
-            <ion-text color="success">
-              <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-            </ion-text>
-            <mat-divider></mat-divider>
-            <ion-text color="medium">
-              <p>
-                Cancel your booking status of the course or update Klasszone Admin about class: 
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="success">
-              <p>
-                View your class and course details using this action button:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="medium">
-              <p>
-                Join your classes at scheduled time using this action button:
-                <ion-button color="tertiary" fill="outline" class="small-btn">
-                  <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="warning">
-              <p>
-                Pay your Next month fee for your enrolled classes of your course:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="dark">
-              <p>
-                Review your Tutor and provide Star Rating using this action button:
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-          </ion-col>
-          <!-- all-enrolement-classes end -->
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
 
-          <!-- approved-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'approved-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.type == 'individual'">Individual Class</span>
+                      <span *ngIf="element.type == 'batch'">Group Class</span>
+                    </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
-            </ion-text>
-            <ion-text color="warning">
-              <p><b>Note:</b>You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-          </ion-col>
-          <!-- approved-enrolement-classes end -->
+                  <!-- Booking status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
 
-          <!-- session-initiated-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'session-initiated-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-            <ion-text color="tertiary">
-              <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-            </ion-text>
-            <ion-text color="success">
-              <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-            </ion-text>
-            <mat-divider></mat-divider>
-            <ion-text color="medium">
-              <p>
-                Cancel your booking status of the course or update Klasszone Admin about class: 
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="success">
-              <p>
-                View your class and course details using this action button:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="medium">
-              <p>
-                Join your classes at scheduled time using this action button:
-                <ion-button color="tertiary" fill="outline" class="small-btn">
-                  <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="warning">
-              <p>
-                Pay your Next month fee for your enrolled classes of your course:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="dark">
-              <p>
-                Review your Tutor and provide Star Rating using this action button:
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-          </ion-col>
-          <!-- session-initiated-enrolement-classes end -->
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button color="tertiary" fill="outline" class="small-btn">
+                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+            <!-- all-enrolement-classes end -->
 
-          <!-- completed-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'completed-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+            <!-- approved-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'approved-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-          </ion-col>
-          <!-- completed-enrolement-classes end -->
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
 
-          <!-- cancelled-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'cancelled-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-            <ion-text color="tertiary">
-              <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-            </ion-text>
-            <ion-text color="success">
-              <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-            </ion-text>
-            <mat-divider></mat-divider>
-            <ion-text color="medium">
-              <p>
-                Cancel your booking status of the course or update Klasszone Admin about class: 
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="success">
-              <p>
-                View your class and course details using this action button:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="medium">
-              <p>
-                Join your classes at scheduled time using this action button:
-                <ion-button color="tertiary" fill="outline" class="small-btn">
-                  <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="warning">
-              <p>
-                Pay your Next month fee for your enrolled classes of your course:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="dark">
-              <p>
-                Review your Tutor and provide Star Rating using this action button:
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-          </ion-col>
-          <!-- cancelled-enrolement-classes end -->
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
 
-          <!-- intervention-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'intervention-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-          </ion-col>
-          <!-- intervention-enrolement-classes end -->
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
 
-          <!-- closed-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'closed-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                  <!-- Booking status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element"> 
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                    </td>
+                  </ng-container>
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
-            </ion-text>
-            <ion-text color="warning">
-              <p><b>Note:</b>You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-          </ion-col>
-          <!-- closed-enrolement-classes end -->
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'approved', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                    </td>
+                  </ng-container>
 
-          <!-- all-enrolement-classes start -->
-          <ion-col size="12" *ngIf="parms_slug == 'expired-enrolement-classes'">
-            <div class="example-container mat-elevation-z8" tabindex="0">
-              <table mat-table [dataSource]="list_product">
-            
-                <!-- Course title Column -->
-                <ng-container matColumnDef="course_title">
-                  <th mat-header-cell *matHeaderCellDef> Course title </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
-                </ng-container>
-            
-                <!-- Start Date Column -->
-                <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
-                </ng-container>
-            
-                <!-- Weekly Schedule Column -->
-                <ng-container matColumnDef="course_id">
-                  <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
-                </ng-container>
-            
-                <!-- Tutor Name Column -->
-                <ng-container matColumnDef="s1ba55b7f">
-                  <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
-                </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
 
-                <!-- Completed class Column -->
-                <ng-container matColumnDef="course_level">
-                  <th mat-header-cell *matHeaderCellDef> Completed class </th>
-                  <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
-                </ng-container>
-            
-                <!-- Duration (In months) Column -->
-                <ng-container matColumnDef="duration">
-                  <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
-                </ng-container>
-            
-                <!-- Fee per class (In KlassCoins) Column -->
-                <ng-container matColumnDef="increased_fee">
-                  <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
-                </ng-container>
-            
-                <!-- Class Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                  <td mat-cell *matCellDef="let element">{{element?.type}}</td>
-                </ng-container>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
+              </ion-text>
+              <ion-text color="warning">
+                <p><b>Note:</b>You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+            </ion-col>
+            <!-- approved-enrolement-classes end -->
 
-                <!-- Booking status Column -->
-                <ng-container matColumnDef="prev_status">
-                  <th mat-header-cell *matHeaderCellDef> Booking status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.prev_status}} </td>
-                </ng-container>
-          
-                <!-- Action Column -->
-                <ng-container matColumnDef="actions" stickyEnd>
-                  <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
-                  <td mat-cell *matCellDef="let element" class="ion-text-center">
-                    <mat-icon>edit</mat-icon>
-                    <mat-icon>visibility</mat-icon> 
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons
-                            aria-label="Select page of periodic elements">
-              </mat-paginator>
-            </div>
-            <ion-text color="primary">
-              <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-            </ion-text>
-            <ion-text color="tertiary">
-              <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-            </ion-text>
-            <ion-text color="success">
-              <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-            </ion-text>
-            <mat-divider></mat-divider>
-            <ion-text color="medium">
-              <p>
-                Cancel your booking status of the course or update Klasszone Admin about class: 
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="success">
-              <p>
-                View your class and course details using this action button:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="medium">
-              <p>
-                Join your classes at scheduled time using this action button:
-                <ion-button color="tertiary" fill="outline" class="small-btn">
-                  <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="warning">
-              <p>
-                Pay your Next month fee for your enrolled classes of your course:
-                <ion-button color="danger" fill="outline" class="small-btn">
-                  <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-            <ion-text color="dark">
-              <p>
-                Review your Tutor and provide Star Rating using this action button:
-                <ion-button color="warning" fill="outline" class="small-btn">
-                  <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </p>
-            </ion-text>
-          </ion-col>
-          <!-- all-enrolement-classes end -->
-        </ion-row>
-      </ion-grid>
-    </div>
-    <!-- table data end -->
-  </mat-sidenav-content>
-</mat-sidenav-container>
+            <!-- session-initiated-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'session-initiated-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
 
-  
-  
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'session_initiated', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button color="tertiary" fill="outline" class="small-btn">
+                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+            <!-- session-initiated-enrolement-classes end -->
+
+            <!-- completed-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'completed-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'completed', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- completed-enrolement-classes end -->
+
+            <!-- cancelled-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'cancelled-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'cancelled', element?.booking_id]">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button color="tertiary" fill="outline" class="small-btn">
+                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+            <!-- cancelled-enrolement-classes end -->
+
+            <!-- intervention-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'intervention-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'called_for_admin_intervention', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- intervention-enrolement-classes end -->
+
+            <!-- closed-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'closed-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'closed', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
+              </ion-text>
+              <ion-text color="warning">
+                <p><b>Note:</b>You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+            </ion-col>
+            <!-- closed-enrolement-classes end -->
+
+            <!-- expired-enrolement-classes start -->
+            <ion-col size="12" *ngIf="parms_slug == 'expired-enrolement-classes'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                  </ng-container>
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Weekly Schedule Column -->
+                  <ng-container matColumnDef="course_id">
+                    <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_id}} </td>
+                  </ng-container>
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType !== 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Completed class Column -->
+                  <ng-container matColumnDef="course_level">
+                    <th mat-header-cell *matHeaderCellDef> Completed class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_level}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration / 30}} </td>
+                  </ng-container>
+
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Class Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Class Type </th>
+                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                  </ng-container>
+
+                   <!-- Booking status Column -->
+                   <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Booking status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/user/rate-tutor']">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button color="tertiary" fill="outline" class="small-btn">
+                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+            <!-- expired-enrolement-classes end -->
+            <!-- My Enrolled Classes end -->
+
+            <!-- Event Enrollment	start -->
+            <!-- all-enrolement start -->
+            <ion-col size="12" *ngIf="parms_slug == 'all-enrolement'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Tutor Name Column -->
+                  <ng-container matColumnDef="s1ba55b7f">
+                    <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Event Column -->
+                  <ng-container matColumnDef="event_id">
+                    <th mat-header-cell *matHeaderCellDef> Event </th>
+                    <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+                  </ng-container>
+
+                  <!-- Category Column -->
+                  <ng-container matColumnDef="sea134da7">
+                    <th mat-header-cell *matHeaderCellDef> Category </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
+                  </ng-container>
+
+                  <!-- Event date Column -->
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Event date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Start time Column -->
+                  <ng-container matColumnDef="start_time">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
+
+                  <!-- End time Column -->
+                  <ng-container matColumnDef="end_time">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                  </ng-container>
+
+                  <!-- Fee (In KlassCoins) Column -->
+                  <ng-container matColumnDef="increased_fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                  </ng-container>
+
+                  <!-- Event description Column -->
+                  <ng-container matColumnDef="content">
+                    <th mat-header-cell *matHeaderCellDef> Event description </th>
+                    <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
+                  </ng-container>
+
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed', 'cancelled': element.status == 'cancelled'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary">duo</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- all-enrolement end -->
+            <!-- Event Enrollment	end -->
+
+            <!-- klassCoins-history start -->
+            <ion-col size="12" *ngIf="parms_slug == 'klassCoins-history'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- credits Column -->
+                  <ng-container matColumnDef="credits">
+                    <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
+                    <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+                  </ng-container>
+
+                  <!-- balance Column -->
+                  <ng-container matColumnDef="balance">
+                    <th mat-header-cell *matHeaderCellDef> Balance </th>
+                    <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
+                  </ng-container>
+
+                  <!-- action Column -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+                  </ng-container>
+
+                  <!-- purpose Column -->
+                  <ng-container matColumnDef="purpose">
+                    <th mat-header-cell *matHeaderCellDef> Purpose </th>
+                    <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+                  </ng-container>
+
+                  <!-- Date of action Column -->
+                  <ng-container matColumnDef="date_of_action">
+                    <th mat-header-cell *matHeaderCellDef> Date of action </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_of_action | date:'dd MMM yyy : h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Actions</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- klassCoins-history end -->
+
+            <!-- rewards-points start -->
+            <ion-col size="12" *ngIf="parms_slug == 'rewards-points'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- credits Column -->
+                  <ng-container matColumnDef="credits">
+                    <th mat-header-cell *matHeaderCellDef> KlassCoins </th>
+                    <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+                  </ng-container>
+
+                  <!-- balance Column -->
+                  <ng-container matColumnDef="balance">
+                    <th mat-header-cell *matHeaderCellDef> Balance </th>
+                    <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
+                  </ng-container>
+
+                  <!-- action Column -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+                  </ng-container>
+
+                  <!-- purpose Column -->
+                  <ng-container matColumnDef="purpose">
+                    <th mat-header-cell *matHeaderCellDef> Purpose </th>
+                    <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+                  </ng-container>
+
+                  <!-- Date of action Column -->
+                  <ng-container matColumnDef="date_of_action">
+                    <th mat-header-cell *matHeaderCellDef> Date of action </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_of_action | date:'dd MMM yyy : h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Actions</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- rewards-points end -->
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- table data end -->
+
+      
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
 </ion-content>
 <common-footer></common-footer>
-

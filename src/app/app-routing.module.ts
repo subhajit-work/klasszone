@@ -52,6 +52,18 @@ const routes: Routes = [
   {
     path: 'teacher-list/:department/:class',
     loadChildren: () => import('./pages/teacher-list/teacher-list.module').then( m => m.TeacherListPageModule)
+  },
+  {
+    path: 'teacher-profile/:tutor/:category/:course',
+    loadChildren: () => import('./pages/teacher-profile/teacher-profile.module').then( m => m.TeacherProfilePageModule)
+  },
+  {
+    path: 'booking-view/:status/:id',
+    loadChildren: () => import('./pages/booking-view/booking-view.module').then( m => m.BookingViewPageModule)
+  },
+  {
+    path: 'booking-edit/:status/:id',
+    loadChildren: () => import('./pages/booking-edit/booking-edit.module').then( m => m.BookingEditPageModule)
   }
 ];
 

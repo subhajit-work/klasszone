@@ -4,8 +4,8 @@
       <ion-back-button default-href="#"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Academic Classes
-      <ion-icon (click)="openFilterMenu()" name="grid-outline"></ion-icon>
+      {{pageName}}
+      <ion-icon *ngIf="filterEnabled" (click)="openFilterMenu()" name="grid-outline"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,8 @@
   <div class="page-inner">
     <div class="filter-section">
       <mat-accordion>
-        <mat-expansion-panel>
+        <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Please specific with your selection:
@@ -27,41 +28,36 @@
                   <ion-row>
                     <!-- Department -->
                     <ion-col size="12">
-                      <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Department" name="department" [(ngModel)]="model.department" (ionChange)="onChangeDepartment($event)">
+                      <div class="field-item" *ngIf="model.department">
+                        <ion-select interface="action-sheet" placeholder="Select an option" name="department" [(ngModel)]="model.department" (ionChange)="onChangeDepartment($event)">
                           <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
                         </ion-select>
                       </div>
                     </ion-col>
                     <!-- Class -->
-                    <ion-col size="12" *ngIf="model.department">
+                    <ion-col size="12" *ngIf="model.department && classAllData.length !== 0">
                       <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Class" name="class" [(ngModel)]="model.class" (ionChange)="onChangeClass($event)">
+                        <ion-select interface="action-sheet" placeholder="Select an option" name="class" [(ngModel)]="model.class" (ionChange)="onChangeClass($event)">
+                          <ion-select-option value="">Select an option</ion-select-option>
                           <ion-select-option *ngFor="let item of classAllData" [value]="item">{{item?.name}}</ion-select-option>
                         </ion-select>
                       </div>
                     </ion-col>
                     <!-- Board -->
-                    <ion-col size="12" *ngIf="model.class">
+                    <ion-col size="12" *ngIf="model.class && boardAllData.length !== 0">
                       <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Board" name="board" [(ngModel)]="model.board" (ionChange)="onChangeBoard($event)">
+                        <ion-select interface="action-sheet" placeholder="Select an option" name="board" [(ngModel)]="model.board" (ionChange)="onChangeBoard($event)">
+                          <ion-select-option value="">Select an option</ion-select-option>
                           <ion-select-option *ngFor="let item of boardAllData" [value]="item">{{item?.name}}</ion-select-option>
                         </ion-select>
                       </div>
                     </ion-col>
                     <!-- Subject -->
-                    <ion-col size="12" *ngIf="model.board">
+                    <ion-col size="12" *ngIf="model.board && subjectAllData.length !== 0">
                       <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Subject" name="categories" [(ngModel)]="model.subject" (ionChange)="onChangeSubject($event)">
+                        <ion-select interface="action-sheet" placeholder="Select an option" name="categories" [(ngModel)]="model.subject" (ionChange)="onChangeSubject($event)">
+                          <ion-select-option value="">Select an option</ion-select-option>
                           <ion-select-option *ngFor="let item of subjectAllData" [value]="item">{{item?.name}}</ion-select-option>
-                        </ion-select>
-                      </div>
-                    </ion-col>
-                    <!-- Tutor -->
-                    <ion-col size="12" *ngIf="model.subject">
-                      <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Tutor" name="tutor" [(ngModel)]="model.tutor" (ionChange)="onChangetutor($event)">
-                          <ion-select-option *ngFor="let item of tutorAllData" [value]="item">{{item?.name}}</ion-select-option>
                         </ion-select>
                       </div>
                     </ion-col>
@@ -69,7 +65,7 @@
                 </ion-grid>
             </div>
             <mat-action-row>
-              <button type="reset" mat-button color="warn">Clear</button>
+              <button (click)="togglePanel()" type="button" mat-button color="warn">Close</button>
               <button type="submit" mat-button color="primary">Search</button>
             </mat-action-row>
           </form>
@@ -78,7 +74,7 @@
     </div>
     <div *ngIf="teacherAllData?.courses instanceof Array">
       <div class="section-item" *ngFor="let courseItem of teacherAllData?.courses">
-        <ion-grid>
+        <ion-grid *ngIf="courseItem?.tutors.length !== 0">
           <ion-row>
             <ion-col>
               <div class="top-bar">
@@ -92,17 +88,25 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        <ion-grid>
+        <ion-grid *ngIf="courseItem?.tutors.length !== 0">
           <ion-row>
             <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of courseItem?.tutors">
-              <div class="profile-card">
+              <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, teacherAllData.category_slug, courseItem.slug]" >
                 <div class="profile-top">
                   <div class="profile-img">
-                    <img src="assets/default-student-male.png">
+                    <img onError="this.src='assets/default-student-male.png'" src="{{file_url}}/assets/uploads/profiles/thumbs/{{tutorItem?.photo}}">
                   </div>
                   <div class="profile-details">
                     <p class="name">{{tutorItem?.username}}</p>
-                    <p class="designation">{{tutorItem?.course_title}}</p>
+                    <p class="designation">
+                      {{tutorItem?.course_title}} 
+                      <br>
+                      <b *ngIf="tutorItem?.type == 'individual'">One-to-One Class</b>
+                      <b *ngIf="tutorItem?.type == 'batch'">- Group Class</b>
+                      <b *ngIf="tutorItem?.discount_offer !== '0'">
+                        <i> - {{tutorItem?.discount_offer}}0% Off</i>
+                      </b>
+                    </p>
                   </div>
                 </div>
                 <div class="profile-bottom">
@@ -110,7 +114,7 @@
                     <mat-icon>account_balance_wallet</mat-icon>
                     <span>{{tutorItem?.increased_fee}} KlassCoin</span>
                   </div>
-                  <div class="rating">
+                  <div class="rating" *ngIf="tutorItem?.avg_rating !== null">
                     <div class="rating-bar">
                       <ion-icon name="star"></ion-icon>
                       <ion-icon name="star"></ion-icon>
@@ -124,7 +128,8 @@
               </div>
             </ion-col>
             <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0">
-              <p class="ion-text-center">Tutor(s) not available.</p>
+              <img class="no-tutor" src="../../../assets/no-tutor.jpg">
+              <h3 class="ion-text-center">Tutor(s) not available.</h3>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -132,12 +137,13 @@
       </div>
     </div>
     
-    <div class="section-item" *ngIf="teacherAllData?.courses.length == 0">
-      <p class="ion-text-center">Tutor(s) not available.</p>
+    <div class="section-item" *ngIf="teacherAllData?.courses.length == 0 || noTutors">
+      <img class="no-tutor" src="../../../assets/no-tutor.jpg">
+      <h3 class="ion-text-center">Tutor(s) not available.</h3>
     </div>
   </div>
 
-  <ion-menu side="end" menuId="filterMenu" contentId="filterMenu">
+  <ion-menu *ngIf="filterEnabled" side="end" menuId="filterMenu" contentId="filterMenu">
     <div class="courseFilter">
       <!-- Mode of Class -->
       <div class="filter-item">

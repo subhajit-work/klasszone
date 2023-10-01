@@ -1,0 +1,213 @@
+<ion-content [fullscreen]="true" [class.example-is-mobile]="mobileQuery.matches">
+  <ion-header [translucent]="true" class="profile-head">
+
+    <!-- breadcumb start -->
+    <div class="head-inner">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">
+          Home
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          Booking View
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+      <ion-button menuToggle size="small" (click)="snav.toggle()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <!-- breadcumb end -->
+
+  </ion-header>
+
+
+
+  <mat-sidenav-container class="profile-sidenav-container example-sidenav-container">
+    <!-- side menu start -->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+      <mat-nav-list class="profile-menu">
+
+        <ion-accordion-group>
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
+            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="menu?.subPages" slot="header">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+                <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+                <ion-label>{{submenu?.name}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </mat-nav-list>
+    </mat-sidenav>
+    <!-- side menu end -->
+
+    <mat-sidenav-content>
+
+      <!-- booking edit start -->
+      <div class="profile-edit" *ngIf="enquiriesEditData">
+        <form #bookingEditForm="ngForm" (ngSubmit)="onSubmit(bookingEditForm)"
+          (keyup.enter)="onSubmit(bookingEditForm)">
+          <ion-grid>
+            <input type="hidden" name="prev_status" [(ngModel)]="enquiriesEditData.prev_status">
+            <input type="hidden" required name="updated_by" [(ngModel)]="userData.user_data.id">
+            <ion-row>
+              <!-- Booking Status -->
+              <ion-col size="12" [hidden]="enquiriesEditData?.status.length == 0">
+                <div class="field-item">
+                  <ion-select [(ngModel)]="enquiriesEditData.prev_status"
+                  name="status" interface="action-sheet" required placeholder="Select Change Status">
+                    <ion-select-option *ngFor="let item of enquiriesEditData.status" [value]="item?.display_value">{{item?.display_name}}</ion-select-option>
+                  </ion-select>
+                </div>
+              </ion-col>
+              <!-- Status desc -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.status_desc" name="status_desc" labelPlacement="stacked"
+                    placeholder="Enter Status desc"></ion-input>
+                </div>
+              </ion-col>
+              
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button (click)="clickButtonType('save')" type="submit" [disabled]="!bookingEditForm.valid" shape="round">
+                    Update changes
+                  </ion-button>
+                  <ion-button (click)="backClicked()" color="danger" shape="round" class="home-btn">Cancel</ion-button>
+                  <ion-button (click)="clickButtonType('save-back')" type="submit" [disabled]="!bookingEditForm.valid" color="tertiary" shape="round" class="home-btn">Update and go back to list</ion-button>
+                  
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-text color="primary">
+                  <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                </ion-text>
+                <ion-text color="tertiary">
+                  <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                </ion-text>
+                <ion-text color="success">
+                  <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+                </ion-text>
+                <mat-divider></mat-divider>
+                <ion-text color="medium">
+                  <p>
+                    Cancel your booking status of the course or update Klasszone Admin about class:
+                    <ion-button color="warning" fill="outline" class="small-btn">
+                      <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="success">
+                  <p>
+                    View your class and course details using this action button:
+                    <ion-button color="danger" fill="outline" class="small-btn">
+                      <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="medium">
+                  <p>
+                    Join your classes at scheduled time using this action button:
+                    <ion-button color="tertiary" fill="outline" class="small-btn">
+                      <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="warning">
+                  <p>
+                    Pay your Next month fee for your enrolled classes of your course:
+                    <ion-button color="danger" fill="outline" class="small-btn">
+                      <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="dark">
+                  <p>
+                    Review your Tutor and provide Star Rating using this action button:
+                    <ion-button color="warning" fill="outline" class="small-btn">
+                      <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button color="tertiary" fill="outline" class="small-btn">
+                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button color="danger" fill="outline" class="small-btn">
+                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button color="warning" fill="outline" class="small-btn">
+                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- booking edit end -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
+</ion-content>
+<common-footer></common-footer>

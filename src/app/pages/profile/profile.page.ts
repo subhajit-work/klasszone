@@ -174,6 +174,186 @@ export class ProfilePage implements OnInit {
       ],
     },
   ];
+  tutorMenuData = [
+    {
+      name: 'Tutor Dashboard',
+      url: 'dashboard',
+      icon: 'speed'
+    },
+    {
+      name: 'Class Enrollments',
+      url: 'enrolement',
+      icon: 'school',
+      subPages : [
+        {
+          name: 'All',
+          url: 'all-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Approved',
+          url: 'approved-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Session Initiated',
+          url: 'session-initiated-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Completed',
+          url: 'completed-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Cancelled ',
+          url: 'cancelled-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Claim For Admin Intervention ',
+          url: 'intervention-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Closed',
+          url: 'closed-enrolement-classes',
+          icon: 'send',
+        },
+        {
+          name: 'Expired',
+          url: 'expired-enrolement-classes',
+          icon: 'send',
+        }
+      ],
+    },
+    {
+      name: 'Manage Courses',
+      url: 'event-enrollment',
+      icon: 'menu_book',
+      subPages : [
+        {
+          name: 'Courses ',
+          url: 'all-enrolement',
+          icon: 'send',
+        }
+      ],
+    },
+    {
+      name: 'Manage Events',
+      url: 'event-enrollment',
+      icon: 'celebration',
+      subPages : [
+        {
+          name: 'List Events',
+          url: 'all-enrolement',
+          icon: 'send',
+        },
+        {
+          name: 'All Enrollments',
+          url: 'upcoming-enrollments',
+          icon: 'send',
+        },
+        {
+          name: 'Upcoming Enrollments',
+          url: 'completed-expired-events',
+          icon: 'send',
+        },
+        {
+          name: 'Completed/Expired Enrollments ',
+          url: 'upcoming-enrollments',
+          icon: 'send',
+        },
+        {
+          name: 'Cancelled Enrollments ',
+          url: 'completed-expired-events',
+          icon: 'send',
+        }
+      ],
+    },
+    {
+      name: 'Buy KlassCoins',
+      url: 'buy-klassCoins',
+      icon: 'toll',
+      subPages : [
+        {
+          name: 'KlassCoins Packages',
+          url: 'klassCoins-packages',
+          icon: 'send',
+        },
+        {
+          name: 'Order History',
+          url: 'order-history',
+          icon: 'send',
+        }
+      ],
+    },
+    {
+      name: 'Salary Request',
+      url: 'buy-klassCoins',
+      icon: 'account_balance_wallet',
+      subPages : [
+        {
+          name: 'Pending',
+          url: 'klassCoins-packages',
+          icon: 'send',
+        },
+        {
+          name: 'Done',
+          url: 'order-history',
+          icon: 'send',
+        }
+      ],
+    },
+    {
+      name: 'KlassCoins History',
+      url: 'klassCoins-history',
+      icon: 'history'
+    },
+    {
+      name: 'Refer and Earn',
+      url: 'rewards-points',
+      icon: 'emoji_events'
+    },
+    {
+      name: 'Received Reviews',
+      url: 'redeem-rewards',
+      icon: 'redeem'
+    },
+    {
+      name: 'Tutor Information',
+      url: 'student-information',
+      icon: 'person',
+      subPages : [
+        {
+          name: 'Personal Information',
+          url: 'personal-information',
+          icon: 'send',
+        },
+        {
+          name: 'Profile Information',
+          url: 'profile-information',
+          icon: 'send',
+        },
+        {
+          name: 'Experience ',
+          url: 'profile-information',
+          icon: 'send',
+        },
+        {
+          name: 'Manage certificates',
+          url: 'profile-information',
+          icon: 'send',
+        },
+        {
+          name: 'Change Password',
+          url: 'change-password',
+          icon: 'send',
+        }
+      ],
+    },
+  ];
+  profileSideMenuData:any;
   userSavedInfo:any;
   
   mobileQuery: MediaQueryList;
@@ -187,6 +367,20 @@ export class ProfilePage implements OnInit {
   private klassCoinDataSubscribe: Subscription | undefined;
   klassCoin_url:any;
   klassCoinList:any;
+
+  bookingStatus = [
+    {
+      name: 'Cancel Booking',
+      id: 1
+    },
+    {
+      name: 'Claim For Admin Intervention',
+      id: 1
+    },
+  ]
+  fetchItems = [];
+
+  userType:any;
 
   constructor(
     private menuCtrl: MenuController,
@@ -207,6 +401,12 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
+    this.userType = localStorage.getItem('user_type');
+    if (this.userType == 'tutor') {
+      this.profileSideMenuData = this.tutorMenuData;
+    }else {
+      this.profileSideMenuData = this.studentMenuData;
+    }
     this.commonUtils.userInfoDataObservable.subscribe(res =>{
       console.log('userInfoDataObservable res>>>>>>>>>>>>>>>>>>>.. >', res);
       this.userData = res;
@@ -227,7 +427,13 @@ export class ProfilePage implements OnInit {
       this.klassCoin_url = 'list_packages';
       this.klassCoinPackageList(); 
     }
-    
+    this.model = {
+      languages : [],
+      listening_skills: [],
+      reading_skills: [],
+      writing_skills: [],
+      presentation_skills: []
+    }
   }
 
   ionViewDidEnter(){
@@ -298,37 +504,77 @@ export class ProfilePage implements OnInit {
           // call table data
           if (this.parms_slug == 'klassCoins-history') {
             this.tableListData_url = 'credits_transactions_history/'+this.userData.user_data.id;
-            this.displayedColumns = ['credits', 'action', 'purpose', 'date_of_action','actions'];
+            this.displayedColumns = ['credits', 'balance', 'action', 'purpose', 'date_of_action','actions'];
           }else if (this.parms_slug == 'all-enrolement') {
             this.tableListData_url = 'event_enquiries?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['s1ba55b7f', 'event_id', 's1ba55b7f', 'event_id', 'start_time', 'end_time', 'increased_fee', 'content','actions'];
+            this.displayedColumns = ['s1ba55b7f', 'event_id', 's1ba55b7f', 'event_id', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
           }else if (this.parms_slug == 'rewards-points') {
             this.tableListData_url = 'creditcoins_transactions_history?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['credits', 'action', 'purpose', 'date_of_action','actions'];
+            this.displayedColumns = ['credits','balance', 'action', 'purpose', 'date_of_action','actions'];
           }else if (this.parms_slug == 'all-enrolement-classes') {
-            this.tableListData_url = 'enquiries?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['see4f574b','course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'approved-enrolement-classes') {
-            this.tableListData_url = 'enquiries/approved?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/approved?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names','course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/approved?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'session-initiated-enrolement-classes') {
-            this.tableListData_url = 'enquiries/session_initiated?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/session_initiated?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names','course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/session_initiated?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'completed-enrolement-classes') {
-            this.tableListData_url = 'enquiries/completed?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/completed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/completed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'cancelled-enrolement-classes') {
-            this.tableListData_url = 'enquiries/cancelled?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/cancelled?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/cancelled?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'intervention-enrolement-classes') {
-            this.tableListData_url = 'enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'closed-enrolement-classes') {
-            this.tableListData_url = 'enquiries/closed?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/closed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/closed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'expired-enrolement-classes') {
-            this.tableListData_url = 'enquiries/expired?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'student_enquiries/expired?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'course_id', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'enquiries/expired?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['course_title', 'start_date', 'course_id', 's1ba55b7f', 'course_level', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+            }
           }
           this.tableListData();
           
@@ -349,7 +595,16 @@ export class ProfilePage implements OnInit {
   }
   /* User detasils get end */
 
-  
+  //---- rating click function call  start ----
+  ratingClicked: any;
+  ratingComponentClick(clickObj: any): void {
+    console.log('clickObj >>', clickObj);
+    const item = this.fetchItems.find(((i: any) => i.id === clickObj.itemId));
+    // if (!!item) {
+    //   item.rating = clickObj.rating;
+    // }
+  }
+  // --rating click function call  end--
 
   /* profile picture upload start */
   changeProfileImage(image:any) {

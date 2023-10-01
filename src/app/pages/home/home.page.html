@@ -13,7 +13,7 @@
       <swiper-slide *ngFor="let item of viewData?.home_page_advantages">
         <div class="card-item">
           <div class="image">
-            <img src="{{file_url}}/{{item?.path}}/{{item?.image}}" alt="">
+            <img src="{{file_url}}/assets/uploads/repeaters/{{item?.image}}" alt="">
           </div>
           <h1 class="title">{{item?.category_name}}</h1>
           <div class="descption" [innerHTML]="item?.short_description | safeHtml">

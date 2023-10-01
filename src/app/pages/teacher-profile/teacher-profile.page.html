@@ -1,0 +1,762 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Academic Classes
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-inner">
+    <ion-grid>
+      <div class="teacher-profile">
+        <div class="profile_top">
+          <div class="profile__picture">
+            <img src="{{teacherProfileData?.og_image}}" alt="ananddavis">
+          </div>
+          <div class="profile__header">
+            <div class="profile__account">
+              <h4 class="profile__username">
+                <span>{{teacherProfileData?.pagetitle}}</span>
+                <span class="reviews-count">
+                  <div class="rating">
+                    <span class="rating__stars"
+                      style="--rating: {{teacherProfileData?.tutor_rating?.avg_rating}};"></span>
+                  </div>
+                  <mat-icon matBadge="{{teacherProfileData?.tutor_rating?.no_of_ratings}}"
+                    matBadgeColor="warn">chat_bubble</mat-icon>
+                </span>
+              </h4>
+
+            </div>
+          </div>
+          <p class="subject">Edge Technologies / Blockchain Applications / Kidzz</p>
+          <div class="profile__stats">
+            <div class="profile__stat">
+              <div class="profile__icon profile__icon--gold">
+                <mat-icon>star_rate</mat-icon>
+              </div>
+              <div class="profile__value">{{tutorExp}} Years
+                <div class="profile__key">Experience</div>
+              </div>
+            </div>
+            <div class="profile__stat">
+              <div class="profile__icon profile__icon--blue">
+                <mat-icon>event</mat-icon>
+              </div>
+              <div class="profile__value">{{tutorAge}}
+                <div class="profile__key">Age</div>
+              </div>
+            </div>
+            <div *ngIf="userData" class="profile__stat">
+              <div class="profile__icon profile__icon--pink">
+                <mat-icon>account_balance_wallet</mat-icon>
+              </div>
+              <div class="profile__value">{{userData?.user_data?.net_credits}}
+                <div class="profile__key">KlassCoins</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-details" *ngIf="teacherProfileData">
+          <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+            <!-- profile information -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">person</mat-icon>
+                Profile Details
+              </ng-template>
+              <div class="tab-inner">
+                <div class="basic-details">
+                  <div class="details-item">
+                    <div class="label">Name</div>
+                    <div class="data">{{tutorDetails?.first_name}} {{tutorDetails?.last_name}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Gender</div>
+                    <div class="data">{{tutorDetails?.gender}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Age</div>
+                    <div class="data">{{tutorAge}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Experiance</div>
+                    <div class="data">{{tutorExp}} Years</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Qualification</div>
+                    <div class="data">{{tutorDetails?.qualification}} from {{tutorDetails?.bachelor_uni}},
+                      {{tutorDetails?.master_qualification}} from {{tutorDetails?.master_uni}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Language Known</div>
+                    <div class="data">{{tutorDetails?.languages_known}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Mode of Class</div>
+                    <div class="data">
+                      <span *ngIf="teacherProfileData.tutor_individual_courses">One-to-One Classes</span>
+                      <span *ngIf="teacherProfileData.tutor_batch_courses.length > 0">Group Classes</span>
+                    </div>
+                  </div>
+                  <div class="details-item"
+                    *ngIf="teacherProfileData.tutor_individual_courses || teacherProfileData.tutor_batch_courses">
+                    <div class="label">Fee</div>
+                    <div class="data">
+                      <span *ngIf="teacherProfileData.tutor_individual_courses">{{teacherProfileData?.increased_fee}}
+                        KlassCoins per Class (Individual Classes)</span>
+                      <span
+                        *ngIf="teacherProfileData.tutor_batch_courses.length > 0">{{teacherProfileData.tutor_batch_courses[0].increased_fee}}
+                        KlassCoin (Group Classes)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <!-- Student's Reviews -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">star</mat-icon>
+                Student's Reviews
+              </ng-template>
+              <div class="tab-inner">
+                <h4>Student's Reviews</h4>
+                <div class="rating">
+                  <span class="rating__stars"
+                    style="--rating: {{teacherProfileData?.tutor_rating?.avg_rating}};"></span>
+                  <div class="rating__number">
+                    <span class="rating__score">{{teacherProfileData?.tutor_rating?.avg_rating}} out of 5</span>
+                    <div class="rating__reviews">({{teacherProfileData?.tutor_rating?.no_of_ratings}})</div>
+                  </div>
+                </div>
+
+                <div class="google-review">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="rating-review-item">
+                          <div class="row">
+                            <div class="side">
+                              <div>5 star</div>
+                            </div>
+                            <div class="middle">
+                              <div class="bar-container">
+                                <div class="bar-5"
+                                  [ngStyle]="{'width': teacherProfileData?.tutor_rating_percentage?.five_star_percentage +'%'}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="side right">
+                              <div>{{teacherProfileData?.tutor_rating_percentage?.five_star_percentage}}%</div>
+                            </div>
+                            <div class="side">
+                              <div>4 star</div>
+                            </div>
+                            <div class="middle">
+                              <div class="bar-container">
+                                <div class="bar-4"
+                                  [ngStyle]="{'width': teacherProfileData?.tutor_rating_percentage?.four_star_percentage +'%'}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="side right">
+                              <div>{{teacherProfileData?.tutor_rating_percentage?.four_star_percentage}}%</div>
+                            </div>
+                            <div class="side">
+                              <div>3 star</div>
+                            </div>
+                            <div class="middle">
+                              <div class="bar-container">
+                                <div class="bar-3"
+                                  [ngStyle]="{'width': teacherProfileData?.tutor_rating_percentage?.three_star_percentage +'%'}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="side right">
+                              <div>{{teacherProfileData?.tutor_rating_percentage?.three_star_percentage}}%</div>
+                            </div>
+                            <div class="side">
+                              <div>2 star</div>
+                            </div>
+                            <div class="middle">
+                              <div class="bar-container">
+                                <div class="bar-2"
+                                  [ngStyle]="{'width': teacherProfileData?.tutor_rating_percentage?.two_star_percentage +'%'}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="side right">
+                              <div>{{teacherProfileData?.tutor_rating_percentage?.two_star_percentage}}%</div>
+                            </div>
+                            <div class="side">
+                              <div>1 star</div>
+                            </div>
+                            <div class="middle">
+                              <div class="bar-container">
+                                <div class="bar-1"
+                                  [ngStyle]="{'width': teacherProfileData?.tutor_rating_percentage?.one_star_percentage +'%'}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="side right">
+                              <div>{{teacherProfileData?.tutor_rating_percentage?.one_star_percentage}}%</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="several-rating">
+                  <h4>By Several Parameters</h4>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Tutor Self-Confidence</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_self_confidence_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_self_confidence_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Punctuality & Regularity</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_punctuality_regularity_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_punctuality_regularity_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Course/Syllabus Coverage</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_focus_in_syllabus_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_focus_in_syllabus_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Course/Syllabus Completeness</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_course_completeness_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_course_completeness_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Course Content Delivery</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_course_delivery_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_course_delivery_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Communication Skills</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_communication_skills_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_communication_skills_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Presentation skills</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_presentation_skills_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_presentation_skills_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Teaching Technique</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_teaching_technique_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_teaching_technique_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Focus in Syllabus</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_focus_in_syllabus_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_focus_in_syllabus_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Innovative Teaching Method</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_innovative_method_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_innovative_method_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Helping Student Attitude</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_helping_attitude_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_helping_attitude_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="6">
+                        <b>Effective Class Control</b>
+                      </ion-col>
+                      <ion-col size="6">
+                        <div class="rating">
+                          <span class="rating__stars"
+                            style="--rating: {{teacherProfileData?.tutor_rating?.avg_effective_control_rating}};"></span>
+                          <div class="rating__number">
+                            <span
+                              class="rating__score">{{teacherProfileData?.tutor_rating?.avg_effective_control_rating}}</span>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+
+                <!-- review slider -->
+                <swiper-container #swiper [modules]="swiperModules" [slidesPerView]="1" [loop]="true" [autoplay]="true">
+                  <swiper-slide *ngFor="let item of teacherProfileData?.tutor_reviews">
+                    <div class="review-item">
+                      <div class="review-top">
+                        <div class="profile-img">
+                          <img onError="this.src='assets/default-user.jpg'" src="{{file_url}}/assets/uploads/profiles/{{item?.photo}}">
+                        </div>
+                        <div>
+                          <b>{{item?.student_name}}</b>
+                          <div class="rating">
+                            <span class="rating__stars"
+                              style="--rating: {{item?.rating}};"></span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <b>{{item?.title}}</b>
+                      <i>Reviewed On {{item?.posted_on | date:'dd MMM yyy : h:mm a'}}</i>
+                      <p>{{item?.comments}}</p>
+                    </div>
+                  </swiper-slide>
+                </swiper-container>
+              </div>
+            </mat-tab>
+            <!-- Other information -->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">info</mat-icon>
+                Others information
+              </ng-template>
+              <div class="tab-inner">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th>Course</th>
+                      <th>Fee per Class (In KlassCoins)</th>
+                      <th>Duration</th>
+                      <th>Type</th>
+                    </tr>
+
+                    <tr>
+                      <td>{{teacherProfileData?.tutor_individual_courses?.course_title}}</td>
+                      <td>{{teacherProfileData?.tutor_individual_courses?.increased_fee}}</td>
+                      <td>{{teacherProfileData?.tutor_individual_courses?.duration / 30}} Months</td>
+                      <td>Indiviual Classes</td>
+                    </tr>
+
+                    <tr>
+                      <td>{{teacherProfileData?.tutor_batch_courses[0]?.course_title}}</td>
+                      <td>{{teacherProfileData?.tutor_batch_courses[0]?.increased_fee}}</td>
+                      <td>{{teacherProfileData?.tutor_batch_courses[0]?.duration / 30}} Months </td>
+                      <td>Group Classes</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <ion-accordion-group>
+                  <ion-accordion value="course">
+                    <ion-item slot="header">
+                      <ion-label>About Course</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content"
+                      [innerHTML]="teacherProfileData?.tutor_batch_courses[0]?.content | safeHtml"></div>
+                  </ion-accordion>
+                  <ion-accordion value="requirement">
+                    <ion-item slot="header">
+                      <ion-label>Pre-Requisite Requirement</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content"
+                      [innerHTML]="teacherProfileData?.tutor_batch_courses[0]?.pre_req | safeHtml"></div>
+                  </ion-accordion>
+                  <ion-accordion value="about-me">
+                    <ion-item slot="header">
+                      <ion-label>About Me</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content"
+                      [innerHTML]="teacherProfileData?.tutor_details[0]?.profile | safeHtml"></div>
+                  </ion-accordion>
+                  <ion-accordion value="experience">
+                    <ion-item slot="header">
+                      <ion-label>My Experience</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                      <div class="experience-item" *ngFor="let item of tutorDetails?.tutor_experience">
+                        <p><b>{{item?.from_date}} - {{item?.to_date}} :</b></p>
+                        <p>{{item?.company}} - {{item?.role}}</p>
+                        <p [innerHTML]="item?.description | safeHtml"></p>
+                      </div>
+                    </div>
+                  </ion-accordion>
+                  <ion-accordion value="skill-set">
+                    <ion-item slot="header">
+                      <ion-label>My Skill Set</ion-label>
+                    </ion-item>
+                    <div class="ion-padding skill-set" slot="content">
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Subject Details:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.subject_details | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Domain Knowledge Details:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.domain_knowledge_details | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Book Published Details:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.book_published_details | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Language Known:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.languages_known}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Tutoring Courses:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.tutoring_courses | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Career Experience:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.experience_desc | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Total Experiance:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorExp}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Listening & Questioning Skill:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.listning}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Reading Skill:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.reading}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Writing Skill:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.writing}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Presentation Skill:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.presentation}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Online classes Experiance:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.statistics_info}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Experience in CBSE:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.exp_cbse}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Experience in ICSE:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.exp_icse}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Experience in STATEBOARD:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.exp_stateboard}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>GATE Score:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.gate_score}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>TOFEL Score:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.tofel_score}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>SAT Score:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            {{tutorDetails?.sat_score}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Award Recg:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.award_recg | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="6">
+                            <b>Research Work:</b>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-text [innerHTML]="tutorDetails?.research_work | safeHtml"></ion-text>
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+                    </div>
+                  </ion-accordion>
+                  <ion-accordion value="qualification">
+                    <ion-item slot="header">
+                      <ion-label>Education Qualification</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                      <p *ngIf="tutorDetails?.qualification">
+                        <b>Degree:</b> {{tutorDetails?.qualification}} -
+                        <b>University:</b> {{tutorDetails?.bachelor_uni}}
+                      </p>
+                      <p *ngIf="tutorDetails?.master_qualification">
+                        <b>Degree:</b> {{tutorDetails?.master_qualification}} -
+                        <b>University:</b> {{tutorDetails?.master_uni}}
+                      </p>
+                      <p *ngIf="tutorDetails?.other_qualification">
+                        <b>Degree:</b> {{tutorDetails?.other_qualification}} -
+                        <b>University:</b> {{tutorDetails?.other_uni}}
+                      </p>
+                    </div>
+                  </ion-accordion>
+                  <ion-accordion value="more-course">
+                    <ion-item slot="header">
+                      <ion-label>More About Course</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="12">
+                            <p [innerHTML]="teacherProfileData?.tutor_individual_courses?.content | safeHtml"></p>
+                          </ion-col>
+                          <ion-col size="12">
+                            <b>Learning Objectives:</b>
+                            <p
+                              [innerHTML]="teacherProfileData?.tutor_individual_courses?.learning_objectives | safeHtml">
+                            </p>
+                          </ion-col>
+                          <ion-col size="12">
+                            <b>Course Outline:</b>
+                            <p [innerHTML]="teacherProfileData?.tutor_individual_courses?.course_outline | safeHtml">
+                            </p>
+                          </ion-col>
+                          <ion-col size="12">
+                            <b>Recomended Audience:</b>
+                            <p
+                              [innerHTML]="teacherProfileData?.tutor_individual_courses?.recomended_audience | safeHtml">
+                            </p>
+                          </ion-col>
+                          <ion-col size="12">
+                            <b>Pre-Requisite Requirement:</b>
+                            <p [innerHTML]="teacherProfileData?.tutor_individual_courses?.pre_req | safeHtml"></p>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="4">
+                            <b>Course Level:</b>
+                          </ion-col>
+                          <ion-col size="8">
+                            {{teacherProfileData?.tutor_individual_courses?.course_level}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="4">
+                            <b>Language of Teaching:</b>
+                          </ion-col>
+                          <ion-col size="8" *ngIf="tutorDetails?.tutoring_course_details?.teaching_lang">
+                            {{tutorDetails?.tutoring_course_details?.teaching_lang}}
+                          </ion-col>
+                          <ion-col size="8" *ngIf="!tutorDetails?.tutoring_course_details?.teaching_lang">
+                            English
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="4">
+                            <b>Class Schedule Availiability:</b>
+                          </ion-col>
+                          <ion-col size="8" *ngIf="tutorDetails?.tutoring_course_details?.class_availiability">
+                            {{tutorDetails?.tutoring_course_details?.class_availiability}}
+                          </ion-col>
+                          <ion-col size="8" *ngIf="!tutorDetails?.tutoring_course_details?.class_availiability">
+                            Morning, Afternoon, Evening
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+
+
+
+
+
+
+                    </div>
+                  </ion-accordion>
+                </ion-accordion-group>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </ion-grid>
+
+  </div>
+</ion-content>
+<common-footer></common-footer>

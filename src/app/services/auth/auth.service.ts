@@ -94,6 +94,7 @@ export class AuthService {
       console.log('resData', resData);
 
       localStorage.setItem('userId', resData.return_data);
+      localStorage.setItem('user_type', resData.user_type);
 
       
       console.log('userDetails>>',  localStorage.getItem('userId'));

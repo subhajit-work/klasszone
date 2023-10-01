@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-teacher-list',
@@ -12,6 +13,9 @@ import { Subscription } from 'rxjs';
 })
 
 export class TeacherListPage implements OnInit {
+  api_url = environment.apiUrl;
+  file_url = environment.fileUrl;
+  
   model: any = {};
   parms_class:any;
   parms_department:any;
@@ -23,6 +27,7 @@ export class TeacherListPage implements OnInit {
   private teacherDataSubscribe: Subscription | undefined;
   teacherLoadData:any;
   teacher_url:any;
+  pageLoad_url:any;
   teacherAllData:any;
 
   private classDataSubscribe: Subscription | undefined;
@@ -40,10 +45,11 @@ export class TeacherListPage implements OnInit {
   subject_url:any;
   subjectAllData:any;
 
-  private tutorDataSubscribe: Subscription | undefined;
-  tutorLoadData:any;
-  tutor_url:any;
-  tutorAllData:any;
+  openFilter = false;
+  filterEnabled = false;
+  noTutors = false;
+  panelOpenState: boolean = false;
+  pageName:any;
 
   constructor(
     private menuCtrl: MenuController,
@@ -56,6 +62,8 @@ export class TeacherListPage implements OnInit {
     this.parms_class = this.activatedRoute.snapshot.paramMap.get('class');
     console.log('parms_department', this.parms_department);
     console.log('parms_class', this.parms_class);
+    this.pageName = this.parms_department.replace(/-/g, " ");
+    this.pageLoad_url = "all_courses/"+this.parms_department+"/"+this.parms_class;
     this. onPageLoadFilter();
 
     this.department_url = 'fetch_categories';
@@ -83,9 +91,18 @@ export class TeacherListPage implements OnInit {
     }
   }
 
+  /* mat-expansion-panel open/close */
+  togglePanel() {
+    console.log('this.panelOpenState', this.panelOpenState);
+    
+    this.panelOpenState = !this.panelOpenState
+  }
+
   /* --------onSubmitFilter start-------- */
   onSubmitFilter(form: NgForm){
+    this.noTutors = false;
     console.log("onSubmitFilter >", form.value);
+    this.pageName = form.value.department.slug.replace(/-/g, " ");
     if (form.value.department) {
       this.teacher_url = "all_courses/"+form.value.department.slug;
     }
@@ -107,8 +124,19 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.teacherLoadData = false;
         this.teacherAllData = res.return_data;
-
+        if (this.openFilter == true) {
+          this.filterEnabled = true;
+        }else {
+          this.filterEnabled = false;
+        }
         console.log('this.teacherAllData', this.teacherAllData);
+        const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
+
+        if (allInnerArraysEmpty) {
+          this.noTutors = true;
+        } else {
+          this.noTutors = false;
+        }
       },
       errRes => {
         this.teacherLoadData = false;
@@ -116,17 +144,27 @@ export class TeacherListPage implements OnInit {
     );
 
   }
+  /* --------onSubmitFilter end-------- */
+
+  /* onPageLoadFilter start */
   onPageLoadFilter(){
+    this.noTutors = false;
     console.log('model>>>', this.model);
     
-    this.teacher_url = "all_courses/"+this.parms_department+"/"+this.parms_class;
-    
-    this.teacherDataSubscribe = this.http.get(this.teacher_url).subscribe(
+    this.teacherDataSubscribe = this.http.get(this.pageLoad_url).subscribe(
       (res:any) => {
         this.teacherLoadData = false;
         this.teacherAllData = res.return_data;
 
         console.log('this.teacherAllData', this.teacherAllData);
+
+        const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
+
+        if (allInnerArraysEmpty) {
+          this.noTutors = true;
+        } else {
+          this.noTutors = false;
+        }
       },
       errRes => {
         this.teacherLoadData = false;
@@ -134,7 +172,11 @@ export class TeacherListPage implements OnInit {
     );
 
   }
+  /* onPageLoadFilter end */
+
+  /* onFilterTeacher start */
   onFilterTeacher(_value:any, _identifier:any){
+    this.pageLoad_url = '';
     console.log('_value', _value);
     console.log('_identifier', _identifier);
     setTimeout(() => {
@@ -228,11 +270,13 @@ export class TeacherListPage implements OnInit {
       
       let maiApi = modeClass+avgReview+price+discount+classAvailiability+hour+interacted+sort;
       console.log('maiApi<<>>', maiApi);
+      this.pageLoad_url = this.teacher_url+'?'+maiApi;
+      this.onPageLoadFilter();
     }, 500);
     
     
   }
-  /* --------onSubmitFilter end-------- */
+  /* onFilterTeacher end */
 
   /* --------Department start-------- */
   departmentData(){
@@ -241,6 +285,11 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.departmentLoadData = false;
         this.departmentAllData = res.return_data;
+        if (res.return_data.length == 0) {
+          this.openFilter = true;
+        }else {
+          this.openFilter = false;
+        }
 
         console.log('this.departmentAllData', this.departmentAllData);
         for (let i = 0; i < this.departmentAllData.length; i++) {
@@ -258,6 +307,15 @@ export class TeacherListPage implements OnInit {
   }
   onChangeDepartment(event:any) {
     console.log(event?.detail?.value);
+
+    this.parms_class = '';
+    this.parms_department = '';
+    
+    this.model.class = '';
+    this.model.board = '';
+    this.model.subject = '';
+
+
     this.classData();
   }
   /* Department end */
@@ -269,6 +327,11 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.classLoadData = false;
         this.classAllData = res.return_data;
+        if (res.return_data.length == 0) {
+          this.openFilter = true;
+        }else {
+          this.openFilter = false;
+        }
 
         console.log('this.classAllData', this.classAllData);
 
@@ -287,6 +350,8 @@ export class TeacherListPage implements OnInit {
   }
   onChangeClass(event:any) {
     console.log(event?.detail?.value);
+    this.model.board = '';
+    this.model.subject = '';
     this.boardData();
   }
   /* Class end */
@@ -298,6 +363,11 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.boardLoadData = false;
         this.boardAllData = res.return_data;
+        if (res.return_data.length == 0) {
+          this.openFilter = true;
+        }else {
+          this.openFilter = false;
+        }
 
         console.log('this.boardAllData', this.boardAllData);
       },
@@ -308,6 +378,7 @@ export class TeacherListPage implements OnInit {
   }
   onChangeBoard(event:any) {
     console.log(event?.detail?.value);
+    this.model.subject = '';
     this.subject_url = 'fetch_courses_using_sub_subcategories?selected_categories='+this.model.department.id+'&selected_sub_categories='+this.model.class.id+'&selected_sub_subcategories='+event?.detail?.value?.id;
     this.subjectData();
   }
@@ -320,6 +391,7 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.subjectLoadData = false;
         this.subjectAllData = res.return_data;
+        this.openFilter = true;
 
         console.log('this.subjectAllData', this.subjectAllData);
       },
@@ -330,31 +402,8 @@ export class TeacherListPage implements OnInit {
   }
   onChangeSubject(event:any) {
     console.log(event?.detail?.value);
-
-    this.tutor_url = 'fetch_tutor_courses_using_sub_subcategories?selected_categories='+this.model.department.id+'&selected_sub_categories='+this.model.class.id+'&selected_sub_subcategories='+this.model.board.id+'&selected_course_id='+event?.detail?.value?.id;
-    this.tutorData();
   }
   /* subject end */
-
-  /* --------Tutor start-------- */
-  tutorData(){
-    this.tutorLoadData = true;
-    this.tutorDataSubscribe = this.http.get(this.tutor_url).subscribe(
-      (res:any) => {
-        this.tutorLoadData = false;
-        this.tutorAllData = res.return_data.class_availiability;
-
-        console.log('this.tutorAllData', this.tutorAllData);
-      },
-      errRes => {
-        this.tutorLoadData = false;
-      }
-    );
-  }
-  onChangetutor(event:any) {
-    console.log(event?.detail?.value);
-  }
-  /* tutor end */
 
   menuOpen = false;
   openFilterMenu() {
@@ -382,9 +431,6 @@ export class TeacherListPage implements OnInit {
     }
     if(this.subjectDataSubscribe !== undefined){
       this.subjectDataSubscribe.unsubscribe();
-    }
-    if(this.tutorDataSubscribe !== undefined){
-      this.tutorDataSubscribe.unsubscribe();
     }
     if(this.teacherDataSubscribe !== undefined){
       this.teacherDataSubscribe.unsubscribe();
