@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
+import profileMenuData from 'src/app/services/profilemenu.json';
 
 @Component({
   selector: 'app-booking-view',
@@ -22,142 +23,6 @@ export class BookingViewPage implements OnInit {
   parms_status:any;
   parms_id:any;
 
-  studentMenuData = [
-    {
-      name: 'Student Dashboard',
-      url: 'dashboard',
-      icon: 'speed'
-    },
-    {
-      name: 'My Enrolled Classes',
-      url: 'enrolement',
-      icon: 'school',
-      subPages : [
-        {
-          name: 'All',
-          url: 'all-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Approved',
-          url: 'approved-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Session Initiated',
-          url: 'session-initiated-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Completed',
-          url: 'completed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Cancelled ',
-          url: 'cancelled-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Claim For Admin Intervention ',
-          url: 'intervention-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Closed',
-          url: 'closed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Expired',
-          url: 'expired-enrolement-classes',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Event Enrollment',
-      url: 'event-enrollment',
-      icon: 'celebration',
-      subPages : [
-        {
-          name: 'All Enrollments',
-          url: 'all-enrolement',
-          icon: 'send',
-        },
-        {
-          name: 'Upcoming Enrollments',
-          url: 'upcoming-enrollments',
-          icon: 'send',
-        },
-        {
-          name: 'Completed/Expired Events',
-          url: 'completed-expired-events',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Buy KlassCoins',
-      url: 'buy-bookingViews',
-      icon: 'toll',
-      subPages : [
-        {
-          name: 'KlassCoins Packages',
-          url: 'bookingViews-packages',
-          icon: 'send',
-        },
-        {
-          name: 'Order History',
-          url: 'order-history',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'KlassCoins History',
-      url: 'bookingViews-history',
-      icon: 'history'
-    },
-    {
-      name: 'Rewards Points',
-      url: 'rewards-points',
-      icon: 'emoji_events'
-    },
-    {
-      name: 'Redeem Rewards',
-      url: 'redeem-rewards',
-      icon: 'redeem'
-    },
-    {
-      name: 'Refer and Earn',
-      url: 'refer-earn',
-      icon: 'share'
-    },
-    {
-      name: 'Student Information',
-      url: 'student-information',
-      icon: 'person',
-      subPages : [
-        {
-          name: 'Personal Information',
-          url: 'personal-information',
-          icon: 'send',
-        },
-        {
-          name: 'Profile Information',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Change Password',
-          url: 'change-password',
-          icon: 'send',
-        }
-      ],
-    },
-  ];
-
   private userDetailsSubscribe: Subscription | undefined;
   userData:any;
   model: any = {};
@@ -165,6 +30,10 @@ export class BookingViewPage implements OnInit {
   private bookingViewDataSubscribe: Subscription | undefined;
   bookingView_url:any;
   bookingViewData:any;
+
+  userType:any;
+
+  profileSideMenuData:any;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef, 
@@ -180,14 +49,18 @@ export class BookingViewPage implements OnInit {
    }
 
   ngOnInit() {
-    // this.commonUtils.userInfoDataObservable.subscribe(res =>{
-    //   console.log('userInfoDataObservable res>>>>>>>>>>>>>>>>>>>.. >', res);
-    //   this.userData = res;
-    // })
     this.parms_status = this.activatedRoute.snapshot.paramMap.get('status');
     this.parms_id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log('parms_status', this.parms_status);
     console.log('parms_id', this.parms_id);
+
+    this.userType = localStorage.getItem('user_type');
+
+    if (this.userType == 'tutor') {
+      this.profileSideMenuData = profileMenuData.tutorMenuData;
+    }else {
+      this.profileSideMenuData = profileMenuData.studentMenuData;
+    }
 
     this.userInfoData();
   }
@@ -204,8 +77,14 @@ export class BookingViewPage implements OnInit {
           this.userData = resData.return_data;
           
           if (this.parms_status == 'all') {
-            this.bookingView_url = 'enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
-            this.getBookingView();
+            if (this.userType == 'student') {
+              this.bookingView_url = 'enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+              this.getBookingView();
+            }else {
+              this.bookingView_url = 'student_enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+              this.getBookingView();
+            }
+            
           }else {
             this.bookingView_url = 'enquiries/'+this.parms_status+'/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
             this.getBookingView();

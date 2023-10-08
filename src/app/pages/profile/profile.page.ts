@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, DatetimeChangeEventDetail, MenuController } from '@ionic/angular';
+import { AlertController, DatetimeChangeEventDetail, MenuController, NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MediaMatcher} from '@angular/cdk/layout';
+
+import profileMenuData from 'src/app/services/profilemenu.json';
 
 interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
@@ -39,320 +41,6 @@ export class ProfilePage implements OnInit {
   private tableListDataSubscribe: Subscription | undefined;
   tableListData_url:any;
   tableData:any;
-  studentMenuData = [
-    {
-      name: 'Student Dashboard',
-      url: 'dashboard',
-      icon: 'speed'
-    },
-    {
-      name: 'My Enrolled Classes',
-      url: 'enrolement',
-      icon: 'school',
-      subPages : [
-        {
-          name: 'All',
-          url: 'all-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Approved',
-          url: 'approved-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Session Initiated',
-          url: 'session-initiated-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Completed',
-          url: 'completed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Cancelled ',
-          url: 'cancelled-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Claim For Admin Intervention ',
-          url: 'intervention-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Closed',
-          url: 'closed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Expired',
-          url: 'expired-enrolement-classes',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Event Enrollment',
-      url: 'event-enrollment',
-      icon: 'celebration',
-      subPages : [
-        {
-          name: 'All Enrollments',
-          url: 'all-enrolement',
-          icon: 'send',
-        },
-        {
-          name: 'Upcoming Enrollments',
-          url: 'upcoming-enrollments',
-          icon: 'send',
-        },
-        {
-          name: 'Completed/Expired Events',
-          url: 'completed-expired-events',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Buy KlassCoins',
-      url: 'buy-klassCoins',
-      icon: 'toll',
-      subPages : [
-        {
-          name: 'KlassCoins Packages',
-          url: 'klassCoins-packages',
-          icon: 'send',
-        },
-        {
-          name: 'Order History',
-          url: 'order-history',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'KlassCoins History',
-      url: 'klassCoins-history',
-      icon: 'history'
-    },
-    {
-      name: 'Rewards Points',
-      url: 'rewards-points',
-      icon: 'emoji_events'
-    },
-    {
-      name: 'Redeem Rewards',
-      url: 'redeem-rewards',
-      icon: 'redeem'
-    },
-    {
-      name: 'Refer and Earn',
-      url: 'refer-earn',
-      icon: 'share'
-    },
-    {
-      name: 'Student Information',
-      url: 'student-information',
-      icon: 'person',
-      subPages : [
-        {
-          name: 'Personal Information',
-          url: 'personal-information',
-          icon: 'send',
-        },
-        {
-          name: 'Profile Information',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Change Password',
-          url: 'change-password',
-          icon: 'send',
-        }
-      ],
-    },
-  ];
-  tutorMenuData = [
-    {
-      name: 'Tutor Dashboard',
-      url: 'dashboard',
-      icon: 'speed'
-    },
-    {
-      name: 'Class Enrollments',
-      url: 'enrolement',
-      icon: 'school',
-      subPages : [
-        {
-          name: 'All',
-          url: 'all-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Approved',
-          url: 'approved-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Session Initiated',
-          url: 'session-initiated-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Completed',
-          url: 'completed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Cancelled ',
-          url: 'cancelled-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Claim For Admin Intervention ',
-          url: 'intervention-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Closed',
-          url: 'closed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Expired',
-          url: 'expired-enrolement-classes',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Manage Courses',
-      url: 'event-enrollment',
-      icon: 'menu_book',
-      subPages : [
-        {
-          name: 'Courses ',
-          url: 'all-enrolement',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Manage Events',
-      url: 'event-enrollment',
-      icon: 'celebration',
-      subPages : [
-        {
-          name: 'List Events',
-          url: 'all-enrolement',
-          icon: 'send',
-        },
-        {
-          name: 'All Enrollments',
-          url: 'upcoming-enrollments',
-          icon: 'send',
-        },
-        {
-          name: 'Upcoming Enrollments',
-          url: 'completed-expired-events',
-          icon: 'send',
-        },
-        {
-          name: 'Completed/Expired Enrollments ',
-          url: 'upcoming-enrollments',
-          icon: 'send',
-        },
-        {
-          name: 'Cancelled Enrollments ',
-          url: 'completed-expired-events',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Buy KlassCoins',
-      url: 'buy-klassCoins',
-      icon: 'toll',
-      subPages : [
-        {
-          name: 'KlassCoins Packages',
-          url: 'klassCoins-packages',
-          icon: 'send',
-        },
-        {
-          name: 'Order History',
-          url: 'order-history',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Salary Request',
-      url: 'buy-klassCoins',
-      icon: 'account_balance_wallet',
-      subPages : [
-        {
-          name: 'Pending',
-          url: 'klassCoins-packages',
-          icon: 'send',
-        },
-        {
-          name: 'Done',
-          url: 'order-history',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'KlassCoins History',
-      url: 'klassCoins-history',
-      icon: 'history'
-    },
-    {
-      name: 'Refer and Earn',
-      url: 'rewards-points',
-      icon: 'emoji_events'
-    },
-    {
-      name: 'Received Reviews',
-      url: 'redeem-rewards',
-      icon: 'redeem'
-    },
-    {
-      name: 'Tutor Information',
-      url: 'student-information',
-      icon: 'person',
-      subPages : [
-        {
-          name: 'Personal Information',
-          url: 'personal-information',
-          icon: 'send',
-        },
-        {
-          name: 'Profile Information',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Experience ',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Manage certificates',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Change Password',
-          url: 'change-password',
-          icon: 'send',
-        }
-      ],
-    },
-  ];
   profileSideMenuData:any;
   userSavedInfo:any;
   
@@ -367,6 +55,14 @@ export class ProfilePage implements OnInit {
   private klassCoinDataSubscribe: Subscription | undefined;
   klassCoin_url:any;
   klassCoinList:any;
+
+  private meetingDataSubscribe: Subscription | undefined;
+  meeting_url:any;
+  meetingData:any;
+
+  private classDataSubscribe: Subscription | undefined;
+  class_url:any;
+  classData:any;
 
   bookingStatus = [
     {
@@ -389,6 +85,7 @@ export class ProfilePage implements OnInit {
     private authService : AuthService,
     private router: Router,
     private commonUtils: CommonUtils,
+    private navCtrl : NavController,
     private activatedRoute : ActivatedRoute,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher
@@ -403,9 +100,9 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.userType = localStorage.getItem('user_type');
     if (this.userType == 'tutor') {
-      this.profileSideMenuData = this.tutorMenuData;
+      this.profileSideMenuData = profileMenuData.tutorMenuData;
     }else {
-      this.profileSideMenuData = this.studentMenuData;
+      this.profileSideMenuData = profileMenuData.studentMenuData;
     }
     this.commonUtils.userInfoDataObservable.subscribe(res =>{
       console.log('userInfoDataObservable res>>>>>>>>>>>>>>>>>>>.. >', res);
@@ -702,6 +399,72 @@ export class ProfilePage implements OnInit {
   }
   // form submit end
 
+  /* Call for join meeting start */
+  joinMeeting(){
+    this.meetingDataSubscribe = this.http.get(this.meeting_url).subscribe(
+      (res:any) => {
+        if (res.return_status > 0) {
+          this.meetingData = res.return_data;
+
+          console.log('this.meetingData', this.meetingData);
+          // localStorage.setItem('big_blue_link', this.classData.url);
+          // this.navCtrl.navigateRoot('big-blue-button');
+          window.location.href=this.classData.url;
+        }else {
+          this.commonUtils.presentToast('error', res.return_message);
+        }
+        
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Call for join meeting URL end */
+
+  /* Aleart for open big blue button start */
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header:  this.classData.meeting_name,
+      message: 'Are you sure want to join this course?',
+      cssClass: 'custom-alert',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'cancelBtn',
+        handler: (blah) => {}
+      }, {
+        text: 'Join Course Now',
+        handler: () => {
+          this.joinMeeting();
+        }
+      }]
+    });
+  
+    await alert.present();
+  }
+  /* Aleart for open big blue button end */
+
+  /* Join Class start */
+  joinClass(_id:any){
+    this.class_url = 'init/'+_id+'?user_type='+this.userType+'&user_id='+this.userData.user_data.id;
+    this.classDataSubscribe = this.http.get(this.class_url).subscribe(
+      (res:any) => {
+        if (res.return_status > 0) {
+          this.classData = res.return_data;
+          console.log('this.classData', this.classData);
+          this.presentAlertConfirm();
+          this.meeting_url = 'course_attendance?course_id='+_id+'&user_id='+this.userData.user_data.id+'&type='+this.userType;
+        }else {
+          this.commonUtils.presentToast('error', res.return_message);
+        }
+        
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Join Class end */
+
   // ----------- destroy subscription start ---------
   ngOnDestroy() {
     if(this.userDetailsSubscribe !== undefined){
@@ -709,6 +472,12 @@ export class ProfilePage implements OnInit {
     }
     if(this.tableListDataSubscribe !== undefined){
       this.tableListDataSubscribe.unsubscribe();
+    }
+    if(this.meetingDataSubscribe !== undefined){
+      this.meetingDataSubscribe.unsubscribe();
+    }
+    if(this.classDataSubscribe !== undefined){
+      this.classDataSubscribe.unsubscribe();
     }
     if (this.klassCoinDataSubscribe !== undefined) {
       this.klassCoinDataSubscribe.unsubscribe();

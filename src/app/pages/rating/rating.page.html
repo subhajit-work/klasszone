@@ -1,0 +1,172 @@
+<ion-content [fullscreen]="true" [class.example-is-mobile]="mobileQuery.matches">
+  <ion-header [translucent]="true" class="profile-head">
+
+    <!-- breadcumb start -->
+    <div class="head-inner">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">
+          Home
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          Rating Tutor
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+      <ion-button menuToggle size="small" (click)="snav.toggle()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <!-- breadcumb end -->
+
+  </ion-header>
+
+
+
+  <mat-sidenav-container class="profile-sidenav-container example-sidenav-container">
+    <!-- side menu start -->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+      <mat-nav-list class="profile-menu">
+
+        <ion-accordion-group>
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
+            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="menu?.subPages" slot="header">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+                <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+                <ion-label>{{submenu?.name}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </mat-nav-list>
+    </mat-sidenav>
+    <!-- side menu end -->
+
+    <mat-sidenav-content>
+      <!-- rate & review start -->
+      <div class="rate-review" *ngIf="userData">
+        <form #ratingEditForm="ngForm" (ngSubmit)="onSubmit(ratingEditForm)"
+          (keyup.enter)="onSubmit(ratingEditForm)">
+          <ion-grid>
+            <input type="hidden" name="user_id" [(ngModel)]="userData.user_data.id">
+            <input type="hidden" name="review_id" [(ngModel)]="model.review_id">
+            <ion-row>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Tutor Self-Confidence</ion-label>
+                  <app-rating name="self_confidence" [(ngModel)]="model.self_confidence" [rating]='model?.self_confidence' [itemId]='1' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Presentation skills</ion-label>
+                  <app-rating name="presentation_skills" [(ngModel)]="model.presentation_skills" [rating]='model?.presentation_skills' [itemId]='2' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Punctuality & Regularity</ion-label>
+                  <app-rating name="punctuality_regularity" [(ngModel)]="model.punctuality_regularity" [rating]='model?.punctuality_regularity' [itemId]='3' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Teaching Technique</ion-label>
+                  <app-rating name="teaching_technique" [(ngModel)]="model.teaching_technique" [rating]='model?.teaching_technique' [itemId]='4' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Course/Syllabus Coverage</ion-label>
+                  <app-rating name="course_coverage" [(ngModel)]="model.course_coverage" [rating]='model?.course_coverage' [itemId]='5' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Focus in Syllabus</ion-label>
+                  <app-rating name="focus_in_syllabus" [(ngModel)]="model.focus_in_syllabus" [rating]='model?.focus_in_syllabus' [itemId]='6' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Course/Syllabus Completeness</ion-label>
+                  <app-rating name="course_completeness" [(ngModel)]="model.course_completeness" [rating]='model?.course_completeness' [itemId]='7' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Innovative Teaching Method</ion-label>
+                  <app-rating name="innovative_method" [(ngModel)]="model.innovative_method" [rating]='model?.innovative_method' [itemId]='8' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Course Content Delivery</ion-label>
+                  <app-rating name="course_delivery" [(ngModel)]="model.course_delivery" [rating]='model?.course_delivery' [itemId]='9' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Helping Student Attitude</ion-label>
+                  <app-rating name="helping_attitude" [(ngModel)]="model.helping_attitude" [rating]='model?.helping_attitude' [itemId]='10' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Communication Skills</ion-label>
+                  <app-rating name="communication_skills" [(ngModel)]="model.communication_skills" [rating]='model?.communication_skills' [itemId]='11' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Effective Class Control</ion-label>
+                  <app-rating name="effective_control" [(ngModel)]="model.effective_control" [rating]='model?.effective_control' [itemId]='12' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="rate-item">
+                  <ion-label>Overall Rating</ion-label>
+                  <app-rating name="rating" [(ngModel)]="model.rating" [rating]='model?.rating' [itemId]='13' (ratingClick)='ratingComponentClick($event)'></app-rating>
+                </div>
+              </ion-col>
+              <!-- Add a headline -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.title" name="title" labelPlacement="stacked"
+                    placeholder="Add a headline"></ion-input>
+                </div>
+              </ion-col>
+              <!-- Add a written review -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-textarea [(ngModel)]="model.comments" name="comments" labelPlacement="stacked" placeholder="Add a written review"></ion-textarea>
+                </div>
+              </ion-col>
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" expand="block" shape="round">
+                    Submit
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+      <!-- rate & review end -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
+</ion-content>
+<common-footer></common-footer>

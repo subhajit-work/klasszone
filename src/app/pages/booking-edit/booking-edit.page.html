@@ -29,7 +29,7 @@
       <mat-nav-list class="profile-menu">
 
         <ion-accordion-group>
-          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
             <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
@@ -64,7 +64,7 @@
               <ion-col size="12" [hidden]="enquiriesEditData?.status.length == 0">
                 <div class="field-item">
                   <ion-select [(ngModel)]="enquiriesEditData.prev_status"
-                  name="status" interface="action-sheet" required placeholder="Select Change Status">
+                  name="status" interface="action-sheet" required cancelText="Close" placeholder="Select Change Status">
                     <ion-select-option *ngFor="let item of enquiriesEditData.status" [value]="item?.display_value">{{item?.display_name}}</ion-select-option>
                   </ion-select>
                 </div>
@@ -72,7 +72,7 @@
               <!-- Status desc -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.status_desc" name="status_desc" labelPlacement="stacked"
+                  <ion-input type="text" [(ngModel)]="enquiriesEditData.status_desc" name="status_desc" labelPlacement="stacked"
                     placeholder="Enter Status desc"></ion-input>
                 </div>
               </ion-col>
@@ -104,40 +104,40 @@
                 <ion-text color="medium">
                   <p>
                     Cancel your booking status of the course or update Klasszone Admin about class:
-                    <ion-button color="warning" fill="outline" class="small-btn">
-                      <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="accent">edit</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>
                 <ion-text color="success">
                   <p>
                     View your class and course details using this action button:
-                    <ion-button color="danger" fill="outline" class="small-btn">
-                      <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="warn">visibility</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>
                 <ion-text color="medium">
                   <p>
                     Join your classes at scheduled time using this action button:
-                    <ion-button color="tertiary" fill="outline" class="small-btn">
-                      <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="primary">duo</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>
                 <ion-text color="warning">
                   <p>
                     Pay your Next month fee for your enrolled classes of your course:
-                    <ion-button color="danger" fill="outline" class="small-btn">
-                      <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="accent">payment</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>
                 <ion-text color="dark">
                   <p>
                     Review your Tutor and provide Star Rating using this action button:
-                    <ion-button color="warning" fill="outline" class="small-btn">
-                      <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="warn">star</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>
@@ -145,63 +145,6 @@
             </ion-row>
           </ion-grid>
         </form>
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-text color="primary">
-                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-              </ion-text>
-              <ion-text color="tertiary">
-                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-              </ion-text>
-              <ion-text color="success">
-                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-              </ion-text>
-              <mat-divider></mat-divider>
-              <ion-text color="medium">
-                <p>
-                  Cancel your booking status of the course or update Klasszone Admin about class:
-                  <ion-button color="warning" fill="outline" class="small-btn">
-                    <ion-icon color="warning" slot="icon-only" name="pencil-outline"></ion-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="success">
-                <p>
-                  View your class and course details using this action button:
-                  <ion-button color="danger" fill="outline" class="small-btn">
-                    <ion-icon color="danger" slot="icon-only" name="eye-outline"></ion-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="medium">
-                <p>
-                  Join your classes at scheduled time using this action button:
-                  <ion-button color="tertiary" fill="outline" class="small-btn">
-                    <ion-icon color="tertiary" slot="icon-only" name="cloud-outline"></ion-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="warning">
-                <p>
-                  Pay your Next month fee for your enrolled classes of your course:
-                  <ion-button color="danger" fill="outline" class="small-btn">
-                    <ion-icon color="danger" slot="icon-only" name="cash-outline"></ion-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="dark">
-                <p>
-                  Review your Tutor and provide Star Rating using this action button:
-                  <ion-button color="warning" fill="outline" class="small-btn">
-                    <ion-icon color="warning" slot="icon-only" name="star"></ion-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
       </div>
       <!-- booking edit end -->
     </mat-sidenav-content>

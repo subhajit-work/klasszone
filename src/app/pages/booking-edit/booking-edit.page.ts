@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import {Location} from '@angular/common';
+import profileMenuData from 'src/app/services/profilemenu.json';
 
 @Component({
   selector: 'app-booking-edit',
@@ -25,141 +26,7 @@ export class BookingEditPage implements OnInit {
   parms_status:any;
   parms_id:any;
 
-  studentMenuData = [
-    {
-      name: 'Student Dashboard',
-      url: 'dashboard',
-      icon: 'speed'
-    },
-    {
-      name: 'My Enrolled Classes',
-      url: 'enrolement',
-      icon: 'school',
-      subPages : [
-        {
-          name: 'All',
-          url: 'all-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Approved',
-          url: 'approved-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Session Initiated',
-          url: 'session-initiated-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Completed',
-          url: 'completed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Cancelled ',
-          url: 'cancelled-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Claim For Admin Intervention ',
-          url: 'intervention-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Closed',
-          url: 'closed-enrolement-classes',
-          icon: 'send',
-        },
-        {
-          name: 'Expired',
-          url: 'expired-enrolement-classes',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Event Enrollment',
-      url: 'event-enrollment',
-      icon: 'celebration',
-      subPages : [
-        {
-          name: 'All Enrollments',
-          url: 'all-enrolement',
-          icon: 'send',
-        },
-        {
-          name: 'Upcoming Enrollments',
-          url: 'upcoming-enrollments',
-          icon: 'send',
-        },
-        {
-          name: 'Completed/Expired Events',
-          url: 'completed-expired-events',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'Buy KlassCoins',
-      url: 'buy-enquiriesEdits',
-      icon: 'toll',
-      subPages : [
-        {
-          name: 'KlassCoins Packages',
-          url: 'enquiriesEdits-packages',
-          icon: 'send',
-        },
-        {
-          name: 'Order History',
-          url: 'order-history',
-          icon: 'send',
-        }
-      ],
-    },
-    {
-      name: 'KlassCoins History',
-      url: 'enquiriesEdits-history',
-      icon: 'history'
-    },
-    {
-      name: 'Rewards Points',
-      url: 'rewards-points',
-      icon: 'emoji_events'
-    },
-    {
-      name: 'Redeem Rewards',
-      url: 'redeem-rewards',
-      icon: 'redeem'
-    },
-    {
-      name: 'Refer and Earn',
-      url: 'refer-earn',
-      icon: 'share'
-    },
-    {
-      name: 'Student Information',
-      url: 'student-information',
-      icon: 'person',
-      subPages : [
-        {
-          name: 'Personal Information',
-          url: 'personal-information',
-          icon: 'send',
-        },
-        {
-          name: 'Profile Information',
-          url: 'profile-information',
-          icon: 'send',
-        },
-        {
-          name: 'Change Password',
-          url: 'change-password',
-          icon: 'send',
-        }
-      ],
-    },
-  ];
+  profileSideMenuData:any;
 
   private userDetailsSubscribe: Subscription | undefined;
   userData:any;
@@ -172,6 +39,8 @@ export class BookingEditPage implements OnInit {
   private formSubmitSubscribe: Subscription | undefined;
   form_submit_text = 'Save';
   form_api: any;
+
+  userType:any;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef, 
@@ -197,9 +66,15 @@ export class BookingEditPage implements OnInit {
     console.log('parms_status', this.parms_status);
     console.log('parms_id', this.parms_id);
 
-    this.userInfoData();
+    this.userType = localStorage.getItem('user_type');
 
-    this.form_api = 'enquiries_edit/'+this.parms_id;
+    if (this.userType == 'tutor') {
+      this.profileSideMenuData = profileMenuData.tutorMenuData;
+    }else {
+      this.profileSideMenuData = profileMenuData.studentMenuData;
+    }
+
+    this.userInfoData();
   }
 
   /* User detasils get start */
@@ -212,10 +87,16 @@ export class BookingEditPage implements OnInit {
         console.log('userDetails@@', resData);
         if(resData.return_status > 0){
           this.userData = resData.return_data;
-          
-          this.enquiriesEdit_url = 'enquiries_edit/'+this.parms_id+'?user_id='+this.userData.user_data.id;
-          this.getBookingView();
-          
+
+          if (this.userType == 'student') {
+            this.enquiriesEdit_url = 'enquiries_edit/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getBookingView();
+            this.form_api = 'enquiries_edit/'+this.parms_id;
+          }else {
+            this.enquiriesEdit_url = 'enquiries_edit_by_tutor/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getBookingView();
+            this.form_api = 'enquiries_edit_by_tutor/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+          }
         }
         
       },

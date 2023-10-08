@@ -1,0 +1,317 @@
+{
+    "studentMenuData" : [
+        {
+          "name" : "Student Dashboard",
+          "url" : "dashboard",
+          "icon" : "speed"
+        },
+        {
+          "name" : "My Enrolled Classes",
+          "url" : "enrolement",
+          "icon" : "school",
+          "subPages" : [
+            {
+              "name" : "All",
+              "url" : "all-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Approved",
+              "url" : "approved-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Session Initiated",
+              "url" : "session-initiated-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Completed",
+              "url" : "completed-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Cancelled ",
+              "url" : "cancelled-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Claim For Admin Intervention ",
+              "url" : "intervention-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Closed",
+              "url" : "closed-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Expired",
+              "url" : "expired-enrolement-classes",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Event Enrollment",
+          "url" : "event-enrollment",
+          "icon" : "celebration",
+          "subPages" : [
+            {
+              "name" : "All Enrollments",
+              "url" : "all-enrolement",
+              "icon" : "send"
+            },
+            {
+              "name" : "Upcoming Enrollments",
+              "url" : "upcoming-enrollments",
+              "icon" : "send"
+            },
+            {
+              "name" : "Completed/Expired Events",
+              "url" : "completed-expired-events",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Buy KlassCoins",
+          "url" : "buy-klassCoins",
+          "icon" : "toll",
+          "subPages" : [
+            {
+              "name" : "KlassCoins Packages",
+              "url" : "klassCoins-packages",
+              "icon" : "send"
+            },
+            {
+              "name" : "Order History",
+              "url" : "order-history",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "KlassCoins History",
+          "url" : "klassCoins-history",
+          "icon" : "history"
+        },
+        {
+          "name" : "Rewards Points",
+          "url" : "rewards-points",
+          "icon" : "emoji_events"
+        },
+        {
+          "name" : "Redeem Rewards",
+          "url" : "redeem-rewards",
+          "icon" : "redeem"
+        },
+        {
+          "name" : "Refer and Earn",
+          "url" : "refer-earn",
+          "icon" : "share"
+        },
+        {
+          "name" : "Student Information",
+          "url" : "student-information",
+          "icon" : "person",
+          "subPages" : [
+            {
+              "name" : "Personal Information",
+              "url" : "personal-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Profile Information",
+              "url" : "profile-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Change Password",
+              "url" : "change-password",
+              "icon" : "send"
+            }
+          ]
+        }
+    ],
+    "tutorMenuData" : [
+        {
+          "name" : "Tutor Dashboard",
+          "url" : "dashboard",
+          "icon" : "speed"
+        },
+        {
+          "name" : "Class Enrollments",
+          "url" : "enrolement",
+          "icon" : "school",
+          "subPages" : [
+            {
+              "name" : "All",
+              "url" : "all-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Approved",
+              "url" : "approved-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Session Initiated",
+              "url" : "session-initiated-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Completed",
+              "url" : "completed-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Cancelled ",
+              "url" : "cancelled-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Claim For Admin Intervention ",
+              "url" : "intervention-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Closed",
+              "url" : "closed-enrolement-classes",
+              "icon" : "send"
+            },
+            {
+              "name" : "Expired",
+              "url" : "expired-enrolement-classes",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Manage Courses",
+          "url" : "event-enrollment",
+          "icon" : "menu_book",
+          "subPages" : [
+            {
+              "name" : "Courses ",
+              "url" : "all-enrolement",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Manage Events",
+          "url" : "event-enrollment",
+          "icon" : "celebration",
+          "subPages" : [
+            {
+              "name" : "List Events",
+              "url" : "all-enrolement",
+              "icon" : "send"
+            },
+            {
+              "name" : "All Enrollments",
+              "url" : "upcoming-enrollments",
+              "icon" : "send"
+            },
+            {
+              "name" : "Upcoming Enrollments",
+              "url" : "completed-expired-events",
+              "icon" : "send"
+            },
+            {
+              "name" : "Completed/Expired Enrollments ",
+              "url" : "upcoming-enrollments",
+              "icon" : "send"
+            },
+            {
+              "name" : "Cancelled Enrollments ",
+              "url" : "completed-expired-events",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Buy KlassCoins",
+          "url" : "buy-klassCoins",
+          "icon" : "toll",
+          "subPages" : [
+            {
+              "name" : "KlassCoins Packages",
+              "url" : "klassCoins-packages",
+              "icon" : "send"
+            },
+            {
+              "name" : "Order History",
+              "url" : "order-history",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "Salary Request",
+          "url" : "buy-klassCoins",
+          "icon" : "account_balance_wallet",
+          "subPages" : [
+            {
+              "name" : "Pending",
+              "url" : "klassCoins-packages",
+              "icon" : "send"
+            },
+            {
+              "name" : "Done",
+              "url" : "order-history",
+              "icon" : "send"
+            }
+          ]
+        },
+        {
+          "name" : "KlassCoins History",
+          "url" : "klassCoins-history",
+          "icon" : "history"
+        },
+        {
+          "name" : "Refer and Earn",
+          "url" : "rewards-points",
+          "icon" : "emoji_events"
+        },
+        {
+          "name" : "Received Reviews",
+          "url" : "redeem-rewards",
+          "icon" : "redeem"
+        },
+        {
+          "name" : "Tutor Information",
+          "url" : "student-information",
+          "icon" : "person",
+          "subPages" : [
+            {
+              "name" : "Personal Information",
+              "url" : "personal-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Profile Information",
+              "url" : "profile-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Experience ",
+              "url" : "profile-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Manage certificates",
+              "url" : "profile-information",
+              "icon" : "send"
+            },
+            {
+              "name" : "Change Password",
+              "url" : "change-password",
+              "icon" : "send"
+            }
+          ]
+        }
+    ]
+}
+

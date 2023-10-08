@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import { IonicSlides } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 import { ActivatedRoute } from '@angular/router';
+import moment from 'moment';
 register();
 
 @Component({

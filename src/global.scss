@@ -202,6 +202,9 @@ img {
 .segment-button-indicator-background {
     border-radius: 30px;
 }
+.action-sheet-button.action-sheet-cancel {
+    color: var(--ion-color-danger);
+}
 
 // login page design start
 .transparent-header {

@@ -59,11 +59,23 @@ const routes: Routes = [
   },
   {
     path: 'booking-view/:status/:id',
-    loadChildren: () => import('./pages/booking-view/booking-view.module').then( m => m.BookingViewPageModule)
+    loadChildren: () => import('./pages/booking-view/booking-view.module').then( m => m.BookingViewPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'booking-edit/:status/:id',
-    loadChildren: () => import('./pages/booking-edit/booking-edit.module').then( m => m.BookingEditPageModule)
+    loadChildren: () => import('./pages/booking-edit/booking-edit.module').then( m => m.BookingEditPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'rating/:status/:id',
+    loadChildren: () => import('./pages/rating/rating.module').then( m => m.RatingPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'big-blue-button',
+    loadChildren: () => import('./pages/big-blue-button/big-blue-button.module').then( m => m.BigBlueButtonPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

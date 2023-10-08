@@ -21,11 +21,13 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 import { StringReplacePipe } from '../pipe/string-replace.pipe';
 import { RatingComponent } from '../components/rating/rating.component';
+import { SafePipe } from '../pipe/safe-pipe.pipe';
 
 @NgModule({
   declarations: [
     CommonFooterComponent,
     SafeHtmlPipe,
+    SafePipe,
     StringReplacePipe,
     RatingComponent
   ],
@@ -66,6 +68,7 @@ import { RatingComponent } from '../components/rating/rating.component';
     MatListModule,
     MatTabsModule,
     SafeHtmlPipe,
+    SafePipe,
     StringReplacePipe,
     RatingComponent,
     MatBadgeModule,
