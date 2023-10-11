@@ -1,4 +1,6 @@
 <ion-content [fullscreen]="true">
-  <iframe *ngIf="big_blue_link" [src]="big_blue_link | sanitizeUrl" width="100%" height="500px" title="Big Blue Button" frameborder="0"
-  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  <!-- <iframe *ngIf="big_blue_link" [src]="big_blue_link | sanitizeUrl" width="100%" height="500px" title="Big Blue Button" frameborder="0"
+  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+
+  <iframe *ngIf="big_blue_link" [src]="big_blue_link | sanitizeUrl" width="100%" height="700" allow="camera ;microphone ;display-capture *;" allowfullscreen></iframe>
 </ion-content>

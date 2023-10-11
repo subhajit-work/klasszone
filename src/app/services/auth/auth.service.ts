@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   public userId:any;
+  public userType:any;
 
   constructor(
     private storage: Storage, 
@@ -56,6 +57,7 @@ export class AuthService {
             return null;
           }else {
             this.userId = storData.id;
+            this.userType = storData.user_type
           }
           const storeauth:any = {
             'id': storData.id,
@@ -84,7 +86,7 @@ export class AuthService {
 
     /* User details api start */
     userDetails() {
-      return this.http.get(`user_dashboard/${this.userId}`).pipe(
+      return this.http.get(`user_dashboard/${this.userId}?user_type=${this.userType}`).pipe(
         // tap(this.setUserGlobalParams.bind(this)) //use for response value send
       );
     }
