@@ -43,6 +43,8 @@ export class ProfilePage implements OnInit {
   tableData:any;
   profileSideMenuData:any;
   userSavedInfo:any;
+  private getCountryCodeSubscribe: Subscription | undefined;
+  countryCodeUrl: any;
   
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -115,9 +117,18 @@ export class ProfilePage implements OnInit {
 
     this.userInfoData();
 
+    
+
     this.updateProfileImageApi = 'student_profile_information/';
-    this.form_api = 'student_profile_update/';
     this.menuCtrl.enable(true,'rightMenu');
+
+    if (this.parms_slug == 'edit-profile') {
+      this.form_api = 'student_profile_update/';
+    }else if (this.parms_slug == 'profile-information') {
+      this.form_api = 'update_contact_information/';
+      this.countryCodeUrl = 'country_code';
+      this.getCountryCode();
+    }
 
     // klass Coin List
     if (this.parms_slug == 'klassCoins-packages') {
@@ -202,8 +213,17 @@ export class ProfilePage implements OnInit {
           if (this.parms_slug == 'klassCoins-history') {
             this.tableListData_url = 'credits_transactions_history/'+this.userData.user_data.id;
             this.displayedColumns = ['credits', 'balance', 'action', 'purpose', 'date_of_action','actions'];
+          }else if (this.parms_slug == 'order-history') {
+            this.tableListData_url = 'mysubscriptions/'+this.userData.user_data.id;
+            this.displayedColumns = ['id', 'subscribe_date', 'package_name', 'transaction_no', 'payment_type', 'credits','amount_paid'];
           }else if (this.parms_slug == 'all-enrolement') {
             this.tableListData_url = 'event_enquiries?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
+          }else if (this.parms_slug == 'upcoming-enrollments') {
+            this.tableListData_url = 'event_enquiries/pending?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
+          }else if (this.parms_slug == 'completed-expired-events') {
+            this.tableListData_url = 'event_enquiries/completed?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
           }else if (this.parms_slug == 'rewards-points') {
             this.tableListData_url = 'creditcoins_transactions_history?user_id='+this.userData.user_data.id;
@@ -282,6 +302,13 @@ export class ProfilePage implements OnInit {
             last_name : this.userData.user_data.last_name,
             gender : this.userData.user_data.gender,
             dob : this.userData.user_data.dob,
+            address : this.userData.user_data.address,
+            state : this.userData.user_data.state,
+            city : this.userData.user_data.city,
+            land_mark : this.userData.user_data.land_mark,
+            country : this.userData.user_data.country,
+            pin_code : this.userData.user_data.pin_code,
+            phone : this.userData.user_data.phone,
           }
         }
         
@@ -291,6 +318,22 @@ export class ProfilePage implements OnInit {
       );
   }
   /* User detasils get end */
+
+  // get country code start
+  countryCodeData: any;
+  getCountryCode() {
+    this.getCountryCodeSubscribe = this.http.get(this.countryCodeUrl).subscribe(
+      (res: any) => {
+        this.countryCodeData = res.return_data;
+
+        console.log('this.countryCodeData', this.countryCodeData);
+
+      },
+      errRes => {
+      }
+    );
+  }
+  // get country code end
 
   //---- rating click function call  start ----
   ratingClicked: any;
@@ -386,6 +429,7 @@ export class ProfilePage implements OnInit {
         if (response.return_status > 0) {
           this.commonUtils.presentToast('success', response.return_message);
           this.userInfoData();
+          this.getCountryCode();
           // this.router.navigateByUrl('/dashboard');
         }else {
           this.commonUtils.presentToast('error', response.return_message);
@@ -489,6 +533,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.klassCoinDataSubscribe !== undefined) {
       this.klassCoinDataSubscribe.unsubscribe();
+    }
+    if (this.getCountryCodeSubscribe !== undefined) {
+      this.getCountryCodeSubscribe.unsubscribe();
     }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
