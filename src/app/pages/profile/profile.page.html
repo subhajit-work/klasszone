@@ -387,7 +387,7 @@
           </ion-grid>
         </form>
       </div>
-      <div class="profile-edit" *ngIf="parms_slug == 'profile-information' && userType == 'student'">
+      <div class="profile-edit" *ngIf="parms_slug == 'profile-information'">
         <form #updateProfileEditForm="ngForm" (ngSubmit)="onSubmit(updateProfileEditForm)"
           (keyup.enter)="onSubmit(updateProfileEditForm)">
           <ion-grid>
@@ -425,7 +425,7 @@
                 <div class="field-item">
                   <ion-select [(ngModel)]="model.country"
                   name="country" required interface="action-sheet" placeholder="Select Country">
-                    <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.id">{{item?.name}}</ion-select-option>
+                    <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.name">{{item?.name}}</ion-select-option>
                   </ion-select>
                 </div>
               </ion-col>
@@ -445,6 +445,17 @@
                   name="phone" labelPlacement="stacked" required placeholder="Enter your Phone Number"></ion-input>
                 </div>
               </ion-col>
+              <!-- Type Of Classes -->
+              <ion-col size="12" *ngIf="userType == 'tutor'">
+                
+                <div class="field-item">
+                  <ion-label>Type Of Classes</ion-label>
+                  <div class="checkBox">
+                    <ion-checkbox name="academic_class" [(ngModel)]="model.academic_class" labelPlacement="end">Academic</ion-checkbox>
+                    <ion-checkbox name="non_academic_class" [(ngModel)]="model.non_academic_class" labelPlacement="end">Non-academic</ion-checkbox>
+                  </div>
+                </div>
+              </ion-col>
               <!-- Button -->
               <ion-col size="12">
                 <div class="custom-btn">
@@ -457,7 +468,7 @@
           </ion-grid>
         </form>
       </div>
-
+      <!-- for tutor -->
       <div class="profile-edit" *ngIf="parms_slug == 'edit-profile' && userType == 'tutor'">
         <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)"
           (keyup.enter)="onSubmit(profileEditForm)">
@@ -481,15 +492,15 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
-                    placeholder="Enter your Last Name"></ion-input>
+                    placeholder="Enter your Last Name" required></ion-input>
                 </div>
               </ion-col>
               <!-- email -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text"
-                  [(ngModel)]="model.identity"
-                  name="identity" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                  <ion-input type="text" disabled
+                  [(ngModel)]="model.email"
+                  name="email" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
                 </div>
               </ion-col>
               <!-- Gender -->
@@ -509,7 +520,7 @@
                 <div class="field-item">
                   <div class="datePicker">
                     <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
-                      [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
+                      [inputDateConfig]="datePickerObj" required></li-ionic4-datepicker>
                   </div>
                 </div>
               </ion-col>
@@ -525,45 +536,45 @@
                   <!-- Languages Known: -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select [(ngModel)]="model.language"
-                      name="language" interface="action-sheet" cancelText="Close" placeholder="Select Languages">
-                        <ion-select-option *ngFor="let item of model?.languages" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
+                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Select Languages">
+                        <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
                   <!-- Listening & questioning skills -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select [(ngModel)]="model.lSkills"
-                      name="lSkills" interface="action-sheet" cancelText="Close" placeholder="Select Listening skills">
-                        <ion-select-option *ngFor="let item of model?.listening_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select [(ngModel)]="model.listning"
+                      name="listning" interface="action-sheet" cancelText="Close" placeholder="Select Listening skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
                   <!-- Reading Skills -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select [(ngModel)]="model.rSkills"
-                      name="rSkills" interface="action-sheet" cancelText="Close" placeholder="Select Reading Skills">
-                        <ion-select-option *ngFor="let item of model?.reading_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select [(ngModel)]="model.reading"
+                      name="reading" interface="action-sheet" cancelText="Close" placeholder="Select Reading Skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
                   <!-- Writing skills -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select [(ngModel)]="model.wSkills"
-                      name="wSkills" interface="action-sheet" cancelText="Close" placeholder="Select Writing skills">
-                        <ion-select-option *ngFor="let item of model?.writing_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select [(ngModel)]="model.writing"
+                      name="writing" interface="action-sheet" cancelText="Close" placeholder="Select Writing skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
                   <!-- Presentation skills -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select [(ngModel)]="model.pSkills"
-                      name="pSkills" interface="action-sheet" cancelText="Close" placeholder="Select Presentation skills">
-                        <ion-select-option *ngFor="let item of model?.presentation_skills" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select [(ngModel)]="model.presentation"
+                      name="presentation" interface="action-sheet" cancelText="Close" placeholder="Select Presentation skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
@@ -583,35 +594,48 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.website" name="website" labelPlacement="stacked"
-                        placeholder="Enter Blog/Website" required></ion-input>
+                        placeholder="Enter Blog/Website"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Facebook Profile -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.facebook" name="facebook" labelPlacement="stacked"
-                        placeholder="Enter Facebook Profile" required></ion-input>
+                        placeholder="Enter Facebook Profile"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Twitter Profile -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.twitter" name="twitter" labelPlacement="stacked"
-                        placeholder="Enter Twitter Profile" required></ion-input>
+                        placeholder="Enter Twitter Profile"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Linkedin Profile -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.linkedin" name="linkedin" labelPlacement="stacked"
-                        placeholder="Enter Linkedin Profile" required></ion-input>
+                        placeholder="Enter Linkedin Profile"></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
               </ion-card-content>
             </ion-card>
+            <ion-row>
+              <ion-col size="12">
+                <div class="field-item">
+                  <p class="ion-text-center">Payment Details</p>
+                  <ion-segment (ionChange)="segmentChanged($event)" [value]="model.pament_type">
+                    <ion-segment-button *ngFor="let item of pament_type" [value]="item?.value">
+                      <ion-label>{{item?.name}}</ion-label>
+                    </ion-segment-button>
+                  </ion-segment>
+                  <input type="hidden" required [(ngModel)]="model.pament_type" name="pament_type">
+                </div>
+              </ion-col>
+            </ion-row>
             <!-- Bank Details -->
-            <ion-card>
+            <ion-card *ngIf="model?.pament_type == 'bank'">
               <ion-card-header>
                 <ion-card-title>Bank Details</ion-card-title>
               </ion-card-header>
@@ -621,43 +645,263 @@
                   <!-- Account Holder Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.accountName" name="accountName" labelPlacement="stacked"
+                      <ion-input type="text" [(ngModel)]="model.account_holder_name" name="account_holder_name" labelPlacement="stacked"
                         placeholder="Account Holder Name" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Account No. -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.aNumber" name="aNumber" labelPlacement="stacked"
+                      <ion-input type="text" [(ngModel)]="model.account_number" name="account_number" labelPlacement="stacked"
                         placeholder="Account No." required></ion-input>
                     </div>
                   </ion-col>
                   <!-- IFSC Code -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.ifsc" name="ifsc" labelPlacement="stacked"
+                      <ion-input type="text" [(ngModel)]="model.ifsc_code" name="ifsc_code" labelPlacement="stacked"
                         placeholder="IFSC Code" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.bName" name="bName" labelPlacement="stacked"
+                      <ion-input type="text" [(ngModel)]="model.bank_name" name="bank_name" labelPlacement="stacked"
                         placeholder="Bank Name" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Branch Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.branchName" name="branchName" labelPlacement="stacked"
+                      <ion-input type="text" [(ngModel)]="model.bank_address" name="bank_address" labelPlacement="stacked"
                         placeholder="Bank Branch Name" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
               </ion-card-content>
             </ion-card>
+            <!-- UPI-ID Details -->
+            <ion-card *ngIf="model?.pament_type == 'paypal'">
+              <ion-card-header>
+                <ion-card-title>UPI-ID/Mobile Number</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-row>
+                  <!-- UPI-ID/Mobile Number -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-input type="text" [(ngModel)]="model.paypal_email" name="paypal_email" labelPlacement="stacked"
+                        placeholder="UPI-ID/Mobile Number" required></ion-input>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+
+            <!-- Address -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Address</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-row>
+                  <!-- Account Holder Name -->
+                  <ion-col size="12">
+                    <ion-label>{{model?.address}}, {{model?.state}}, {{model?.city}}, {{model?.land_mark}},</ion-label>
+                    <br>
+                    <ion-label>{{userData?.user_data?.country}} - {{model?.pin_code}}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+
+            <!-- Contact Information -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Contact Information</ion-card-title>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-row>
+                  <!-- Account Holder Name -->
+                  <ion-col size="12">
+                    <ion-label><b>Mobile:</b> {{userData?.user_data?.phone_code}} - {{userData?.user_data?.phone}}</ion-label>
+                    <br>
+                    <ion-label><b>Email:</b> {{model?.email}}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+
             <ion-row>
               <!-- Button -->
+              <ion-col size="6">
+                <div class="custom-btn">
+                  <ion-button [routerLink]="['/', 'user', 'profile-information']" expand="block" shape="round">
+                    View Profile 
+                  </ion-button>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="custom-btn">
+                  <ion-button [routerLink]="['/', 'user', 'profile-information']" expand="block" shape="round">
+                    Update Info
+                  </ion-button>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" [disabled]="!profileEditForm.valid" expand="block" shape="round">
+                    Save
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+      <div class="profile-edit" *ngIf="parms_slug == 'tutor-profile-information' && userType == 'tutor'">
+        <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)" (keyup.enter)="onSubmit(profileEditForm)">
+          <ion-grid>
+            <div class="profile-header">
+              <div class="header-image">
+                <div class="image-box">
+                  <img onError="this.src='assets/default-user.jpg'"
+                    src="{{file_url}}/{{userData?.user_data?.path}}/{{userData?.user_data?.photo}}">
+                  <span class="image-edit">
+                    <ion-icon name="camera"></ion-icon>
+                  </span>
+                  <input type="file" (change)="changeProfileImage($event)">
+                </div>
+              </div>
+            </div>
+            <ion-row>
+              <!-- First Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
+                    placeholder="Enter your First Name" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Middle Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="stacked"
+                    placeholder="Enter your Middle Name"></ion-input>
+                </div>
+              </ion-col>
+              <!-- Last Name -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
+                    placeholder="Enter your Last Name" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- email -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input type="text" disabled
+                  [(ngModel)]="model.email"
+                  name="email" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Gender -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="radio-box">
+                    <ion-label>Gender</ion-label>
+                    <ion-radio-group value="model.gender" name="gender" [(ngModel)]="model.gender">
+                      <ion-radio value="Male" labelPlacement="end">Male</ion-radio>
+                      <ion-radio value="Female" labelPlacement="end">Female</ion-radio>
+                    </ion-radio-group>
+                  </div>
+                </div>
+              </ion-col>
+              <!-- Date of birth -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <div class="datePicker">
+                    <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
+                      [inputDateConfig]="datePickerObj" required></li-ionic4-datepicker>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <!-- Communication -->
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Communication:</ion-card-title>
+              </ion-card-header>
+                
+              <ion-card-content>
+                <ion-row>
+                  <!-- Languages Known: -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
+                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Select Languages">
+                        <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Listening & questioning skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.listning"
+                      name="listning" interface="action-sheet" cancelText="Close" placeholder="Select Listening skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Reading Skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.reading"
+                      name="reading" interface="action-sheet" cancelText="Close" placeholder="Select Reading Skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Writing skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.writing"
+                      name="writing" interface="action-sheet" cancelText="Close" placeholder="Select Writing skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                  <!-- Presentation skills -->
+                  <ion-col size="12">
+                    <div class="field-item">
+                      <ion-select [(ngModel)]="model.presentation"
+                      name="presentation" interface="action-sheet" cancelText="Close" placeholder="Select Presentation skills">
+                        <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
+                      </ion-select>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-row>
+              <!-- Button -->
+              <ion-col size="6">
+                <div class="custom-btn">
+                  <ion-button [routerLink]="['/', 'user', 'profile-information']" expand="block" shape="round">
+                    View Profile 
+                  </ion-button>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="custom-btn">
+                  <ion-button [routerLink]="['/', 'user', 'profile-information']" expand="block" shape="round">
+                    Update Info
+                  </ion-button>
+                </div>
+              </ion-col>
               <ion-col size="12">
                 <div class="custom-btn">
                   <ion-button type="submit" [disabled]="!profileEditForm.valid" expand="block" shape="round">

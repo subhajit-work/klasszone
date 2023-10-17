@@ -118,7 +118,7 @@
           "subPages" : [
             {
               "name" : "Personal Information",
-              "url" : "personal-information",
+              "url" : "edit-profile",
               "icon" : "send"
             },
             {
@@ -287,12 +287,12 @@
           "subPages" : [
             {
               "name" : "Personal Information",
-              "url" : "personal-information",
+              "url" : "edit-profile",
               "icon" : "send"
             },
             {
               "name" : "Profile Information",
-              "url" : "profile-information",
+              "url" : "tutor-profile-information",
               "icon" : "send"
             },
             {

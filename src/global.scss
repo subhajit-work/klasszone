@@ -94,6 +94,11 @@ img {
 }
 
 .field-item {
+    .checkBox {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
     ion-input {
         background: #F5F5F5;
         border-radius: 30px;
@@ -822,6 +827,9 @@ ion-header.profile-head {
 
     .profile-edit {
         padding-bottom: 50px;
+        .profile-header {
+            background: unset;
+        }
     }
     .small-btn {
         width: 30px;
@@ -981,6 +989,7 @@ mat-sidenav {
 
 .profile-menu {
     ion-accordion-group {
+        margin-bottom: 50px;
         ion-accordion {
             ion-item.no-subMenu {
                 ion-icon {

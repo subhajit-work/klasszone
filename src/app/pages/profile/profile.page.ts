@@ -80,6 +80,34 @@ export class ProfilePage implements OnInit {
 
   userType:any;
 
+  skillRating = [
+    {
+      name : 'Poor'
+    },
+    {
+      name : 'Average'
+    },
+    {
+      name : 'Good'
+    },
+    {
+      name : 'Very Good'
+    },
+    {
+      name : 'Excellent'
+    }
+  ];
+  pament_type = [
+    {
+      value : 'paypal',
+      name : 'UPI-ID'
+    },
+    {
+      value : 'bank',
+      name : 'Bank Details'
+    }
+  ]
+
   constructor(
     private menuCtrl: MenuController,
     private http : HttpClient,
@@ -123,24 +151,25 @@ export class ProfilePage implements OnInit {
     this.menuCtrl.enable(true,'rightMenu');
 
     if (this.parms_slug == 'edit-profile') {
-      this.form_api = 'student_profile_update/';
+      if (this.userType == 'tutor') {
+        this.form_api = 'tutor_personal_info_update/';
+      }else {
+        this.form_api = 'student_profile_update/';
+      }
     }else if (this.parms_slug == 'profile-information') {
-      this.form_api = 'update_contact_information/';
       this.countryCodeUrl = 'country_code';
       this.getCountryCode();
+      if (this.userType == 'tutor') {
+        this.form_api = 'tutor_update_contact_information/';
+      }else {
+        this.form_api = 'update_contact_information/';
+      }
     }
 
     // klass Coin List
     if (this.parms_slug == 'klassCoins-packages') {
       this.klassCoin_url = 'list_packages';
       this.klassCoinPackageList(); 
-    }
-    this.model = {
-      languages : [],
-      listening_skills: [],
-      reading_skills: [],
-      writing_skills: [],
-      presentation_skills: []
     }
   }
 
@@ -165,6 +194,13 @@ export class ProfilePage implements OnInit {
     // this.dataSource.paginator = this.paginator;
     this.list_product.paginator = this.paginator;
   }
+
+  // get payment type start
+  segmentChanged(e: any) {
+    this.model.pament_type = e.detail.value;
+    console.log('segmentValue', this.model.pament_type);
+  }
+  // get payment type end
 
   openRightMenu() {
     console.log('right menu');
@@ -301,14 +337,47 @@ export class ProfilePage implements OnInit {
             middle_name : this.userData.user_data.middle_name,
             last_name : this.userData.user_data.last_name,
             gender : this.userData.user_data.gender,
+            email : this.userData.user_data.email,
             dob : this.userData.user_data.dob,
             address : this.userData.user_data.address,
             state : this.userData.user_data.state,
             city : this.userData.user_data.city,
             land_mark : this.userData.user_data.land_mark,
-            country : this.userData.user_data.country,
+            country : this.userData.user_data.country+'+'+this.userData.user_data.phone_code,
             pin_code : this.userData.user_data.pin_code,
             phone : this.userData.user_data.phone,
+            listning : this.userData.user_data.listning,
+            reading : this.userData.user_data.reading,
+            writing : this.userData.user_data.writing,
+            presentation : this.userData.user_data.presentation,
+            website : this.userData.user_data.website,
+            facebook : this.userData.user_data.facebook,
+            twitter : this.userData.user_data.twitter,
+            linkedin : this.userData.user_data.linkedin,
+            account_holder_name : this.userData.user_data.account_holder_name,
+            account_number : this.userData.user_data.account_number,
+            ifsc_code : this.userData.user_data.ifsc_code,
+            bank_name : this.userData.user_data.bank_name,
+            bank_address : this.userData.user_data.bank_address,
+            paypal_email : this.userData.user_data.paypal_email,
+            language_of_teaching : this.userData.user_data.language_of_teaching,
+          }
+          if ( this.userData.user_data.paypal_email) {
+            this.model.pament_type = 'paypal'
+          }else {
+            this.model.pament_type = 'bank'
+          }
+
+          if (this.userData.user_data.academic_class == 'yes') {
+            this.model.academic_class = true;
+          }else {
+            this.model.academic_class = false;
+          }
+
+          if (this.userData.user_data.non_academic_class == 'yes') {
+            this.model.non_academic_class = true;
+          }else {
+            this.model.non_academic_class = false;
           }
         }
         
@@ -317,7 +386,7 @@ export class ProfilePage implements OnInit {
       }
       );
   }
-  /* User detasils get end */
+  /* User detasils get end */ 
 
   // get country code start
   countryCodeData: any;
@@ -412,6 +481,10 @@ export class ProfilePage implements OnInit {
     for (let val in form.value) {
       if (form.value[val] == undefined) {
         form.value[val] = '';
+      }else if (form.value[val] == false) {
+        form.value[val] = 'no';
+      }else if (form.value[val] == true) {
+        form.value[val] = 'yes';
       }
       fd.append(val, form.value[val]);
     };
