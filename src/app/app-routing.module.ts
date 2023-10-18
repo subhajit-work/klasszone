@@ -76,6 +76,10 @@ const routes: Routes = [
     path: 'big-blue-button',
     loadChildren: () => import('./pages/big-blue-button/big-blue-button.module').then( m => m.BigBlueButtonPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'view/:type/:id',
+    loadChildren: () => import('./pages/credits-transactions-history/credits-transactions-history.module').then( m => m.CreditsTransactionsHistoryPageModule)
   }
 ];
 

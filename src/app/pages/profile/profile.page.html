@@ -765,6 +765,7 @@
       <div class="profile-edit" *ngIf="parms_slug == 'tutor-profile-information' && userType == 'tutor'">
         <form #profileEditForm="ngForm" (ngSubmit)="onSubmit(profileEditForm)" (keyup.enter)="onSubmit(profileEditForm)">
           <ion-grid>
+            <!-- profile picture -->
             <div class="profile-header">
               <div class="header-image">
                 <div class="image-box">
@@ -781,8 +782,8 @@
               <!-- First Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                    placeholder="Enter your First Name" required></ion-input>
+                  <ion-label position="floating">Description</ion-label>
+                  
                 </div>
               </ion-col>
               <!-- Middle Name -->
@@ -905,6 +906,330 @@
               <ion-col size="12">
                 <div class="custom-btn">
                   <ion-button type="submit" [disabled]="!profileEditForm.valid" expand="block" shape="round">
+                    Save
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+      <div class="profile-edit" *ngIf="parms_slug == 'certificates' && userType == 'tutor'">
+        <form #certificatesEditForm="ngForm" (ngSubmit)="onSubmitCertificates(certificatesEditForm)" (keyup.enter)="onSubmit(certificatesEditForm)">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">High School/10th Marksheet/Passing Certificate</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_5" type="file" (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileValPathShow " class="form-upload-image" src="{{fileValPreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_5 && !fileValPathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_5}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_5, 'certificate_5')" [hidden]="!model.certificate_5">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Secondary School/12th/Intermediate Marksheet/Passing Certificate</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_7" type="file" (change)="normalFileUpload($event, model.certificate_7, 'certificate_7')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal1PathShow " class="form-upload-image" src="{{fileVal1PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_7 && !fileVal1PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_7}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_7, 'certificate_7')" [hidden]="!model.certificate_7">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Diploma Degree/Certificate/Marksheet</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_10" type="file" (change)="normalFileUpload($event, model.certificate_10, 'certificate_10')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal2PathShow " class="form-upload-image" src="{{fileVal2PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_10 && !fileVal2PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_10}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_10, 'certificate_10')" [hidden]="!model.certificate_10">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Bachelor Degree/Certificate/Marsheet</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_11" type="file" (change)="normalFileUpload($event, model.certificate_11, 'certificate_11')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal3PathShow " class="form-upload-image" src="{{fileVal3PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_11 && !fileVal3PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_11}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_11, 'certificate_11')" [hidden]="!model.certificate_11">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Master Degree/Certificate/Marksheet</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_12" type="file" (change)="normalFileUpload($event, model.certificate_12, 'certificate_12')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal4PathShow " class="form-upload-image" src="{{fileVal4PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_12 && !fileVal4PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_12}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_12, 'certificate_12')" [hidden]="!model.certificate_12">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Other Degree/Certificate/Marksheet</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_13" type="file" (change)="normalFileUpload($event, model.certificate_13, 'certificate_13')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal5PathShow " class="form-upload-image" src="{{fileVal5PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_13 && !fileVal5PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_13}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_13, 'certificate_13')" [hidden]="!model.certificate_13">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Aadhar Card as ID Proof </ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_14" type="file" (change)="normalFileUpload($event, model.certificate_14, 'certificate_14')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal6PathShow " class="form-upload-image" src="{{fileVal6PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_14 && !fileVal6PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_14}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_14, 'certificate_14')" [hidden]="!model.certificate_14">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Passport (Front & Back) as ID Proof</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_15" type="file" (change)="normalFileUpload($event, model.certificate_15, 'certificate_15')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal7PathShow " class="form-upload-image" src="{{fileVal7PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_15 && !fileVal7PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_15}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_15, 'certificate_15')" [hidden]="!model.certificate_15">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Rental Agreement as Address proof</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_16" type="file" (change)="normalFileUpload($event, model.certificate_16, 'certificate_16')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal8PathShow " class="form-upload-image" src="{{fileVal8PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_16 && !fileVal8PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_16}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_16, 'certificate_16')" [hidden]="!model.certificate_16">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Driving License(DL Front) as Address Proof</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_18" type="file" (change)="normalFileUpload($event, model.certificate_18, 'certificate_18')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal9PathShow " class="form-upload-image" src="{{fileVal9PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_18 && !fileVal9PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_18}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_18, 'certificate_18')" [hidden]="!model.certificate_18">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Mobile or Landline/Electricity/Water Bill as Address proof</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_20" type="file" (change)="normalFileUpload($event, model.certificate_20, 'certificate_20')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal10PathShow " class="form-upload-image" src="{{fileVal10PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_20 && !fileVal10PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_20}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_20, 'certificate_20')" [hidden]="!model.certificate_20">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Election Photo ID Card as Address proof</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_21" type="file" (change)="normalFileUpload($event, model.certificate_21, 'certificate_21')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal11PathShow " class="form-upload-image" src="{{fileVal11PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_21 && !fileVal11PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_21}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_21, 'certificate_21')" [hidden]="!model.certificate_21">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Experience Certificate - 1</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_22" type="file" (change)="normalFileUpload($event, model.certificate_22, 'certificate_22')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal12PathShow " class="form-upload-image" src="{{fileVal12PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_22 && !fileVal12PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_22}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_22, 'certificate_22')" [hidden]="!model.certificate_22">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Experience Certificate - 2</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_23" type="file" (change)="normalFileUpload($event, model.certificate_23, 'certificate_23')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal13PathShow " class="form-upload-image" src="{{fileVal13PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_23 && !fileVal13PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_23}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_23, 'certificate_23')" [hidden]="!model.certificate_23">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Score Card (GATE/TOEFEL/SAT/CSAT/GRE)</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_24" type="file" (change)="normalFileUpload($event, model.certificate_24, 'certificate_24')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal14PathShow " class="form-upload-image" src="{{fileVal14PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_24 && !fileVal14PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_24}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_24, 'certificate_24')" [hidden]="!model.certificate_24">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">B.Ed or M.Ed Degree/Final year Marksheet</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_25" type="file" (change)="normalFileUpload($event, model.certificate_25, 'certificate_25')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal15PathShow " class="form-upload-image" src="{{fileVal15PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_25 && !fileVal15PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_25}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_25, 'certificate_25')" [hidden]="!model.certificate_25">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="field-item">
+                    <ion-label position="floating">Recommendation Letter</ion-label>
+                    <div class="normal-file-uploading">
+                      <span class="upload-file profile-upload">
+                          Upload Picture
+                          <input [(ngModel)]="model.certificate_26" type="file" (change)="normalFileUpload($event, model.certificate_26, 'certificate_26')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                      </span>
+                      <img [hidden]="!fileVal16PathShow " class="form-upload-image" src="{{fileVal16PreviewImage}}" alt="image" />
+
+                      <img *ngIf="model.certificate_26 && !fileVal16PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_26}}" alt="image" />
+
+                      <span class="image-clear img" (click)="fileCross(model.certificate_26, 'certificate_26')" [hidden]="!model.certificate_26">
+                          <ion-icon name="close"></ion-icon>
+                      </span>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" [disabled]="!certificatesEditForm.valid" expand="block" shape="round">
                     Save
                   </ion-button>
                 </div>
@@ -1793,9 +2118,15 @@
                 <table mat-table [dataSource]="list_product">
 
                   <!-- Tutor Name Column -->
-                  <ng-container matColumnDef="s1ba55b7f">
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Event Column -->
@@ -1805,7 +2136,7 @@
                   </ng-container>
 
                   <!-- Category Column -->
-                  <ng-container matColumnDef="sea134da7">
+                  <ng-container matColumnDef="sea134da7" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Category </th>
                     <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
                   </ng-container>
@@ -1819,23 +2150,23 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Event description Column -->
-                  <ng-container matColumnDef="content">
+                  <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
                   </ng-container>
@@ -1889,9 +2220,15 @@
                 <table mat-table [dataSource]="list_product">
 
                   <!-- Tutor Name Column -->
-                  <ng-container matColumnDef="s1ba55b7f">
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Event Column -->
@@ -1901,7 +2238,7 @@
                   </ng-container>
 
                   <!-- Category Column -->
-                  <ng-container matColumnDef="sea134da7">
+                  <ng-container matColumnDef="sea134da7" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Category </th>
                     <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
                   </ng-container>
@@ -1915,23 +2252,23 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Event description Column -->
-                  <ng-container matColumnDef="content">
+                  <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
                   </ng-container>
@@ -1985,9 +2322,15 @@
                 <table mat-table [dataSource]="list_product">
 
                   <!-- Tutor Name Column -->
-                  <ng-container matColumnDef="s1ba55b7f">
+                  <ng-container matColumnDef="s1ba55b7f" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Tutor Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.s1ba55b7f}} </td>
+                  </ng-container>
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Event Column -->
@@ -1997,7 +2340,7 @@
                   </ng-container>
 
                   <!-- Category Column -->
-                  <ng-container matColumnDef="sea134da7">
+                  <ng-container matColumnDef="sea134da7" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Category </th>
                     <td mat-cell *matCellDef="let element"> {{element.sea134da7}} </td>
                   </ng-container>
@@ -2011,23 +2354,23 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'dd MMM yyy : h:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Event description Column -->
-                  <ng-container matColumnDef="content">
+                  <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
                   </ng-container>
@@ -2074,7 +2417,302 @@
               </div>
             </ion-col>
             <!-- completed-expired-events end -->
+
+            <!-- cancelled-enrollments start -->
+            <ion-col size="12" *ngIf="parms_slug == 'cancelled-enrollments'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student names Column -->
+                  <ng-container matColumnDef="student_names">
+                    <th mat-header-cell *matHeaderCellDef> Student names </th>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
+                  </ng-container>
+
+                  <!-- Event Column -->
+                  <ng-container matColumnDef="event_id">
+                    <th mat-header-cell *matHeaderCellDef> Event </th>
+                    <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+                  </ng-container>
+
+                  <!-- Event date Column -->
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Event date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Start time Column -->
+                  <ng-container matColumnDef="start_time">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
+
+                  <!-- End time Column -->
+                  <ng-container matColumnDef="end_time">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                  </ng-container>
+
+                  <!-- Fee (In KlassCoins) Column -->
+                  <ng-container matColumnDef="fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed', 'cancelled': element.status == 'cancelled'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- cancelled-enrollments end -->
             <!-- Event Enrollment	end -->
+
+            <!-- Salary request start -->
+            <!-- done start -->
+            <ion-col size="12" *ngIf="parms_slug == 'salary-request-done'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Booking Ref. No. -->
+                  <ng-container matColumnDef="booking_id">
+                    <th mat-header-cell *matHeaderCellDef> Booking Ref. No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.booking_id}} </td>
+                  </ng-container>
+
+                  <!-- KlassCoins acquired -->
+                  <ng-container matColumnDef="no_of_credits_to_be_converted">
+                    <th mat-header-cell *matHeaderCellDef> KlassCoins acquired </th>
+                    <td mat-cell *matCellDef="let element"> {{element.no_of_credits_to_be_converted}} </td>
+                  </ng-container>
+
+                  <!-- Admin commission val -->
+                  <ng-container matColumnDef="admin_commission_val">
+                    <th mat-header-cell *matHeaderCellDef> Admin commission val </th>
+                    <td mat-cell *matCellDef="let element"> {{element.admin_commission_val}} </td>
+                  </ng-container>
+
+                  <!-- Per KlassCoin Cost (₹) -->
+                  <ng-container matColumnDef="per_credit_cost">
+                    <th mat-header-cell *matHeaderCellDef> Per KlassCoin Cost (₹) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.per_credit_cost}} </td>
+                  </ng-container>
+
+                  <!-- Total Amount (₹) -->
+                  <ng-container matColumnDef="total_amount">
+                    <th mat-header-cell *matHeaderCellDef> Total Amount (₹) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.total_amount}} </td>
+                  </ng-container>
+
+                  <!-- Type -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                  </ng-container>
+
+                  <!-- Status of payment -->
+                  <ng-container matColumnDef="status_of_payment">
+                    <th mat-header-cell *matHeaderCellDef> Status of payment </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status_of_payment}} </td>
+                  </ng-container>
+
+                  <!-- Updated at -->
+                  <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef> Updated at </th>
+                    <td mat-cell *matCellDef="let element"> {{element.updated_at | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="warn">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- done end -->
+            <!-- Salary request end -->
+
+            <!-- Manage Events start -->
+            <!-- List Events start -->
+            <ion-col size="12" *ngIf="parms_slug == 'list-event'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Title Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+
+                  <!-- Total students Column -->
+                  <ng-container matColumnDef="total_students">
+                    <th mat-header-cell *matHeaderCellDef> Total students </th>
+                    <td mat-cell *matCellDef="let element"> {{element.total_students}} </td>
+                  </ng-container>
+
+                  <!-- Fee (In KlassCoins) Column -->
+                  <ng-container matColumnDef="fee">
+                    <th mat-header-cell *matHeaderCellDef> Fee (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+
+                  <!-- Event Date Column -->
+                  <ng-container matColumnDef="event_date">
+                    <th mat-header-cell *matHeaderCellDef> Event Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Start time Column -->
+                  <ng-container matColumnDef="start_time">
+                    <th mat-header-cell *matHeaderCellDef>Start time</th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- End time Column -->
+                  <ng-container matColumnDef="end_time">
+                    <th mat-header-cell *matHeaderCellDef>End time</th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent">edit</mat-icon>
+                      <mat-icon color="warn">content_copy</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- List Events end -->
+            <!-- Manage Events end -->
+
+            <!-- manage course start -->
+            <ion-col size="12" *ngIf="parms_slug == 'manage-courses'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Course title Column -->
+                  <ng-container matColumnDef="course_title">
+                    <th mat-header-cell *matHeaderCellDef> Course title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.course_title}} </td>
+                  </ng-container>
+
+                  <!-- Category Column -->
+                  <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef> Category </th>
+                    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                  </ng-container>
+
+                  <!-- Subcategory Column -->
+                  <ng-container matColumnDef="sub_category">
+                    <th mat-header-cell *matHeaderCellDef> Subcategory </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sub_category}} </td>
+                  </ng-container>
+
+                  <!-- Duration (In Months) Column -->
+                  <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef> Duration (In Months) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+                  </ng-container>
+
+                  <!-- Fee per Class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="fee">
+                    <th mat-header-cell *matHeaderCellDef>Fee per Class (In KlassCoins)</th>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+
+                  <!-- Created on Column -->
+                  <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef>Created on</th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_at | date:'dd MMM yyy : h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- Type Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                  </ng-container>
+
+                  <!-- status Column -->
+                  <ng-container matColumnDef="prev_status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element">
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="accent">edit</mat-icon>
+                      <mat-icon color="warn">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- manage course end -->
 
             <!-- klassCoins-history start -->
             <ion-col size="12" *ngIf="parms_slug == 'klassCoins-history'">
@@ -2127,7 +2765,7 @@
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent">payment</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
@@ -2144,6 +2782,60 @@
               </div>
             </ion-col>
             <!-- klassCoins-history end -->
+
+            <!--received-reviews start -->
+            <ion-col size="12" *ngIf="parms_slug == 'received-reviews'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Student Name Column -->
+                  <ng-container matColumnDef="s30a811f6">
+                    <th mat-header-cell *matHeaderCellDef> Student Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.s30a811f6}} </td>
+                  </ng-container>
+
+                  <!-- comments Column -->
+                  <ng-container matColumnDef="comments">
+                    <th mat-header-cell *matHeaderCellDef> Comments </th>
+                    <td mat-cell *matCellDef="let element"> {{element.comments}} </td>
+                  </ng-container>
+
+                  <!-- Rating (Out of 5) Column -->
+                  <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef> Rating (Out of 5) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                  </ng-container>
+
+                  <!-- Posted Date Column -->
+                  <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef> Posted Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_at | date:'dd MMM yyy : h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- Last Updated Column -->
+                  <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+                    <td mat-cell *matCellDef="let element"> {{element.updated_at | date:'dd MMM yyy : h:mm a'}} </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'reviews', element?.id]">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </ion-col>
+            <!-- received-reviews end -->
 
             <!-- order-history start -->
             <ion-col size="12" *ngIf="parms_slug == 'order-history'">

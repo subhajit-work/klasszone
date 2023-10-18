@@ -168,8 +168,13 @@ export class ProfilePage implements OnInit {
 
     // klass Coin List
     if (this.parms_slug == 'klassCoins-packages') {
-      this.klassCoin_url = 'list_packages';
-      this.klassCoinPackageList(); 
+      if (this.userType == 'tutor') {
+        this.klassCoin_url = 'tutor_list_packages';
+        this.klassCoinPackageList(); 
+      }else {
+        this.klassCoin_url = 'list_packages';
+        this.klassCoinPackageList(); 
+      }
     }
   }
 
@@ -249,18 +254,53 @@ export class ProfilePage implements OnInit {
           if (this.parms_slug == 'klassCoins-history') {
             this.tableListData_url = 'credits_transactions_history/'+this.userData.user_data.id;
             this.displayedColumns = ['credits', 'balance', 'action', 'purpose', 'date_of_action','actions'];
+          }else if (this.parms_slug == 'received-reviews') {
+            this.tableListData_url = 'tutor_user_reviews/'+this.userData.user_data.id;
+            this.displayedColumns = ['s30a811f6', 'comments', 'rating', 'created_at', 'updated_at','actions'];
           }else if (this.parms_slug == 'order-history') {
-            this.tableListData_url = 'mysubscriptions/'+this.userData.user_data.id;
-            this.displayedColumns = ['id', 'subscribe_date', 'package_name', 'transaction_no', 'payment_type', 'credits','amount_paid'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'tutor_mysubscriptions/'+this.userData.user_data.id;
+              this.displayedColumns = ['id', 'subscribe_date', 'package_name', 'transaction_no', 'payment_type', 'credits','amount_paid'];
+            }else {
+              this.tableListData_url = 'mysubscriptions/'+this.userData.user_data.id;
+              this.displayedColumns = ['id', 'subscribe_date', 'package_name', 'transaction_no', 'payment_type', 'credits','amount_paid'];
+            }
           }else if (this.parms_slug == 'all-enrolement') {
-            this.tableListData_url = 'event_enquiries?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'tutor_event_enquiries?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'event_id', 'date', 'start_time', 'end_time', 'fee', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'event_enquiries?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'fee', 'content', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'upcoming-enrollments') {
-            this.tableListData_url = 'event_enquiries/pending?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'tutor_event_enquiries/pending?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'event_id', 'date', 'start_time', 'end_time', 'fee', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'event_enquiries/pending?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'fee', 'content', 'prev_status','actions'];
+            }
           }else if (this.parms_slug == 'completed-expired-events') {
-            this.tableListData_url = 'event_enquiries/completed?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'increased_fee', 'content', 'prev_status','actions'];
+            if (this.userType == 'tutor') {
+              this.tableListData_url = 'tutor_event_enquiries/completed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'event_id', 'date', 'start_time', 'end_time', 'fee', 'prev_status','actions'];
+            }else {
+              this.tableListData_url = 'event_enquiries/completed?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['s1ba55b7f', 'event_id', 'sea134da7', 'date', 'start_time', 'end_time', 'fee', 'content', 'prev_status','actions'];
+            }
+          }else if (this.parms_slug == 'cancelled-enrollments') {
+              this.tableListData_url = 'tutor_event_enquiries/cancelled?user_id='+this.userData.user_data.id;
+              this.displayedColumns = ['student_names', 'event_id', 'date', 'start_time', 'end_time', 'fee', 'prev_status','actions'];
+          }else if (this.parms_slug == 'salary-request-done') {
+            this.tableListData_url = 'credit_conversion_requests/done?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type', 'status_of_payment', 'updated_at', 'actions'];
+          } else if (this.parms_slug == 'manage-courses') {
+            this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
+            this.displayedColumns = ['course_title', 'category', 'sub_category', 'duration', 'fee', 'created_at', 'type', 'prev_status','actions'];
+          }else if (this.parms_slug == 'list-event') {
+            this.tableListData_url = 'tutor_manage_events?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['name', 'total_students', 'fee', 'event_date', 'start_time', 'end_time', 'prev_status','actions'];
           }else if (this.parms_slug == 'rewards-points') {
             this.tableListData_url = 'creditcoins_transactions_history?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['credits','balance', 'action', 'purpose', 'date_of_action','actions'];
@@ -515,6 +555,554 @@ export class ProfilePage implements OnInit {
 
   }
   // form submit end
+
+  /* onSubmitCertificates start */
+  certificatesFormApi = 'tutuor_certificates/';
+  onSubmitCertificates(form: NgForm) {
+    console.log("add form submit >", form.value);
+
+    // get form value
+    let fd = new FormData();
+    
+    if(this.fileValResume) {
+      // normal file upload
+      fd.append(this.normalFileNameResume, this.fileValResume, this.fileValResume.name);
+    }else if(this.fileValResumeCross == 'cross_resume'){
+      fd.append('resume', 'removed');
+    }else{
+      fd.append('resume', '');
+    }
+  
+  
+    // fileVal
+    if(this.fileVal) {
+      fd.append('certificate[5]', this.fileVal, this.fileVal.name);
+    }else if(this.fileValCross == 'cross_image'){
+      fd.append('certificate[5]', 'removed');
+    }else{
+      fd.append('certificate[5]', '');
+    }
+
+    // fileVal1
+    if(this.fileVal1) {
+      fd.append('certificate[7]', this.fileVal1, this.fileVal1.name);
+    }else if(this.fileVal1Cross == 'cross_image'){
+      fd.append('certificate[7]', 'removed');
+    }else{
+      fd.append('certificate[7]', '');
+    }
+    // fileVal2
+    if(this.fileVal2) {
+      fd.append('certificate[10]', this.fileVal2, this.fileVal2.name);
+    }else if(this.fileVal2Cross == 'cross_image'){
+      fd.append('certificate[10]', 'removed');
+    }else{
+      fd.append('certificate[10]', '');
+    }
+    // fileVal3
+    if(this.fileVal3) {
+      fd.append('certificate[11]', this.fileVal3, this.fileVal3.name);
+    }else if(this.fileVal3Cross == 'cross_image'){
+      fd.append('certificate[11]', 'removed');
+    }else{
+      fd.append('certificate[11]', '');
+    }
+    // fileVal4
+    if(this.fileVal4) {
+      fd.append('certificate[12]', this.fileVal4, this.fileVal4.name);
+    }else if(this.fileVal4Cross == 'cross_image'){
+      fd.append('certificate[12]', 'removed');
+    }else{
+      fd.append('certificate[12]', '');
+    }
+    // fileVal5
+    if(this.fileVal5) {
+      fd.append('certificate[13]', this.fileVal5, this.fileVal5.name);
+    }else if(this.fileVal5Cross == 'cross_image'){
+      fd.append('certificate[13]', 'removed');
+    }else{
+      fd.append('certificate[13]', '');
+    }
+    // fileVal6
+    if(this.fileVal6) {
+      fd.append('certificate[14]', this.fileVal6, this.fileVal6.name);
+    }else if(this.fileVal6Cross == 'cross_image'){
+      fd.append('certificate[14]', 'removed');
+    }else{
+      fd.append('certificate[14]', '');
+    }
+    // fileVal7
+    if(this.fileVal7) {
+      fd.append('certificate[15]', this.fileVal7, this.fileVal7.name);
+    }else if(this.fileVal7Cross == 'cross_image'){
+      fd.append('certificate[15]', 'removed');
+    }else{
+      fd.append('certificate[15]', '');
+    }
+    // fileVal8
+    if(this.fileVal8) {
+      fd.append('certificate[16]', this.fileVal8, this.fileVal8.name);
+    }else if(this.fileVal8Cross == 'cross_image'){
+      fd.append('certificate[16]', 'removed');
+    }else{
+      fd.append('certificate[16]', '');
+    }
+    // fileVal9
+    if(this.fileVal9) {
+      fd.append('certificate[18]', this.fileVal9, this.fileVal9.name);
+    }else if(this.fileVal9Cross == 'cross_image'){
+      fd.append('certificate[18]', 'removed');
+    }else{
+      fd.append('certificate[18]', '');
+    }
+
+    // fileVal10
+    if(this.fileVal10) {
+      fd.append('certificate[20]', this.fileVal10, this.fileVal10.name);
+    }else if(this.fileVal10Cross == 'cross_image'){
+      fd.append('certificate[20]', 'removed');
+    }else{
+      fd.append('certificate[20]', '');
+    }
+    // fileVal11
+    if(this.fileVal11) {
+      fd.append('certificate[21]', this.fileVal11, this.fileVal11.name);
+    }else if(this.fileVal11Cross == 'cross_image'){
+      fd.append('certificate[21]', 'removed');
+    }else{
+      fd.append('certificate[21]', '');
+    }
+    // fileVal12
+    if(this.fileVal12) {
+      fd.append('certificate[22]', this.fileVal12, this.fileVal12.name);
+    }else if(this.fileVal12Cross == 'cross_image'){
+      fd.append('certificate[22]', 'removed');
+    }else{
+      fd.append('certificate[22]', '');
+    }
+    // fileVal13
+    if(this.fileVal13) {
+      fd.append('certificate[23]', this.fileVal13, this.fileVal13.name);
+    }else if(this.fileVal13Cross == 'cross_image'){
+      fd.append('certificate[23]', 'removed');
+    }else{
+      fd.append('certificate[23]', '');
+    }
+    // fileVal14
+    if(this.fileVal14) {
+      fd.append('certificate[24]', this.fileVal14, this.fileVal14.name);
+    }else if(this.fileVal14Cross == 'cross_image'){
+      fd.append('certificate[24]', 'removed');
+    }else{
+      fd.append('certificate[24]', '');
+    }
+    // fileVal15
+    if(this.fileVal15) {
+      fd.append('certificate[25]', this.fileVal15, this.fileVal15.name);
+    }else if(this.fileVal15Cross == 'cross_image'){
+      fd.append('certificate[25]', 'removed');
+    }else{
+      fd.append('certificate[25]', '');
+    }
+    // fileVal16
+    if(this.fileVal16) {
+      fd.append('certificate[26]', this.fileVal16, this.fileVal16.name);
+    }else if(this.fileVal16Cross == 'cross_image'){
+      fd.append('certificate[26]', 'removed');
+    }else{
+      fd.append('certificate[26]', '');
+    }
+    
+
+    if (!form.valid) {
+      return;
+    }
+    console.log('value >', fd);
+    this.formSubmitSubscribe = this.http.post(this.certificatesFormApi+this.userData.user_data.id, fd).subscribe(
+      (response: any) => {
+        if (response.return_status > 0) {
+          this.commonUtils.presentToast('success', response.return_message);
+          // this.userInfoData();
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+        }
+      },
+      errRes => {
+      }
+    );
+
+  }
+  /* onSubmitCertificates end */
+
+  // Normal file upload
+  
+  fileVal:any;
+  fileValCross:any;
+  fileValName:any;
+  fileValPathShow = false;
+  fileValPreviewImage:any;
+  fileVal1:any;
+  fileVal1Cross:any;
+  fileVal1Name:any;
+  fileVal1PathShow = false;
+  fileVal1PreviewImage:any;
+  fileVal2:any;
+  fileVal2Cross:any;
+  fileVal2Name:any;
+  fileVal2PathShow = false;
+  fileVal2PreviewImage:any;
+  fileVal3:any;
+  fileVal3Cross:any;
+  fileVal3Name:any;
+  fileVal3PathShow = false;
+  fileVal3PreviewImage:any;
+  fileVal4:any;
+  fileVal4Cross:any;
+  fileVal4Name:any;
+  fileVal4PathShow = false;
+  fileVal4PreviewImage:any;
+  fileVal5:any;
+  fileVal5Cross:any;
+  fileVal5Name:any;
+  fileVal5PathShow = false;
+  fileVal5PreviewImage:any;
+  fileVal6:any;
+  fileVal6Cross:any;
+  fileVal6Name:any;
+  fileVal6PathShow = false;
+  fileVal6PreviewImage:any;
+  fileVal7:any;
+  fileVal7Cross:any;
+  fileVal7Name:any;
+  fileVal7PathShow = false;
+  fileVal7PreviewImage:any;
+  fileVal8:any;
+  fileVal8Cross:any;
+  fileVal8Name:any;
+  fileVal8PathShow = false;
+  fileVal8PreviewImage:any;
+  fileVal9:any;
+  fileVal9Cross:any;
+  fileVal9Name:any;
+  fileVal9PathShow = false;
+  fileVal9PreviewImage:any;
+  fileVal10:any;
+  fileVal10Cross:any;
+  fileVal10Name:any;
+  fileVal10PathShow = false;
+  fileVal10PreviewImage:any;
+  fileVal11:any;
+  fileVal11Cross:any;
+  fileVal11Name:any;
+  fileVal11PathShow = false;
+  fileVal11PreviewImage:any;
+  fileVal12:any;
+  fileVal12Cross:any;
+  fileVal12Name:any;
+  fileVal12PathShow = false;
+  fileVal12PreviewImage:any;
+  fileVal13:any;
+  fileVal13Cross:any;
+  fileVal13Name:any;
+  fileVal13PathShow = false;
+  fileVal13PreviewImage:any;
+  fileVal14:any;
+  fileVal14Cross:any;
+  fileVal14Name:any;
+  fileVal14PathShow = false;
+  fileVal14PreviewImage:any;
+  fileVal15:any;
+  fileVal15Cross:any;
+  fileVal15Name:any;
+  fileVal15PathShow = false;
+  fileVal15PreviewImage:any;
+  fileVal16:any;
+  fileVal16Cross:any;
+  fileVal16Name:any;
+  fileVal16PathShow = false;
+  fileVal16PreviewImage:any;
+
+  fileValResume:any;
+  fileValResumeCross:any;
+  normalFileNameResume:any;
+  uploadresumePathShow = false;
+  
+  normalFileUpload(event:any, _item:any, _name:any) {
+    console.log('nomal file upload _item => ', _item);
+    console.log('nomal file upload _name => ', _name);
+
+    if(_name == 'resume'){
+      this.fileValResume =  event.target.files[0];
+      _item =  event.target.files[0].name;
+      this.normalFileNameResume = _name;
+      this.uploadresumePathShow = true;
+    }else if(_name == 'certificate_5'){
+      this.fileVal =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileValPreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal);
+      _item =  event.target.files[0].name;
+      this.fileValName = _name;
+      this.fileValPathShow = true;
+    }else if(_name == 'certificate_7'){
+      this.fileVal1 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal1PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal1);
+      _item =  event.target.files[0].name;
+      this.fileVal1Name = _name;
+      this.fileVal1PathShow = true;
+    }else if(_name == 'certificate_10'){
+      this.fileVal2 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal2PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal2);
+      _item =  event.target.files[0].name;
+      this.fileVal2Name = _name;
+      this.fileVal2PathShow = true;
+    }else if(_name == 'certificate_11'){
+      this.fileVal3 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal3PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal3);
+      _item =  event.target.files[0].name;
+      this.fileVal3Name = _name;
+      this.fileVal3PathShow = true;
+    }else if(_name == 'certificate_12'){
+      this.fileVal4 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal4PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal4);
+      _item =  event.target.files[0].name;
+      this.fileVal4Name = _name;
+      this.fileVal4PathShow = true;
+    }else if(_name == 'certificate_13'){
+      this.fileVal5 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal5PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal5);
+      _item =  event.target.files[0].name;
+      this.fileVal5Name = _name;
+      this.fileVal5PathShow = true;
+    }else if(_name == 'certificate_14'){
+      this.fileVal6 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal6PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal6);
+      _item =  event.target.files[0].name;
+      this.fileVal6Name = _name;
+      this.fileVal6PathShow = true;
+    }else if(_name == 'certificate_15'){
+      this.fileVal7 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal7PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal7);
+      _item =  event.target.files[0].name;
+      this.fileVal7Name = _name;
+      this.fileVal7PathShow = true;
+    }else if(_name == 'certificate_16'){
+      this.fileVal8 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal8PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal8);
+      _item =  event.target.files[0].name;
+      this.fileVal8Name = _name;
+      this.fileVal8PathShow = true;
+    }else if(_name == 'certificate_18'){
+      this.fileVal9 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal9PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal9);
+      _item =  event.target.files[0].name;
+      this.fileVal9Name = _name;
+      this.fileVal9PathShow = true;
+    }else if(_name == 'certificate_20'){
+      this.fileVal10 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal10PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal10);
+      _item =  event.target.files[0].name;
+      this.fileVal10Name = _name;
+      this.fileVal10PathShow = true;
+    }else if(_name == 'certificate_21'){
+      this.fileVal11 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal11PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal11);
+      _item =  event.target.files[0].name;
+      this.fileVal11Name = _name;
+      this.fileVal11PathShow = true;
+    }else if(_name == 'certificate_22'){
+      this.fileVal12 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal12PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal12);
+      _item =  event.target.files[0].name;
+      this.fileVal12Name = _name;
+      this.fileVal12PathShow = true;
+    }else if(_name == 'certificate_23'){
+      this.fileVal13 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal13PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal13);
+      _item =  event.target.files[0].name;
+      this.fileVal13Name = _name;
+      this.fileVal13PathShow = true;
+    }else if(_name == 'certificate_24'){
+      this.fileVal14 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal14PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal14);
+      _item =  event.target.files[0].name;
+      this.fileVal14Name = _name;
+      this.fileVal14PathShow = true;
+    }else if(_name == 'certificate_25'){
+      this.fileVal15 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal15PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal15);
+      _item =  event.target.files[0].name;
+      this.fileVal15Name = _name;
+      this.fileVal15PathShow = true;
+    }else if(_name == 'certificate_26'){
+      this.fileVal16 =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileVal16PreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileVal16);
+      _item =  event.target.files[0].name;
+      this.fileVal16Name = _name;
+      this.fileVal16PathShow = true;
+    }
+  }
+  fileCross(_item:any, _identifire:any){
+    if(_identifire == 'resume'){
+      this.model.resume = null;
+      this.model.resume2 = null;
+      this.normalFileNameResume = '';
+      this.fileValResumeCross = 'cross_resume';
+
+    }else if(_identifire == 'certificate_5'){
+      this.model.certificate_5 = null;
+      this.fileValName = '';
+      this.fileValCross = 'cross_image';
+      this.fileValPathShow = false;
+    }else if(_identifire == 'certificate_7'){
+      this.model.certificate_7 = null;
+      this.fileVal1Name = '';
+      this.fileVal1Cross = 'cross_image';
+      this.fileVal1PathShow = false;
+    }else if(_identifire == 'certificate_10'){
+      this.model.certificate_10 = null;
+      this.fileVal2Name = '';
+      this.fileVal2Cross = 'cross_image';
+      this.fileVal2PathShow = false;
+    }else if(_identifire == 'certificate_11'){
+      this.model.certificate_11 = null;
+      this.fileVal3Name = '';
+      this.fileVal3Cross = 'cross_image';
+      this.fileVal3PathShow = false;
+    }else if(_identifire == 'certificate_12'){
+      this.model.certificate_12 = null;
+      this.fileVal4Name = '';
+      this.fileVal4Cross = 'cross_image';
+      this.fileVal4PathShow = false;
+    }else if(_identifire == 'certificate_13'){
+      this.model.certificate_13 = null;
+      this.fileVal5Name = '';
+      this.fileVal5Cross = 'cross_image';
+      this.fileVal5PathShow = false;
+    }else if(_identifire == 'certificate_14'){
+      this.model.certificate_14 = null;
+      this.fileVal6Name = '';
+      this.fileVal6Cross = 'cross_image';
+      this.fileVal6PathShow = false;
+    }else if(_identifire == 'certificate_15'){
+      this.model.certificate_15 = null;
+      this.fileVal7Name = '';
+      this.fileVal7Cross = 'cross_image';
+      this.fileVal7PathShow = false;
+    }else if(_identifire == 'certificate_16'){
+      this.model.certificate_16 = null;
+      this.fileVal8Name = '';
+      this.fileVal8Cross = 'cross_image';
+      this.fileVal8PathShow = false;
+    }else if(_identifire == 'certificate_18'){
+      this.model.certificate_18 = null;
+      this.fileVal9Name = '';
+      this.fileVal9Cross = 'cross_image';
+      this.fileVal9PathShow = false;
+    }else if(_identifire == 'certificate_20'){
+      this.model.certificate_20 = null;
+      this.fileVal10Name = '';
+      this.fileVal10Cross = 'cross_image';
+      this.fileVal10PathShow = false;
+    }else if(_identifire == 'certificate_21'){
+      this.model.certificate_21 = null;
+      this.fileVal11Name = '';
+      this.fileVal11Cross = 'cross_image';
+      this.fileVal11PathShow = false;
+    }else if(_identifire == 'certificate_22'){
+      this.model.certificate_22 = null;
+      this.fileVal12Name = '';
+      this.fileVal12Cross = 'cross_image';
+      this.fileVal12PathShow = false;
+    }else if(_identifire == 'certificate_23'){
+      this.model.certificate_23 = null;
+      this.fileVal13Name = '';
+      this.fileVal13Cross = 'cross_image';
+      this.fileVal13PathShow = false;
+    }else if(_identifire == 'certificate_24'){
+      this.model.certificate_24 = null;
+      this.fileVal14Name = '';
+      this.fileVal14Cross = 'cross_image';
+      this.fileVal14PathShow = false;
+    }else if(_identifire == 'certificate_25'){
+      this.model.certificate_25 = null;
+      this.fileVal15Name = '';
+      this.fileVal15Cross = 'cross_image';
+      this.fileVal15PathShow = false;
+    }else if(_identifire == 'certificate_26'){
+      this.model.certificate_26 = null;
+      this.fileVal16Name = '';
+      this.fileVal16Cross = 'cross_image';
+      this.fileVal16PathShow = false;
+    }
+  }
+  // Normal file upload end
 
   /* Call for join meeting start */
   joinMeeting(){

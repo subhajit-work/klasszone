@@ -7,8 +7,8 @@ export const environment = {
   apiMaster:'1',
   // apiUrl:'http://192.168.1.7/klasszone/Api', 
   // fileUrl:'http://192.168.1.7/klasszone/Api'
-  apiUrl:'https://klasszone.indinews24.com/Api', 
-  fileUrl:'https://klasszone.indinews24.com'
+  apiUrl:'https://klasszone.soumyadeepbiswas.com/Api', 
+  fileUrl:'https://klasszone.soumyadeepbiswas.com'
 };
 
 /*

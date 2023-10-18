@@ -1,0 +1,169 @@
+<ion-content [fullscreen]="true" [class.example-is-mobile]="mobileQuery.matches">
+  <ion-header [translucent]="true" class="profile-head">
+
+    <!-- breadcumb start -->
+    <div class="head-inner">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">
+          Home
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          {{parms_type}}
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+      <ion-button menuToggle size="small" (click)="snav.toggle()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <!-- breadcumb end -->
+
+  </ion-header>
+
+
+
+  <mat-sidenav-container class="profile-sidenav-container example-sidenav-container">
+    <!-- side menu start -->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+      <mat-nav-list class="profile-menu">
+
+        <ion-accordion-group>
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
+            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="menu?.subPages" slot="header">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+                <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+                <ion-label>{{submenu?.name}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </mat-nav-list>
+    </mat-sidenav>
+    <!-- side menu end -->
+
+    <mat-sidenav-content>
+      <!-- View  details start -->
+      <div class="view-booking">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" *ngIf="parms_type == 'transactions'">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">KlassCoin :</div>
+                  <div class="data">{{ViewData?.credits}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Balance :</div>
+                  <div class="data">{{ViewData?.balance}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Action :</div>
+                  <div class="data">{{ViewData?.action}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Purpose :</div>
+                  <div class="data">{{ViewData?.purpose}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Date of action :</div>
+                  <div class="data">{{ViewData?.date_of_action | date:'dd MMM yyy : h:mm a'}}</div>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" *ngIf="parms_type == 'reviews'">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Student Name :</div>
+                  <div class="data">{{ViewData?.s30a811f6}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Self confidence :</div>
+                  <div class="data">{{ViewData?.self_confidence}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Punctuality regularity :</div>
+                  <div class="data">{{ViewData?.punctuality_regularity}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course coverage :</div>
+                  <div class="data">{{ViewData?.course_coverage}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course completeness :</div>
+                  <div class="data">{{ViewData?.course_completeness}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course delivery :</div>
+                  <div class="data">{{ViewData?.course_delivery}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Communication skills :</div>
+                  <div class="data">{{ViewData?.communication_skills}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Presentation skills :</div>
+                  <div class="data">{{ViewData?.presentation_skills}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Teaching technique :</div>
+                  <div class="data">{{ViewData?.teaching_technique}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Focus in syllabus :</div>
+                  <div class="data">{{ViewData?.focus_in_syllabus}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Innovative method :</div>
+                  <div class="data">{{ViewData?.innovative_method}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Helping attitude :</div>
+                  <div class="data">{{ViewData?.helping_attitude}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Effective control :</div>
+                  <div class="data">{{ViewData?.effective_control}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Rating (Out of 5) :</div>
+                  <div class="data">{{ViewData?.rating}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Title :</div>
+                  <div class="data">{{ViewData?.title}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Comments :</div>
+                  <div class="data">{{ViewData?.comments}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Posted Date :</div>
+                  <div class="data">{{ViewData?.created_at | date:'dd MMM yyy : h:mm a'}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Last Updated :</div>
+                  <div class="data">{{ViewData?.updated_at | date:'dd MMM yyy : h:mm a'}}</div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- View  details end  -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
+</ion-content>
+<common-footer></common-footer>

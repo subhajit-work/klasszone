@@ -194,7 +194,7 @@
           "subPages" : [
             {
               "name" : "Courses ",
-              "url" : "all-enrolement",
+              "url" : "manage-courses",
               "icon" : "send"
             }
           ]
@@ -206,27 +206,27 @@
           "subPages" : [
             {
               "name" : "List Events",
-              "url" : "all-enrolement",
+              "url" : "list-event",
               "icon" : "send"
             },
             {
               "name" : "All Enrollments",
-              "url" : "upcoming-enrollments",
+              "url" : "all-enrolement",
               "icon" : "send"
             },
             {
               "name" : "Upcoming Enrollments",
-              "url" : "completed-expired-events",
-              "icon" : "send"
-            },
-            {
-              "name" : "Completed/Expired Enrollments ",
               "url" : "upcoming-enrollments",
               "icon" : "send"
             },
             {
-              "name" : "Cancelled Enrollments ",
+              "name" : "Completed/Expired Enrollments ",
               "url" : "completed-expired-events",
+              "icon" : "send"
+            },
+            {
+              "name" : "Cancelled Enrollments ",
+              "url" : "cancelled-enrollments",
               "icon" : "send"
             }
           ]
@@ -255,12 +255,12 @@
           "subPages" : [
             {
               "name" : "Pending",
-              "url" : "klassCoins-packages",
+              "url" : "salary-request-pending",
               "icon" : "send"
             },
             {
               "name" : "Done",
-              "url" : "order-history",
+              "url" : "salary-request-done",
               "icon" : "send"
             }
           ]
@@ -277,7 +277,7 @@
         },
         {
           "name" : "Received Reviews",
-          "url" : "redeem-rewards",
+          "url" : "received-reviews",
           "icon" : "redeem"
         },
         {
@@ -302,7 +302,7 @@
             },
             {
               "name" : "Manage certificates",
-              "url" : "profile-information",
+              "url" : "certificates",
               "icon" : "send"
             },
             {
