@@ -22,6 +22,7 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 import { StringReplacePipe } from '../pipe/string-replace.pipe';
 import { RatingComponent } from '../components/rating/rating.component';
 import { SafePipe } from '../pipe/safe-pipe.pipe';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { SafePipe } from '../pipe/safe-pipe.pipe';
     MatTabsModule,
     MatBadgeModule,
     Ionic4DatepickerModule,
+    AngularEditorModule 
   ],
   exports: [
     CommonFooterComponent,
@@ -73,6 +75,7 @@ import { SafePipe } from '../pipe/safe-pipe.pipe';
     RatingComponent,
     MatBadgeModule,
     Ionic4DatepickerModule,
+    AngularEditorModule 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

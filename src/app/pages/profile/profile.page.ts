@@ -12,6 +12,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MediaMatcher} from '@angular/cdk/layout';
 
 import profileMenuData from 'src/app/services/profilemenu.json';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
@@ -106,7 +107,35 @@ export class ProfilePage implements OnInit {
       value : 'bank',
       name : 'Bank Details'
     }
-  ]
+  ];
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      ['bold']
+      ],
+    customClasses: [
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  };
 
   constructor(
     private menuCtrl: MenuController,
@@ -164,6 +193,8 @@ export class ProfilePage implements OnInit {
       }else {
         this.form_api = 'update_contact_information/';
       }
+    }else if (this.parms_slug == 'tutor-profile-information'){
+      this.form_api = 'tutor_profile_information/';
     }
 
     // klass Coin List
@@ -455,6 +486,14 @@ export class ProfilePage implements OnInit {
   }
   // --rating click function call  end--
 
+  // ------ export function call start ------
+  export_url:any;
+  onExport(_identifier:any, _item:any){
+    this.export_url = this.file_url+'/'+_item;
+    window.open(this.export_url);
+  }
+  // export function call end
+
   /* profile picture upload start */
   changeProfileImage(image:any) {
     var file = image.dataTransfer ? image.dataTransfer.files[0] : image.target.files[0];
@@ -735,7 +774,11 @@ export class ProfilePage implements OnInit {
   /* onSubmitCertificates end */
 
   // Normal file upload
-  
+  fileValphoto:any;
+  fileValphotoCross:any;
+  fileValphotoName:any;
+  fileValphotoPathShow = false;
+  fileValphotoPreviewImage:any;
   fileVal:any;
   fileValCross:any;
   fileValName:any;
@@ -836,6 +879,16 @@ export class ProfilePage implements OnInit {
       _item =  event.target.files[0].name;
       this.normalFileNameResume = _name;
       this.uploadresumePathShow = true;
+    }else if(_name == 'photo'){
+      this.fileValphoto =  event.target.files[0];
+      const render = new FileReader();
+      render.onload = () =>{
+        this.fileValphotoPreviewImage = render.result;
+      }
+      render.readAsDataURL(this.fileValphoto);
+      _item =  event.target.files[0].name;
+      this.fileValphotoName = _name;
+      this.fileValphotoPathShow = true;
     }else if(_name == 'certificate_5'){
       this.fileVal =  event.target.files[0];
       const render = new FileReader();
@@ -1015,6 +1068,11 @@ export class ProfilePage implements OnInit {
       this.normalFileNameResume = '';
       this.fileValResumeCross = 'cross_resume';
 
+    }else if(_identifire == 'photo'){
+      this.model.photo = null;
+      this.fileValphotoName = '';
+      this.fileValphotoCross = 'cross_image';
+      this.fileValphotoPathShow = false;
     }else if(_identifire == 'certificate_5'){
       this.model.certificate_5 = null;
       this.fileValName = '';
