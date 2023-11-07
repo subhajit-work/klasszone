@@ -41,7 +41,7 @@ export class ProfilePage implements OnInit {
   pageName:any;
   private tableListDataSubscribe: Subscription | undefined;
   tableListData_url:any;
-  tableData:any;
+  tableData:any = [];
   profileSideMenuData:any;
   userSavedInfo:any;
   private getCountryCodeSubscribe: Subscription | undefined;
@@ -325,10 +325,10 @@ export class ProfilePage implements OnInit {
               this.displayedColumns = ['student_names', 'event_id', 'date', 'start_time', 'end_time', 'fee', 'prev_status','actions'];
           }else if (this.parms_slug == 'salary-request-done') {
             this.tableListData_url = 'credit_conversion_requests/done?user_id='+this.userData.user_data.id;
-            this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type', 'status_of_payment', 'updated_at', 'actions'];
+            this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           } else if (this.parms_slug == 'manage-courses') {
             this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
-            this.displayedColumns = ['course_title', 'category', 'sub_category', 'duration', 'fee', 'created_at', 'type', 'prev_status','actions'];
+            this.displayedColumns = ['course_title', 'category', 'sub_category', 'duration', 'fee', 'created_at', 'type_display', 'prev_status','actions'];
           }else if (this.parms_slug == 'list-event') {
             this.tableListData_url = 'tutor_manage_events?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['name', 'total_students', 'fee', 'event_date', 'start_time', 'end_time', 'prev_status','actions'];
@@ -338,66 +338,66 @@ export class ProfilePage implements OnInit {
           }else if (this.parms_slug == 'all-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['see4f574b','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'approved-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/approved?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/approved?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'session-initiated-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/session_initiated?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names','course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/session_initiated?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'completed-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/completed?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/completed?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'cancelled-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/cancelled?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/cancelled?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'intervention-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/called_for_admin_intervention?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'closed-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/closed?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/closed?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }else if (this.parms_slug == 'expired-enrolement-classes') {
             if (this.userType == 'tutor') {
               this.tableListData_url = 'student_enquiries/expired?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['student_names', 'course_title', 'start_date', 'message', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }else {
               this.tableListData_url = 'enquiries/expired?user_id='+this.userData.user_data.id;
-              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'increased_fee', 'type', 'prev_status','actions'];
+              this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
           }
           this.tableListData();

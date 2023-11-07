@@ -1395,9 +1395,9 @@
                 <table mat-table [dataSource]="list_product">
 
                   <!-- Student names Column -->
-                  <ng-container matColumnDef="see4f574b" *ngIf="userType == 'tutor'">
+                  <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1437,13 +1437,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
                     <td mat-cell *matCellDef="let element">
                       <span *ngIf="element.type == 'individual'">Individual Class</span>
@@ -1475,18 +1475,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -1502,7 +1502,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1542,15 +1542,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                   <!-- Booking status Column -->
@@ -1576,18 +1576,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -1603,7 +1603,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1643,15 +1643,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -1678,18 +1678,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -1705,7 +1705,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1745,15 +1745,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -1780,18 +1780,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -1807,7 +1807,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1847,15 +1847,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -1882,18 +1882,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -1909,7 +1909,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -1949,15 +1949,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -1984,18 +1984,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2011,7 +2011,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -2051,15 +2051,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -2086,18 +2086,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2119,7 +2119,7 @@
                   <!-- Student names Column -->
                   <ng-container matColumnDef="student_names" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Student names </th>
-                    <td mat-cell *matCellDef="let element"> {{element.see4f574b}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.student_names}} </td>
                   </ng-container>
 
                   <!-- Course title Column -->
@@ -2159,15 +2159,15 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="increased_fee">
+                  <ng-container matColumnDef="fee">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
-                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">{{element?.type}}</td>
+                    <td mat-cell *matCellDef="let element">{{element?.type_display}}</td>
                   </ng-container>
 
                    <!-- Booking status Column -->
@@ -2194,18 +2194,18 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.group_button == '1'">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2309,7 +2309,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2411,7 +2411,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2513,7 +2513,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2586,7 +2586,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2632,7 +2632,7 @@
                   </ng-container>
 
                   <!-- Type -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Type </th>
                     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
                   </ng-container>
@@ -2660,7 +2660,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2732,7 +2732,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2783,7 +2783,7 @@
                   </ng-container>
 
                   <!-- Type Column -->
-                  <ng-container matColumnDef="type">
+                  <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef>Type</th>
                     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
                   </ng-container>
@@ -2809,7 +2809,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2878,7 +2878,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2932,7 +2932,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -2990,7 +2990,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
@@ -3059,7 +3059,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
