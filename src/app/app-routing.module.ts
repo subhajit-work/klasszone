@@ -80,7 +80,12 @@ const routes: Routes = [
   {
     path: 'view/:type/:id',
     loadChildren: () => import('./pages/credits-transactions-history/credits-transactions-history.module').then( m => m.CreditsTransactionsHistoryPageModule)
+  },
+  {
+    path: 'students-group/:id',
+    loadChildren: () => import('./pages/students-group/students-group.module').then( m => m.StudentsGroupPageModule)
   }
+
 ];
 
 @NgModule({

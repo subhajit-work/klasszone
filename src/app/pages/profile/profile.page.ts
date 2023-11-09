@@ -46,6 +46,8 @@ export class ProfilePage implements OnInit {
   userSavedInfo:any;
   private getCountryCodeSubscribe: Subscription | undefined;
   countryCodeUrl: any;
+  private getSalaryRequestSubscribe: Subscription | undefined;
+  salaryRequestUrl: any;
   
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -326,6 +328,9 @@ export class ProfilePage implements OnInit {
           }else if (this.parms_slug == 'salary-request-done') {
             this.tableListData_url = 'credit_conversion_requests/done?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
+          }else if (this.parms_slug == 'salary-request-pending') {
+            this.tableListData_url = 'credit_conversion_requests/pending?user_id='+this.userData.user_data.id;
+            this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           } else if (this.parms_slug == 'manage-courses') {
             this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
             this.displayedColumns = ['course_title', 'category', 'sub_category', 'duration', 'fee', 'created_at', 'type_display', 'prev_status','actions'];
@@ -474,6 +479,20 @@ export class ProfilePage implements OnInit {
     );
   }
   // get country code end
+
+  /* Request for salary start */
+  salaryRequest() {
+    this.salaryRequestUrl = 'send_credits_conversion_request/168?user_id='+this.userData.user_data.id;
+    this.getSalaryRequestSubscribe = this.http.get(this.salaryRequestUrl).subscribe(
+      (res: any) => {
+       
+
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Request for salary end */
 
   //---- rating click function call  start ----
   ratingClicked: any;
@@ -1255,6 +1274,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getCountryCodeSubscribe !== undefined) {
       this.getCountryCodeSubscribe.unsubscribe();
+    }
+    if (this.getSalaryRequestSubscribe !== undefined) {
+      this.getSalaryRequestSubscribe.unsubscribe();
     }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
