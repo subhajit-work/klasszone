@@ -48,6 +48,8 @@ export class ProfilePage implements OnInit {
   countryCodeUrl: any;
   private getSalaryRequestSubscribe: Subscription | undefined;
   salaryRequestUrl: any;
+  private cloneEventSubscribe: Subscription | undefined;
+  cloneEventUrl: any;
   
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -329,7 +331,7 @@ export class ProfilePage implements OnInit {
             this.tableListData_url = 'credit_conversion_requests/done?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           }else if (this.parms_slug == 'salary-request-pending') {
-            this.tableListData_url = 'credit_conversion_requests/pending?user_id='+this.userData.user_data.id;
+            this.tableListData_url = 'credit_conversion_requests?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           } else if (this.parms_slug == 'manage-courses') {
             this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
@@ -481,11 +483,15 @@ export class ProfilePage implements OnInit {
   // get country code end
 
   /* Request for salary start */
-  salaryRequest() {
-    this.salaryRequestUrl = 'send_credits_conversion_request/168?user_id='+this.userData.user_data.id;
+  salaryRequest(_id:any) {
+    this.salaryRequestUrl = 'send_credits_conversion_request/'+_id+'?user_id='+this.userData.user_data.id;
     this.getSalaryRequestSubscribe = this.http.get(this.salaryRequestUrl).subscribe(
       (res: any) => {
-       
+        if (res.return_status > 0) {
+          this.commonUtils.presentToast('success', res.return_message);
+        }else {
+          this.commonUtils.presentToast('error', res.return_message);
+        }
 
       },
       errRes => {
@@ -493,6 +499,25 @@ export class ProfilePage implements OnInit {
     );
   }
   /* Request for salary end */
+
+  /* Clone event start */
+  cloneEvent(_id:any) {
+    this.cloneEventUrl = 'tutor_manage_events?clone='+_id+'&user_id='+this.userData.user_data.id;
+    this.cloneEventSubscribe = this.http.get(this.cloneEventUrl).subscribe(
+      (res: any) => {
+        if (res.return_status > 0) {
+          this.commonUtils.presentToast('success', res.return_message);
+          this.tableListData();
+        }else {
+          this.commonUtils.presentToast('error', res.return_message);
+        }
+
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Clone event end */
 
   //---- rating click function call  start ----
   ratingClicked: any;
@@ -1277,6 +1302,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getSalaryRequestSubscribe !== undefined) {
       this.getSalaryRequestSubscribe.unsubscribe();
+    }
+    if (this.cloneEventSubscribe !== undefined) {
+      this.cloneEventSubscribe.unsubscribe();
     }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

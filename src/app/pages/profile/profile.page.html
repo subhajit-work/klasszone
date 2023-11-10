@@ -67,8 +67,8 @@
             shape="round">Edit Profile</ion-button>
           <h3 class="name">{{userData?.user_data?.username}}</h3>
           <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
-          <!-- <p>Per KlassCoin Value: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p> -->
-          <p>Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
+          <p *ngIf="userType == 'tutor'">Per KlassCoin Value: <b>₹ {{userData?.user_data?.per_credit_value}}</b></p>
+          <p *ngIf="userType == 'student'">Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
         </div>
       </div>
       <!-- Profile header end -->
@@ -1467,7 +1467,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1478,7 +1478,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -1491,6 +1491,60 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                  </ion-text>
+                  <ion-text color="tertiary">
+                    <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+                  </ion-text>
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Cancel your booking status of the course or update Klasszone Admin about class:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">edit</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      View your class and course details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your classes at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Pay your Next month fee for your enrolled classes of your course:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      Review your Tutor and provide Star Rating using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">star</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- all-enrolement-classes end -->
 
@@ -1568,7 +1622,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'approved', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1579,7 +1633,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -1670,7 +1724,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'session_initiated', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1681,7 +1735,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -1772,7 +1826,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'completed', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1783,7 +1837,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -1874,7 +1928,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'cancelled', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1885,7 +1939,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -1976,7 +2030,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'called_for_admin_intervention', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -1987,7 +2041,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -2078,7 +2132,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'closed', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2089,7 +2143,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -2186,7 +2240,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2197,7 +2251,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
@@ -2290,7 +2344,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2301,7 +2355,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2392,7 +2446,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2403,7 +2457,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2494,7 +2548,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2505,7 +2559,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2578,7 +2632,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2597,7 +2651,7 @@
 
             <!-- Salary request start -->
             <!-- done start -->
-            <ion-col size="12" *ngIf="parms_slug == 'salary-request-done' || 'salary-request-pending'">
+            <ion-col size="12" *ngIf="parms_slug == 'salary-request-done' || parms_slug == 'salary-request-pending'">
               <div class="example-container mat-elevation-z8" tabindex="0">
                 <table mat-table [dataSource]="list_product">
 
@@ -2724,8 +2778,8 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent">edit</mat-icon>
-                      <mat-icon color="warn">content_copy</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.status == 'Approved'" [routerLink]="['/', 'event-details', element?.view_link]">visibility</mat-icon>
+                      <mat-icon color="primary" (click)="cloneEvent(element?.id)">content_copy</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2755,13 +2809,13 @@
                   <!-- Category Column -->
                   <ng-container matColumnDef="category">
                     <th mat-header-cell *matHeaderCellDef> Category </th>
-                    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.sb583a629}} </td>
                   </ng-container>
 
                   <!-- Subcategory Column -->
                   <ng-container matColumnDef="sub_category">
                     <th mat-header-cell *matHeaderCellDef> Subcategory </th>
-                    <td mat-cell *matCellDef="let element"> {{element.sub_category}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.sfa50d5d8}} </td>
                   </ng-container>
 
                   <!-- Duration (In Months) Column -->
@@ -2801,8 +2855,8 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent">edit</mat-icon>
-                      <mat-icon color="warn">visibility</mat-icon>
+                      <!-- <mat-icon color="accent">edit</mat-icon> -->
+                      <mat-icon color="warn" [routerLink]="['/teacher-profile/'+ element?.view_link]">visibility</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2859,7 +2913,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2870,7 +2924,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -3040,7 +3094,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -3051,7 +3105,7 @@
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">payment</mat-icon>
+                      <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -3066,61 +3120,6 @@
               </div>
             </ion-col>
             <!-- rewards-points end -->
-          </ion-row>
-
-          <ion-row *ngIf="parms_slug !== 'klassCoins-packages' || parms_slug !== 'booking-view' || parms_slug !== 'edit-profile' || parms_slug !=='dashboard'">
-            <ion-col size="12">
-              <ion-text color="primary">
-                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-              </ion-text>
-              <ion-text color="tertiary">
-                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
-              </ion-text>
-              <ion-text color="success">
-                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-              </ion-text>
-              <mat-divider></mat-divider>
-              <ion-text color="medium">
-                <p>
-                  Cancel your booking status of the course or update Klasszone Admin about class:
-                  <ion-button fill="clear" class="small-btn">
-                    <mat-icon color="accent">edit</mat-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="success">
-                <p>
-                  View your class and course details using this action button:
-                  <ion-button fill="clear" class="small-btn">
-                    <mat-icon color="warn">visibility</mat-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="medium">
-                <p>
-                  Join your classes at scheduled time using this action button:
-                  <ion-button fill="clear" class="small-btn">
-                    <mat-icon color="primary">duo</mat-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="warning">
-                <p>
-                  Pay your Next month fee for your enrolled classes of your course:
-                  <ion-button fill="clear" class="small-btn">
-                    <mat-icon color="accent">payment</mat-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-              <ion-text color="dark">
-                <p>
-                  Review your Tutor and provide Star Rating using this action button:
-                  <ion-button fill="clear" class="small-btn">
-                    <mat-icon color="warn">star</mat-icon>
-                  </ion-button>
-                </p>
-              </ion-text>
-            </ion-col>
           </ion-row>
         </ion-grid>
       </div>

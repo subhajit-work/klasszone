@@ -84,7 +84,12 @@ const routes: Routes = [
   {
     path: 'students-group/:id',
     loadChildren: () => import('./pages/students-group/students-group.module').then( m => m.StudentsGroupPageModule)
+  },
+  {
+    path: 'event-details/:slug',
+    loadChildren: () => import('./pages/event-details/event-details.module').then( m => m.EventDetailsPageModule)
   }
+
 
 ];
 
