@@ -52,7 +52,7 @@
 
     <mat-sidenav-content>
       <!-- View booking details start -->
-      <div class="view-booking">
+      <div class="view-booking" *ngIf="parms_status !== 'event'">
         <ion-grid>
           <ion-row>
             <ion-col size="12">
@@ -128,6 +128,123 @@
                 <div class="details-item">
                   <div class="label">Booking status :</div>
                   <div class="data">{{bookingViewData?.status | stringReplace : '_' : ' '}}</div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">edit</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">visibility</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="primary">duo</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">payment</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">star</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div class="view-booking" *ngIf="parms_status === 'event' && userType == 'tutor'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Student names:</div>
+                  <div class="data">{{bookingViewData?.student_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course:</div>
+                  <div class="data">{{bookingViewData?.category_name}}</div>
+                </div>
+                <div class="details-item" >
+                  <div class="label">Event:</div>
+                  <div class="data">{{bookingViewData?.tutor_events}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Event page :</div>
+                  <div class="data" [routerLink]="['/', 'event-details', bookingViewData?.event_page]">Open Event</div>
+                </div>
+                
+                <div class="experience-item">
+                  <p><b>Event description :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Pre-Requisites Information :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Other information :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Fee (In KlassCoins) :</b></p>
+                  <div class="data">{{bookingViewData?.fee}}</div>
+                </div>
+                <div class="experience-item">
+                  <p><b>Event date :</b></p>
+                  <div class="data">{{bookingViewData?.date}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Start time :</div>
+                  <div class="data">{{bookingViewData?.start_time | date:'h:mm a'}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">End time :</div>
+                  <div class="data">{{bookingViewData?.end_time | date:'h:mm a'}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Status :</div>
+                  <div class="data">{{bookingViewData?.status | stringReplace : '_' : ' '}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Created at :</div>
+                  <div class="data">{{bookingViewData?.created_at}}</div>
                 </div>
               </div>
             </ion-col>

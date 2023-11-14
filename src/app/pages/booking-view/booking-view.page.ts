@@ -85,6 +85,11 @@ export class BookingViewPage implements OnInit {
               this.getBookingView();
             }
             
+          }else if (this.parms_status == 'event'){
+            if (this.userType == 'tutor') {
+              this.bookingView_url = 'tutor_event_enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+              this.getBookingView();
+            }
           }else {
             this.bookingView_url = 'enquiries/'+this.parms_status+'/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
             this.getBookingView();

@@ -50,6 +50,8 @@ export class ProfilePage implements OnInit {
   salaryRequestUrl: any;
   private cloneEventSubscribe: Subscription | undefined;
   cloneEventUrl: any;
+  private referAndEarnSubscribe: Subscription | undefined;
+  referAndEarnUrl: any;
   
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -406,6 +408,8 @@ export class ProfilePage implements OnInit {
               this.tableListData_url = 'enquiries/expired?user_id='+this.userData.user_data.id;
               this.displayedColumns = ['course_title', 'start_date', 'message', 's1ba55b7f', 'total_class_per_week', 'duration', 'fee', 'type_display', 'prev_status','actions'];
             }
+          }else if (this.parms_slug == 'refer-and-earn') {
+            this.referAndEarn();
           }
           this.tableListData();
           
@@ -518,6 +522,22 @@ export class ProfilePage implements OnInit {
     );
   }
   /* Clone event end */
+
+  /* Refer and earn start */
+  referAndEarnData:any;
+  referAndEarn() {
+    this.referAndEarnUrl = 'refer_and_earn/'+this.userData.user_data.id;
+    this.referAndEarnSubscribe = this.http.get(this.referAndEarnUrl).subscribe(
+      (res: any) => {
+        this.referAndEarnData = this.api_url + res.return_data.code
+        console.log('referAndEarnData', this.referAndEarnData);
+        
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Refer and earn end */
 
   //---- rating click function call  start ----
   ratingClicked: any;
@@ -1305,6 +1325,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.cloneEventSubscribe !== undefined) {
       this.cloneEventSubscribe.unsubscribe();
+    }
+    if (this.referAndEarnSubscribe !== undefined) {
+      this.referAndEarnSubscribe.unsubscribe();
     }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

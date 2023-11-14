@@ -1959,6 +1959,19 @@ ion-header {
 
 /* header end */
 
+/* refer-and-earn start */
+.refer-and-earn {
+    padding: 20px;
+    .share-input {
+        display: flex;
+        align-items: center;
+        .field-item {
+            flex: auto;
+        }
+    }
+}
+/* refer-and-earn end */
+
 /* skeleton loading start */
 .loading-animation {
     .banner {
@@ -2032,3 +2045,7 @@ ion-header {
 }
 
 /* skeleton loading end */
+.disabled {
+    pointer-events:none;
+    opacity: 0.5;
+}

@@ -1384,6 +1384,26 @@
       </div>
       <!-- View booking details end  -->
 
+      <!-- refer-and-earn start -->
+      <div class="refer-and-earn" *ngIf="parms_slug == 'refer-and-earn'">
+        <img src="assets/refer-and-earn.jpg">
+        <p><b>1) Invite your friends to join Klasszone using your referral code.</b></p>
+        <p><b>2.1) If registered as Student, they will recieve 250 Rewards Points on their first KlassCoins Package Purchase.</b></p>
+        <p><b>2.2) If registered as Tutor, they will recieve 100 KlassCoin on their first KlassCoins Purchase.</b></p>
+        <p><b>3) You earn 250 KlassCoins after their first KlassCoins Package Purchase.</b></p>
+
+        <div class="share-input">
+            <div class="field-item">
+              <ion-input type="text" [(ngModel)]="referAndEarnData" labelPlacement="stacked"
+                placeholder="Enter your First Name"></ion-input>
+            </div>
+            <ion-button shape="round">
+              <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+        </div>
+      </div>
+      <!-- refer-and-earn end -->
+
       <!-- table data start -->
       <div class="page-inner">
         <ion-grid>
@@ -2352,11 +2372,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'event', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.booked_students_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3002,7 +3022,7 @@
                   <!-- Order id Column -->
                   <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> Order id </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    <td mat-cell *matCellDef="let element"> 000{{element.id}} </td>
                   </ng-container>
 
                   <!-- Purchase date Column -->
