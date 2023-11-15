@@ -1343,6 +1343,45 @@
       </div>
       <!-- profile edit end -->
 
+      <!-- change-password start -->
+      <div class="profile-edit" *ngIf="parms_slug == 'change-password'">
+        <form #changePasswordForm="ngForm" (ngSubmit)="onSubmitChangePassword(changePasswordForm)"
+          (keyup.enter)="onSubmitChangePassword(changePasswordForm)">
+          <ion-grid>
+            <ion-row>
+              <input type="hidden" required [(ngModel)]="model.email" name="identity">
+              <!-- Current Password -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input name="old" [(ngModel)]="model.old" labelPlacement="stacked" placeholder="Enter your Current Password" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- New Password -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input name="new" [(ngModel)]="model.new" labelPlacement="stacked" placeholder="Enter your New Password" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Confirm Password -->
+              <ion-col size="12">
+                <div class="field-item">
+                  <ion-input name="confirmPassword" [(ngModel)]="model.confirmPassword" labelPlacement="stacked" placeholder="Enter your Confirm Password" required></ion-input>
+                </div>
+              </ion-col>
+              <!-- Button -->
+              <ion-col size="12">
+                <div class="custom-btn">
+                  <ion-button type="submit" [disabled]="!changePasswordForm.valid" expand="block" shape="round">
+                    Change Password
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+      <!-- change-password end -->
+
       <!-- View booking details start -->
       <div class="view-booking"  *ngIf="parms_slug == 'booking-view'">
         <ion-grid>
@@ -1511,7 +1550,7 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
-              <ion-row>
+              <ion-row *ngIf="userType == 'student'">
                 <ion-col size="12">
                   <ion-text color="primary">
                     <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
@@ -1560,6 +1599,51 @@
                       Review your Tutor and provide Star Rating using this action button:
                       <ion-button fill="clear" class="small-btn">
                         <mat-icon color="warn">star</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Change your booking status of the course or update Klasszone Admin about class:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">edit</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      View your active course details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your classes at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Request for Payment for current month fee for active/completed classes of your course:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      View the Group class active/non-active students:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">groups_2</mat-icon>
                       </ion-button>
                     </p>
                   </ion-text>
@@ -1666,6 +1750,13 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    <p><b>Note:</b> Your course will move to Session Initiated tab once you initiate the session.</p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- approved-enrolement-classes end -->
 
@@ -1768,6 +1859,51 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Change your booking status of the course or update Klasszone Admin about class:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">edit</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      View your active course details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your classes at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Request for Payment for current month fee for active/completed classes of your course:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      View the Group class active/non-active students:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">groups_2</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- session-initiated-enrolement-classes end -->
 
@@ -1972,6 +2108,51 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Change your booking status of the course or update Klasszone Admin about class:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">edit</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      View your active course details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your classes at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Request for Payment for current month fee for active/completed classes of your course:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      View the Group class active/non-active students:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">groups_2</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- cancelled-enrolement-classes end -->
 
@@ -2388,6 +2569,43 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="success">
+                    <p>
+                      View your active event details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your event at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Request for Payment of your event:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      View the enrolled students for current event:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">groups_2</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- all-enrolement end -->
 
@@ -2490,6 +2708,43 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="success">
+                    <p>
+                      View your active event details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="medium">
+                    <p>
+                      Join your event at scheduled time using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">duo</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="warning">
+                    <p>
+                      Request for Payment of your event:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">money</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="dark">
+                    <p>
+                      View the enrolled students for current event:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">groups_2</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- upcoming-enrolement end -->
 
@@ -2739,6 +2994,19 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="success">
+                    <p>
+                      View your payment details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- done end -->
             <!-- Salary request end -->
@@ -2811,6 +3079,27 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Copy your event to make duplicate event on next scheule.:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">content_copy</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      Open your active event using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- List Events end -->
             <!-- Manage Events end -->
@@ -2888,6 +3177,27 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="medium">
+                    <p>
+                      Change your course details before Klasszone Approval:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="accent">edit</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p>
+                      Open your active course using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- manage course end -->
 

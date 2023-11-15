@@ -333,7 +333,7 @@ export class ProfilePage implements OnInit {
             this.tableListData_url = 'credit_conversion_requests/done?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           }else if (this.parms_slug == 'salary-request-pending') {
-            this.tableListData_url = 'credit_conversion_requests?user_id='+this.userData.user_data.id;
+            this.tableListData_url = 'credit_conversion_requests/pending?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
           } else if (this.parms_slug == 'manage-courses') {
             this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
@@ -658,6 +658,44 @@ export class ProfilePage implements OnInit {
 
   }
   // form submit end
+
+  /* change-password start */
+  onSubmitChangePassword(form: NgForm) {
+    console.log("add form submit >", form.value);
+
+    // get form value
+    let fd = new FormData();
+
+    for (let val in form.value) {
+      if (form.value[val] == undefined) {
+        form.value[val] = '';
+      }
+      fd.append(val, form.value[val]);
+    };
+
+    console.log('value >', fd);
+
+    if (!form.valid) {
+      return;
+    }
+
+    this.formSubmitSubscribe = this.http.post('change_password', fd).subscribe(
+      (response: any) => {
+        console.log("add form response >", response);
+        if (response.return_status > 0) {
+          this.commonUtils.presentToast('success', response.return_message);
+          
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+        }
+        
+      },
+      errRes => {
+      }
+    );
+
+  }
+  /* change-password end */
 
   /* onSubmitCertificates start */
   certificatesFormApi = 'tutuor_certificates/';
