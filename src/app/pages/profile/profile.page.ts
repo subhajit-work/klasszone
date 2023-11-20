@@ -410,7 +410,7 @@ export class ProfilePage implements OnInit {
             }
           }else if (this.parms_slug == 'refer-and-earn') {
             this.referAndEarn();
-          }
+          } 
           this.tableListData();
           
           this.model = {
@@ -460,6 +460,28 @@ export class ProfilePage implements OnInit {
             this.model.non_academic_class = true;
           }else {
             this.model.non_academic_class = false;
+          }
+
+          if (this.parms_slug == 'certificates') {
+            this.model = {
+              certificate_5 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[5],
+              certificate_7 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[7],
+              certificate_10 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[10],
+              certificate_11 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[11],
+              certificate_12 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[12],
+              certificate_13 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[13],
+              certificate_14 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[14],
+              certificate_15 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[15],
+              certificate_16 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[16],
+              certificate_18 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[18],
+              certificate_20 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[20],
+              certificate_21 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[21],
+              certificate_22 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[22],
+              certificate_23 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[23],
+              certificate_24 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[24],
+              certificate_25 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[25],
+              certificate_26 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[26],
+            }
           }
         }
         
@@ -863,7 +885,7 @@ export class ProfilePage implements OnInit {
       (response: any) => {
         if (response.return_status > 0) {
           this.commonUtils.presentToast('success', response.return_message);
-          // this.userInfoData();
+          this.userInfoData();
         }else {
           this.commonUtils.presentToast('error', response.return_message);
         }

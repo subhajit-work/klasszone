@@ -2049,3 +2049,10 @@ ion-header {
     pointer-events:none;
     opacity: 0.5;
 }
+.dotsAfter2lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

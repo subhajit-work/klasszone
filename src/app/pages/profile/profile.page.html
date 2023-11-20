@@ -286,7 +286,39 @@
                 </div>
               </ion-card>
             </ion-col>
+
+            <ion-col size="12">
+              <mat-divider></mat-divider>
+              <ion-text color="primary">
+                <p><b>Note:</b> "Welcome Klasscoins" will be awarded upon first time registration: 500 Klasscoins.</p>
+              </ion-text>
+              <ion-text color="accent">
+                <p><b>Note:</b> Registration using any other registered student's Referral Code: 250 Rewards points.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> On every Referral Klasszone Rewards points: 200 Reward points.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> Grab Klasszone Rewards points for every Text Reviews about Tutor: 50 Rewards points.</p>
+              </ion-text>
+              <ion-text color="warn">
+                <p><b>Note:</b> Grab Klasszone Rewards points for every Star Ratings about Tutor: 50 Rewards points.</p>
+              </ion-text>
+              <ion-text color="primary">
+                <p><b>Note:</b> Learn 'n' Earn Reward points(for every 60 minutes of learning): 100 Rewards points.</p>
+              </ion-text>
+              <ion-text color="accent">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Event Cancellation Deduction: 5% of Event Fee (in Klasscoin).</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> Klasszone Rewards point for E-Gift card Redemption: Multiple of 100 Rewards points</p>
+              </ion-text>
+            </ion-col>
           </ion-row>
+          
         </ion-grid>
 
       </div>
@@ -1496,18 +1528,19 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
                   <ng-container matColumnDef="type_display">
                     <th mat-header-cell *matHeaderCellDef> Class Type </th>
-                    <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.type == 'individual'">Individual Class</span>
-                      <span *ngIf="element.type == 'batch'">Group Class</span>
-                    </td>
+                    <td mat-cell *matCellDef="let element">{{element.type_display}}</td>
                   </ng-container>
 
                   <!-- Booking status Column -->
@@ -1523,11 +1556,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -1536,7 +1569,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -1561,47 +1594,49 @@
                   <ion-text color="success">
                     <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
                   </ion-text>
-                  <mat-divider></mat-divider>
-                  <ion-text color="medium">
-                    <p>
-                      Cancel your booking status of the course or update Klasszone Admin about class:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="accent">edit</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                  <ion-text color="success">
-                    <p>
-                      View your class and course details using this action button:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="warn">visibility</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                  <ion-text color="medium">
-                    <p>
-                      Join your classes at scheduled time using this action button:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="primary">duo</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                  <ion-text color="warning">
-                    <p>
-                      Pay your Next month fee for your enrolled classes of your course:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="accent">money</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                  <ion-text color="dark">
-                    <p>
-                      Review your Tutor and provide Star Rating using this action button:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="warn">star</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
                 </ion-col>
               </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
@@ -1700,9 +1735,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -1723,11 +1762,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'approved', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -1736,7 +1775,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -1750,6 +1789,60 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="primary">
+                    <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
+                  </ion-text>
+                  <ion-text color="tertiary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                  </ion-text>
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <ion-text color="primary">
@@ -1808,9 +1901,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -1832,11 +1929,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'session_initiated', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -1845,7 +1942,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -1859,6 +1956,62 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                  </ion-text>
+                  <ion-text color="tertiary">
+                    <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+                  </ion-text>
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <mat-divider></mat-divider>
@@ -1955,9 +2108,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -1979,11 +2136,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'completed', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -1992,7 +2149,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2006,6 +2163,53 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- completed-enrolement-classes end -->
 
@@ -2057,9 +2261,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -2081,11 +2289,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'cancelled', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2094,7 +2302,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2108,6 +2316,62 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                  </ion-text>
+                  <ion-text color="tertiary">
+                    <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                  </ion-text>
+                  <ion-text color="success">
+                    <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+                  </ion-text>
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <mat-divider></mat-divider>
@@ -2204,9 +2468,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -2228,11 +2496,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'called_for_admin_intervention', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2241,7 +2509,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2255,6 +2523,53 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- intervention-enrolement-classes end -->
 
@@ -2306,9 +2621,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -2330,11 +2649,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'closed', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2343,7 +2662,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2357,12 +2676,59 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
-              <ion-text color="primary">
-                <p><b>Note:</b> Your course will move to Session Initiated tab once Tutor will initiate the session.</p>
-              </ion-text>
-              <ion-text color="warning">
-                <p><b>Note:</b>You will earn 100 Rewards Points per hour after successful completion of any course.</p>
-              </ion-text>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 50 Rewards Points after adding any star rating for a Tutor.</p>
+                  </ion-text>
+                  <ion-text color="tertiary">
+                    <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                  </ion-text>
+                  <div *ngIf="tableData.length > 0">
+                    <mat-divider></mat-divider>
+                    <ion-text color="medium">
+                      <p>
+                        Cancel your booking status of the course or update Klasszone Admin about class:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">edit</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="success">
+                      <p>
+                        View your class and course details using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">visibility</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="medium">
+                      <p>
+                        Join your classes at scheduled time using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="primary">duo</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="warning">
+                      <p>
+                        Pay your Next month fee for your enrolled classes of your course:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="accent">money</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                    <ion-text color="dark">
+                      <p>
+                        Review your Tutor and provide Star Rating using this action button:
+                        <ion-button fill="clear" class="small-btn">
+                          <mat-icon color="warn">star</mat-icon>
+                        </ion-button>
+                      </p>
+                    </ion-text>
+                  </div>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <!-- closed-enrolement-classes end -->
 
@@ -2414,9 +2780,13 @@
                   </ng-container>
 
                   <!-- Fee per class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Class Type Column -->
@@ -2438,11 +2808,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2451,7 +2821,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.join_link_button == '1'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2490,7 +2860,7 @@
                   <!-- Event Column -->
                   <ng-container matColumnDef="event_id">
                     <th mat-header-cell *matHeaderCellDef> Event </th>
-                    <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.s4437cfac}} </td>
                   </ng-container>
 
                   <!-- Category Column -->
@@ -2508,13 +2878,13 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -2526,7 +2896,9 @@
                   <!-- Event description Column -->
                   <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
-                    <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
+                    <td mat-cell *matCellDef="let element"> 
+                      <div class="dotsAfter2lines" [innerHTML]="element?.content | safeHtml"></div>
+                    </td>
                   </ng-container>
 
                   <!-- Status Column -->
@@ -2542,11 +2914,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2569,6 +2941,14 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after joining any event.</p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <mat-divider></mat-divider>
@@ -2629,7 +3009,7 @@
                   <!-- Event Column -->
                   <ng-container matColumnDef="event_id">
                     <th mat-header-cell *matHeaderCellDef> Event </th>
-                    <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.s4437cfac}} </td>
                   </ng-container>
 
                   <!-- Category Column -->
@@ -2647,13 +3027,13 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -2665,7 +3045,9 @@
                   <!-- Event description Column -->
                   <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
-                    <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
+                    <td mat-cell *matCellDef="let element"> 
+                      <div class="dotsAfter2lines" [innerHTML]="element?.content | safeHtml"></div>
+                    </td>
                   </ng-container>
 
                   <!-- Status Column -->
@@ -2681,11 +3063,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2708,6 +3090,14 @@
                   aria-label="Select page of periodic elements">
                 </mat-paginator>
               </div>
+              <ion-row *ngIf="userType == 'student'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="primary">
+                    <p><b>Note:</b> You will earn 100 Rewards Points per hour after joining any event.</p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <mat-divider></mat-divider>
@@ -2768,7 +3158,7 @@
                   <!-- Event Column -->
                   <ng-container matColumnDef="event_id">
                     <th mat-header-cell *matHeaderCellDef> Event </th>
-                    <td mat-cell *matCellDef="let element"> {{element.event_id}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.s4437cfac}} </td>
                   </ng-container>
 
                   <!-- Category Column -->
@@ -2786,13 +3176,13 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -2804,7 +3194,9 @@
                   <!-- Event description Column -->
                   <ng-container matColumnDef="content" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Event description </th>
-                    <td mat-cell *matCellDef="let element" [innerHTML]="element?.content | safeHtml"> </td>
+                    <td mat-cell *matCellDef="let element"> 
+                      <div class="dotsAfter2lines" [innerHTML]="element?.content | safeHtml"></div>
+                    </td>
                   </ng-container>
 
                   <!-- Status Column -->
@@ -2820,11 +3212,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 
@@ -2876,13 +3268,13 @@
                   <!-- Start time Column -->
                   <ng-container matColumnDef="start_time">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- End time Column -->
                   <ng-container matColumnDef="end_time">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -3133,10 +3525,14 @@
                     <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
                   </ng-container>
 
-                  <!-- Fee per Class (In KlassCoins) Column -->
-                  <ng-container matColumnDef="fee">
-                    <th mat-header-cell *matHeaderCellDef>Fee per Class (In KlassCoins)</th>
+                  <!-- Fee per class (In KlassCoins) Column -->
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fee" *ngIf="userType == 'student'">
+                    <th mat-header-cell *matHeaderCellDef> Fee per class (In KlassCoins) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.increased_fee}} </td>
                   </ng-container>
 
                   <!-- Created on Column -->
@@ -3240,11 +3636,7 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3421,11 +3813,7 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
                     </td>
                   </ng-container>
 
