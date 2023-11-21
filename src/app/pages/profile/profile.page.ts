@@ -46,6 +46,8 @@ export class ProfilePage implements OnInit {
   userSavedInfo:any;
   private getCountryCodeSubscribe: Subscription | undefined;
   countryCodeUrl: any;
+  private getRedeemRewardSubscribe: Subscription | undefined;
+  redeemRewardUrl: any;
   private getSalaryRequestSubscribe: Subscription | undefined;
   salaryRequestUrl: any;
   private cloneEventSubscribe: Subscription | undefined;
@@ -80,9 +82,21 @@ export class ProfilePage implements OnInit {
     },
     {
       name: 'Claim For Admin Intervention',
-      id: 1
+      id: 2
     },
   ]
+
+  durationType = [
+    {
+      name: 'Months',
+      id: 1
+    },
+    {
+      name: 'Years',
+      id: 2
+    },
+  ]
+
   fetchItems = [];
 
   userType:any;
@@ -199,8 +213,6 @@ export class ProfilePage implements OnInit {
       }else {
         this.form_api = 'update_contact_information/';
       }
-    }else if (this.parms_slug == 'tutor-profile-information'){
-      this.form_api = 'tutor_profile_information/';
     }
 
     // klass Coin List
@@ -289,7 +301,7 @@ export class ProfilePage implements OnInit {
           this.userData = resData.return_data;
           // call table data
           if (this.parms_slug == 'klassCoins-history') {
-            this.tableListData_url = 'credits_transactions_history/'+this.userData.user_data.id;
+            this.tableListData_url = 'credits_transactions_history?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['credits', 'balance', 'action', 'purpose', 'date_of_action','actions'];
           }else if (this.parms_slug == 'received-reviews') {
             this.tableListData_url = 'tutor_user_reviews/'+this.userData.user_data.id;
@@ -410,11 +422,14 @@ export class ProfilePage implements OnInit {
             }
           }else if (this.parms_slug == 'refer-and-earn') {
             this.referAndEarn();
+          }else if (this.parms_slug == 'redeem-rewards') {
+            this.redeemRewardUrl = 'redeem_rewards_points/'+this.userData.user_data.id;
+            this.getRedeemReward();
+            this.form_api = 'redeem_rewards_points/';
           } 
           this.tableListData();
           
           this.model = {
-            photo : this.userData.user_data.photo,
             first_name : this.userData.user_data.first_name,
             middle_name : this.userData.user_data.middle_name,
             last_name : this.userData.user_data.last_name,
@@ -443,7 +458,9 @@ export class ProfilePage implements OnInit {
             bank_address : this.userData.user_data.bank_address,
             paypal_email : this.userData.user_data.paypal_email,
             language_of_teaching : this.userData.user_data.language_of_teaching,
+            net_creditcoins : this.userData.user_data.net_creditcoins,
           }
+          console.log('photo', this.model.photo);
           if ( this.userData.user_data.paypal_email) {
             this.model.pament_type = 'paypal'
           }else {
@@ -482,6 +499,37 @@ export class ProfilePage implements OnInit {
               certificate_25 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[25],
               certificate_26 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[26],
             }
+          }else if (this.parms_slug == 'tutor-profile-information'){
+            this.model = {
+              photo : this.userData.user_data.path + this.userData.user_data.photo,
+              resume : this.userData.user_data.path+this.userData.user_data.resume,
+              subject_details: this.userData.user_data.subject_details,
+              experience_desc: this.userData.user_data.experience_desc,
+              domain_knowledge_details: this.userData.user_data.domain_knowledge_details,
+              book_published_details: this.userData.user_data.book_published_details,
+              profile: this.userData.user_data.profile,
+              profile_page_title: this.userData.user_data.profile_page_title,
+              gate_score: this.userData.user_data.gate_score,
+              tofel_score: this.userData.user_data.tofel_score,
+              sat_score: this.userData.user_data.sat_score,
+              award_recg: this.userData.user_data.award_recg,
+              research_work: this.userData.user_data.research_work,
+              statistics_info: this.userData.user_data.statistics_info,
+              exp_cbse: this.userData.user_data.exp_cbse,
+              exp_icse: this.userData.user_data.exp_icse,
+              exp_stateboard: this.userData.user_data.exp_stateboard,
+              qualification: this.userData.user_data.qualification,
+              bachelor_uni: this.userData.user_data.bachelor_uni,
+              master_qualification: this.userData.user_data.master_qualification,
+              master_uni: this.userData.user_data.master_uni,
+              other_qualification: this.userData.user_data.other_qualification,
+              other_uni: this.userData.user_data.other_uni,
+              seo_keywords: this.userData.user_data.seo_keywords,
+              meta_desc: this.userData.user_data.meta_desc,
+              teaching_experience: this.userData.user_data.teaching_experience,
+              duration_of_experience: this.userData.user_data.duration_of_experience,
+            }
+            this.form_api = 'tutor_profile_information/';
           }
         }
         
@@ -507,6 +555,22 @@ export class ProfilePage implements OnInit {
     );
   }
   // get country code end
+
+  // get redeem-rewards start
+  redeemRewardData: any;
+  getRedeemReward() {
+    this.getRedeemRewardSubscribe = this.http.get(this.redeemRewardUrl).subscribe(
+      (res: any) => {
+        this.redeemRewardData = res.return_data.giftvouchers;
+
+        console.log('this.redeemRewardData', this.redeemRewardData);
+
+      },
+      errRes => {
+      }
+    );
+  }
+  // get redeem-rewards end
 
   /* Request for salary start */
   salaryRequest(_id:any) {
@@ -642,6 +706,23 @@ export class ProfilePage implements OnInit {
 
     // get form value
     let fd = new FormData();
+
+    if(this.fileValResume) {
+      // normal file upload
+      fd.append(this.normalFileNameResume, this.fileValResume, this.fileValResume.name);
+    }else if(this.fileValResumeCross == 'cross_resume'){
+      fd.append('resume', 'removed');
+    }else{
+      fd.append('resume', '');
+    }
+
+    if(this.fileValphoto) {
+      fd.append('photo', this.fileValphoto, this.fileValphoto.name);
+    }else if(this.fileValCross == 'cross_image'){
+      fd.append('photo', 'removed');
+    }else{
+      fd.append('photo', '');
+    }
 
     for (let val in form.value) {
       if (form.value[val] == undefined) {
@@ -1340,8 +1421,8 @@ export class ProfilePage implements OnInit {
   /* Aleart for open big blue button end */
 
   /* Join Class start */
-  joinClass(_id:any){
-    this.class_url = 'init/'+_id+'?user_type='+this.userType+'&user_id='+this.userData.user_data.id;
+  joinClass(_type:any, _id:any){
+    this.class_url = _type+'/'+_id+'?user_type='+this.userType+'&user_id='+this.userData.user_data.id;
     this.classDataSubscribe = this.http.get(this.class_url).subscribe(
       (res:any) => {
         if (res.return_status > 0) {
@@ -1379,6 +1460,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getCountryCodeSubscribe !== undefined) {
       this.getCountryCodeSubscribe.unsubscribe();
+    }
+    if (this.getRedeemRewardSubscribe !== undefined) {
+      this.getRedeemRewardSubscribe.unsubscribe();
     }
     if (this.getSalaryRequestSubscribe !== undefined) {
       this.getSalaryRequestSubscribe.unsubscribe();

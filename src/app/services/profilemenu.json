@@ -44,11 +44,6 @@
               "name" : "Closed",
               "url" : "closed-enrolement-classes",
               "icon" : "send"
-            },
-            {
-              "name" : "Expired",
-              "url" : "expired-enrolement-classes",
-              "icon" : "send"
             }
           ]
         },
@@ -178,11 +173,6 @@
             {
               "name" : "Closed",
               "url" : "closed-enrolement-classes",
-              "icon" : "send"
-            },
-            {
-              "name" : "Expired",
-              "url" : "expired-enrolement-classes",
               "icon" : "send"
             }
           ]

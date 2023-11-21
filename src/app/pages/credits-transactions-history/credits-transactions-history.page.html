@@ -80,6 +80,64 @@
               </div>
             </ion-col>
 
+            <ion-col size="12" *ngIf="parms_type == 'credit-conversion-requests-pending' || parms_type == 'credit-conversion-requests-done'">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Booking Ref. No. :</div>
+                  <div class="data">{{ViewData?.booking_id}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">KlassCoins acquired :</div>
+                  <div class="data">{{ViewData?.no_of_credits_to_be_converted}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Per KlassCoin Cost (₹) :</div>
+                  <div class="data">{{ViewData?.per_credit_cost}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Total Amount (₹) :</div>
+                  <div class="data">{{ViewData?.total_amount}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Type :</div>
+                  <div class="data">{{ViewData?.type}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Status of payment :</div>
+                  <div class="data">{{ViewData?.status_of_payment}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Updated at :</div>
+                  <div class="data">{{ViewData?.updated_at | date:'dd MMM yyy : h:mm a'}}</div>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size="12" *ngIf="parms_type == 'reward-transactions'">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Rewards Point :</div>
+                  <div class="data">{{ViewData?.credits}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Balance :</div>
+                  <div class="data">{{ViewData?.balance}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Action :</div>
+                  <div class="data">{{ViewData?.action}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Purpose :</div>
+                  <div class="data">{{ViewData?.purpose}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Date of action :</div>
+                  <div class="data">{{ViewData?.date_of_action | date:'dd MMM yyy : h:mm a'}}</div>
+                </div>
+              </div>
+            </ion-col>
+
             <ion-col size="12" *ngIf="parms_type == 'reviews'">
               <div class="basic-details">
                 <div class="details-item">

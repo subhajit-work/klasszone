@@ -325,7 +325,7 @@
       <!-- dashboard end -->
 
       <!-- klassCoins-packages start -->
-      <div class="klassCoins-packages">
+      <div class="klassCoins-packages" *ngIf="parms_slug == 'klassCoins-packages'">
         <ion-grid>
           <ion-row>
             <ion-col size="12" size-md="6" size-lg="4" *ngFor="let item of klassCoinList?.package_data">
@@ -354,6 +354,17 @@
                 </div>
               </div>
             </ion-col>
+            <ion-col size="12" *ngIf="userType == 'tutor'">
+              <mat-divider></mat-divider>
+              <ion-text color="primary">
+                <p><b>Note:</b> All Klasszone packages are inclusive with GST(C-GST & S-GST) as 18%</p>
+                <p>INNOVINTENT EDUCATION PRIVATE LIMITED</p>
+                <p>GSTIN 20AAFCI8487H1ZE</p>
+                <p>(Chapter/ Section/Heading: 9992</p>
+                <p>Description of Service: Education Services</p>
+                <p>Rate/Notification: 18% as per serial no 30 of notification no. 11 CTR dated 28th July 2017)</p>
+              </ion-text>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
@@ -368,22 +379,22 @@
               <!-- First Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                    placeholder="Enter your First Name" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="floating"
+                  label="First Name" required></ion-input>
                 </div>
               </ion-col>
               <!-- Middle Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="stacked"
-                    placeholder="Enter your Middle Name"></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="floating"
+                  label="Middle Name"></ion-input>
                 </div>
               </ion-col>
               <!-- Last Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
-                    placeholder="Enter your Last Name"></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="floating"
+                    label="Last Name"></ion-input>
                 </div>
               </ion-col>
               <!-- Gender -->
@@ -427,36 +438,36 @@
               <!-- Address review -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-textarea required [(ngModel)]="model.address" name="address" labelPlacement="stacked" placeholder="Address"></ion-textarea>
+                  <ion-textarea required [(ngModel)]="model.address" name="address" labelPlacement="floating" label="Address"></ion-textarea>
                 </div>
               </ion-col>
 
               <!-- State -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.state" name="state" labelPlacement="stacked"
-                    placeholder="Enter your State" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.state" name="state" labelPlacement="floating"
+                  label="State" required></ion-input>
                 </div>
               </ion-col>
               <!-- City -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" required [(ngModel)]="model.city" name="city" labelPlacement="stacked"
-                    placeholder="Enter your City"></ion-input>
+                  <ion-input type="text" required [(ngModel)]="model.city" name="city" labelPlacement="floating"
+                  label="City"></ion-input>
                 </div>
               </ion-col>
               <!-- Landmark -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" required [(ngModel)]="model.land_mark" name="land_mark" labelPlacement="stacked"
-                    placeholder="Enter your Landmark"></ion-input>
+                  <ion-input type="text" required [(ngModel)]="model.land_mark" name="land_mark" labelPlacement="floating"
+                  label="Landmark"></ion-input>
                 </div>
               </ion-col>
               <!-- Country -->
               <ion-col size="12">
                 <div class="field-item">
                   <ion-select [(ngModel)]="model.country"
-                  name="country" required interface="action-sheet" placeholder="Select Country">
+                  name="country" required interface="action-sheet" labelPlacement="floating" label="Country">
                     <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.name">{{item?.name}}</ion-select-option>
                   </ion-select>
                 </div>
@@ -466,7 +477,7 @@
                 <div class="field-item">
                   <ion-input type="text"
                   [(ngModel)]="model.pin_code"
-                  name="pin_code" labelPlacement="stacked" required placeholder="Enter your Pincode"></ion-input>
+                  name="pin_code" labelPlacement="floating" required label="Pincode"></ion-input>
                 </div>
               </ion-col>
               <!-- Phone Number -->
@@ -474,7 +485,7 @@
                 <div class="field-item">
                   <ion-input type="text"
                   [(ngModel)]="model.phone"
-                  name="phone" labelPlacement="stacked" required placeholder="Enter your Phone Number"></ion-input>
+                  name="phone" labelPlacement="floating" required label="Phone Number"></ion-input>
                 </div>
               </ion-col>
               <!-- Type Of Classes -->
@@ -509,22 +520,22 @@
               <!-- First Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                    placeholder="Enter your First Name" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="floating"
+                  label="First Name" required></ion-input>
                 </div>
               </ion-col>
               <!-- Middle Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="stacked"
-                    placeholder="Enter your Middle Name"></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.middle_name" name="middle_name" labelPlacement="floating"
+                  label="Middle Name"></ion-input>
                 </div>
               </ion-col>
               <!-- Last Name -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="stacked"
-                    placeholder="Enter your Last Name" required></ion-input>
+                  <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="floating"
+                  label="Last Name" required></ion-input>
                 </div>
               </ion-col>
               <!-- email -->
@@ -532,7 +543,7 @@
                 <div class="field-item">
                   <ion-input type="text" disabled
                   [(ngModel)]="model.email"
-                  name="email" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                  name="email" labelPlacement="floating" label="Email" required></ion-input>
                 </div>
               </ion-col>
               <!-- Gender -->
@@ -569,7 +580,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
-                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Select Languages">
+                      name="language_of_teaching" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Languages Known">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -578,7 +589,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.listning"
-                      name="listning" interface="action-sheet" cancelText="Close" placeholder="Select Listening skills">
+                      name="listning" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Listening skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -587,7 +598,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.reading"
-                      name="reading" interface="action-sheet" cancelText="Close" placeholder="Select Reading Skills">
+                      name="reading" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Reading Skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -596,7 +607,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.writing"
-                      name="writing" interface="action-sheet" cancelText="Close" placeholder="Select Writing skills">
+                      name="writing" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Writing skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -605,7 +616,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.presentation"
-                      name="presentation" interface="action-sheet" cancelText="Close" placeholder="Select Presentation skills">
+                      name="presentation" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Presentation skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -625,29 +636,29 @@
                   <!-- Blog/Website -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.website" name="website" labelPlacement="stacked"
-                        placeholder="Enter Blog/Website"></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.website" name="website" labelPlacement="floating"
+                      label="Blog/Website"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Facebook Profile -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.facebook" name="facebook" labelPlacement="stacked"
-                        placeholder="Enter Facebook Profile"></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.facebook" name="facebook" labelPlacement="floating"
+                      label="Facebook Profile"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Twitter Profile -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.twitter" name="twitter" labelPlacement="stacked"
-                        placeholder="Enter Twitter Profile"></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.twitter" name="twitter" labelPlacement="floating"
+                      label="Twitter Profile"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Linkedin Profile -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.linkedin" name="linkedin" labelPlacement="stacked"
-                        placeholder="Enter Linkedin Profile"></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.linkedin" name="linkedin" labelPlacement="floating"
+                      label="Linkedin Profile"></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -677,36 +688,36 @@
                   <!-- Account Holder Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.account_holder_name" name="account_holder_name" labelPlacement="stacked"
-                        placeholder="Account Holder Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.account_holder_name" name="account_holder_name" labelPlacement="floating"
+                      label="Account Holder Name" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Account No. -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.account_number" name="account_number" labelPlacement="stacked"
-                        placeholder="Account No." required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.account_number" name="account_number" labelPlacement="floating"
+                      label="Account No." required></ion-input>
                     </div>
                   </ion-col>
                   <!-- IFSC Code -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.ifsc_code" name="ifsc_code" labelPlacement="stacked"
-                        placeholder="IFSC Code" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.ifsc_code" name="ifsc_code" labelPlacement="floating"
+                      label="IFSC Code" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.bank_name" name="bank_name" labelPlacement="stacked"
-                        placeholder="Bank Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.bank_name" name="bank_name" labelPlacement="floating"
+                      label="Bank Name" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Branch Name -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.bank_address" name="bank_address" labelPlacement="stacked"
-                        placeholder="Bank Branch Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.bank_address" name="bank_address" labelPlacement="floating"
+                      label="Branch Name" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -723,8 +734,8 @@
                   <!-- UPI-ID/Mobile Number -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.paypal_email" name="paypal_email" labelPlacement="stacked"
-                        placeholder="UPI-ID/Mobile Number" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.paypal_email" name="paypal_email" labelPlacement="floating"
+                      label="UPI-ID/Mobile Number" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -801,20 +812,20 @@
               <!-- profile picture -->
               <ion-col size="12">
                 <div class="field-item">
-                    <div class="normal-file-uploading">
-                      <span class="upload-file profile-upload">
+                  <div class="normal-file-uploading">
+                    <span class="upload-file profile-upload">
                         Profile Image
-                        <input [(ngModel)]="model.photo" type="file" (change)="normalFileUpload($event, model.photo, 'photo')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
-                      </span>
-                      <img [hidden]="!fileValphotoPathShow " class="form-upload-image" src="{{fileValphotoPreviewImage}}" alt="image" />
+                        <input [(ngModel)]="model.photo" type="file" (change)="normalFileUpload($event, model.photo, 'photo')" placeholder="Profile Image" [ngModelOptions]="{standalone: true}" accept="image/*">
+                    </span>
+                    <img [hidden]="!fileValphotoPathShow " class="form-upload-image" src="{{fileValphotoPreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.photo && !fileValphotoPathShow" class="form-upload-image" src="{{file_url}}/{{model.photo}}" alt="image" />
+                    <img *ngIf="model.photo && !fileValphotoPathShow" class="form-upload-image mm" src="{{file_url}}/{{model.photo}}" alt="image" />
 
-                      <span class="image-clear img" (click)="fileCross(model.photo, 'photo')" [hidden]="!model.photo">
-                          <ion-icon name="close"></ion-icon>
-                      </span>
-                  </div>
+                    <span class="image-clear img" (click)="fileCross(model.photo, 'photo')" [hidden]="!model.photo">
+                        <ion-icon name="close"></ion-icon>
+                    </span>
                 </div>
+              </div>
               </ion-col>
               <!-- upload resume -->
               <ion-col size="12">
@@ -822,11 +833,11 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file resume">
                           Upload resume
-                          <input [(ngModel)]="model.resume2" type="file" (change)="normalFileUpload($event, model.resume2, 'resume')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".pdf,.doc,.docx">
+                          <input [(ngModel)]="model.resume" type="file" (change)="normalFileUpload($event, model.resume, 'resume')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".pdf,.doc,.docx">
                       </span>
                       <!-- accept=".pdf,.jpg,.doc,.docx" -->
 
-                      <span [hidden]="!uploadresumePathShow" class="file-name">{{model.resume2}}</span>
+                      <span [hidden]="!uploadresumePathShow" class="file-name">{{model.resume}}</span>
 
                       <ion-button class="download-resume" shape="round" *ngIf="model.resume && !uploadresumePathShow" (click)="onExport('single', model.resume)">
                           <ion-icon slot="start" name="download"></ion-icon>
@@ -835,7 +846,7 @@
 
                       <!-- <span [hidden]="!model.resume" class="file-name">{{model.resume}}</span> -->
 
-                      <span class="image-clear" (click)="fileCross(model.resume2, 'resume')" [hidden]="!model.resume && !model.resume2">
+                      <span class="image-clear" (click)="fileCross(model.resume, 'resume')" [hidden]="!model.resume && !model.resume">
                           <ion-icon name="close"></ion-icon>
                       </span>
                   </div>
@@ -845,7 +856,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-label position="floating">Introduce Yourself Briefly:</ion-label>
-                  <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                  <angular-editor [(ngModel)]="model.profile" name="profile" [config]="config"></angular-editor>
                 </div>
               </ion-col>
             </ion-row>
@@ -861,49 +872,49 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Highlight Your Subject Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.subject_details" name="subject_details" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Briefly Provide Your Expertise Details: -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Briefly Provide Your Expertise Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.experience_desc" name="experience_desc" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Summarize Your Domain Knowledge Details: -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Summarize Your Domain Knowledge Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.domain_knowledge_details" name="domain_knowledge_details" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Any Book published Details: -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Any Book published Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.book_published_details" name="book_published_details" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- GATE Score -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Enter your First Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.gate_score" name="gate_score" labelPlacement="floating"
+                      label="GATE Score" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- TOFEL Score -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Enter your First Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.tofel_score" name="tofel_score" labelPlacement="floating"
+                      label="TOFEL Score" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- SAT Score -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Enter your First Name" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.sat_score" name="sat_score" labelPlacement="floating"
+                      label="SAT Score" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -920,59 +931,59 @@
                   <!-- Total Experiance Duration -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Total Experiance Duration" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.teaching_experience" name="teaching_experience" labelPlacement="floating"
+                      label="Total Experiance Duration" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Duration Type -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
-                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Duration Type">
-                        <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
+                      <ion-select multiple="true" [(ngModel)]="model.duration_of_experience" [value]="model.duration_of_experience"
+                      name="duration_of_experience" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Duration Type">
+                        <ion-select-option *ngFor="let item of durationType" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
                   </ion-col>
                   <!-- Experience in online classes (in hours) -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Experience in online classes (in hours)" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.statistics_info" name="statistics_info" labelPlacement="floating"
+                      label="Experience in online classes (in hours)" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in CBSE (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Experience in CBSE (in years)" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.exp_cbse" name="exp_cbse" labelPlacement="floating"
+                      label="Experience in CBSE (in years)" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in ICSE (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Experience in ICSE (in years)" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.exp_icse" name="exp_icse" labelPlacement="floating"
+                      label="Experience in ICSE (in years)" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in State Board (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Experience in State Board (in years)" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.exp_stateboard" name="exp_stateboard" labelPlacement="floating"
+                      label="Experience in State Board (in years)" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Award Recognitions Details in Brief -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Award Recognitions Details in Brief</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.award_recg" name="award_recg" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Mention Any Research Work Details -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-label position="floating">Mention Any Research Work Details</ion-label>
-                      <angular-editor [(ngModel)]="model.exp_cbse" name="exp_cbse" [config]="config"></angular-editor>
+                      <angular-editor [(ngModel)]="model.research_work" name="research_work" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -989,8 +1000,8 @@
                   <!-- Select Your Bachelor Degree -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
-                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Select Your Bachelor Degree">
+                      <ion-select multiple="true" [(ngModel)]="model.qualification" [value]="model.qualification"
+                      name="qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Bachelor Degree">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -998,15 +1009,15 @@
                   <!-- Bachelor Degree University -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Bachelor Degree University" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.bachelor_uni" name="bachelor_uni" labelPlacement="floating"
+                      label="Bachelor Degree University" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Select Your Master Degree -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
-                      name="language_of_teaching" interface="action-sheet" cancelText="Close" placeholder="Selec Your Master Degree">
+                      <ion-select multiple="true" [(ngModel)]="model.master_qualification" [value]="model.master_qualification"
+                      name="master_qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Master Degree">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1014,22 +1025,22 @@
                   <!-- Master Degree University -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Master Degree University" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.master_uni" name="master_uni" labelPlacement="floating"
+                      label="Master Degree University" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Any Other Degree/Diploma -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Any Other Degree/Diploma" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.other_qualification" name="other_qualification" labelPlacement="floating"
+                      label="Any Other Degree/Diploma" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Other Degree University/Institute -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="stacked"
-                        placeholder="Other Degree University/Institute" required></ion-input>
+                      <ion-input type="text" [(ngModel)]="model.other_uni" name="other_uni" labelPlacement="floating"
+                      label="Other Degree University/Institute" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -1385,19 +1396,19 @@
               <!-- Current Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="old" [(ngModel)]="model.old" labelPlacement="stacked" placeholder="Enter your Current Password" required></ion-input>
+                  <ion-input name="old" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password" required></ion-input>
                 </div>
               </ion-col>
               <!-- New Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="new" [(ngModel)]="model.new" labelPlacement="stacked" placeholder="Enter your New Password" required></ion-input>
+                  <ion-input name="new" [(ngModel)]="model.new" labelPlacement="floating" label="New Password" required></ion-input>
                 </div>
               </ion-col>
               <!-- Confirm Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="confirmPassword" [(ngModel)]="model.confirmPassword" labelPlacement="stacked" placeholder="Enter your Confirm Password" required></ion-input>
+                  <ion-input name="confirmPassword" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password" required></ion-input>
                 </div>
               </ion-col>
               <!-- Button -->
@@ -1465,8 +1476,8 @@
 
         <div class="share-input">
             <div class="field-item">
-              <ion-input type="text" [(ngModel)]="referAndEarnData" labelPlacement="stacked"
-                placeholder="Enter your First Name"></ion-input>
+              <ion-input type="text" [(ngModel)]="referAndEarnData" labelPlacement="floating"
+              label="First Name"></ion-input>
             </div>
             <ion-button shape="round">
               <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
@@ -1474,6 +1485,83 @@
         </div>
       </div>
       <!-- refer-and-earn end -->
+
+      <!-- redeem-rewards start -->
+      <div class="redeem-rewards" *ngIf="parms_slug == 'redeem-rewards'">
+        <ion-card>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <div class="basic-details">
+                  <div class="details-item">
+                    <div class="label">Name of Student:</div>
+                    <div class="data">{{model?.first_name}} {{model?.middle_name}} {{model?.last_name}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Email:</div>
+                    <div class="data">{{model?.email}}</div>
+                  </div>
+                  <div class="details-item">
+                    <div class="label">Net Rewards Points available:</div>
+                    <div class="data">{{model?.net_creditcoins }}</div>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+        <ion-card >
+          <form #redeemRewardForm="ngForm" (ngSubmit)="onSubmit(redeemRewardForm)"
+            (keyup.enter)="onSubmit(redeemRewardForm)">
+            <ion-grid>
+              <ion-row>
+                <!-- Select the Gift Voucher -->
+                <ion-col size="12">
+                  <div class="field-item">
+                    <ion-select [(ngModel)]="model.giftvoucher"
+                    name="giftvoucher" required interface="action-sheet" labelPlacement="floating" label="Select the Gift Voucher">
+                      <ion-select-option *ngFor="let item of redeemRewardData" [value]="item?.name">{{item?.name}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                </ion-col>
+
+                <!-- Rewards Points to Redeem -->
+                <ion-col size="12">
+                  <div class="field-item">
+                    <ion-input type="text" [(ngModel)]="model.points_to_redeem" name="points_to_redeem" labelPlacement="floating"
+                    label="Rewards Points to Redeem" required></ion-input>
+                  </div>
+                </ion-col>
+
+                <ion-col size="12">
+                  <ion-text color="primary">
+                    (Enter the multiple 100 and less than net available Rewars Points.)
+                  </ion-text>
+                </ion-col>
+                
+                <!-- Button -->
+                <ion-col size="12">
+                  <div class="custom-btn">
+                    <ion-button type="submit" [disabled]="!redeemRewardForm.valid" expand="block" shape="round">
+                      Submit
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </form>
+        </ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let item of redeemRewardData">
+              <ion-card class="img-card">
+                <img src="{{file_url}}/assets/uploads/giftvoucher/{{item?.image}}">
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- redeem-rewards end -->
 
       <!-- table data start -->
       <div class="page-inner">
@@ -1558,7 +1646,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -1569,7 +1657,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -1764,7 +1852,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -1775,7 +1863,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -1931,7 +2019,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -1942,7 +2030,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2138,7 +2226,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2149,7 +2237,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2291,7 +2379,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2302,7 +2390,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2498,7 +2586,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2509,7 +2597,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2651,7 +2739,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2662,7 +2750,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2810,7 +2898,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2821,7 +2909,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'" (click)="salaryRequest(element?.id)">money</mat-icon>
                       <mat-icon color="primary" *ngIf="element?.group_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
                     </td>
@@ -2876,15 +2964,23 @@
                   </ng-container>
 
                   <!-- Start time Column -->
-                  <ng-container matColumnDef="start_time">
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
                     <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
 
                   <!-- End time Column -->
-                  <ng-container matColumnDef="end_time">
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
                     <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -2916,7 +3012,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -2927,9 +3023,9 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'event', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.booked_students_button == '1'" [routerLink]="['/', 'students-group', element?.tutor_courses_id]">groups_2</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.booked_students_button == '1'" [routerLink]="['/', 'students-group', element?.booking_ids]">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3025,15 +3121,23 @@
                   </ng-container>
 
                   <!-- Start time Column -->
-                  <ng-container matColumnDef="start_time">
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
                     <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
 
                   <!-- End time Column -->
-                  <ng-container matColumnDef="end_time">
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
                     <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -3065,7 +3169,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3074,11 +3178,11 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'event', element?.id]">visibility</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.id)">duo</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.send_klasscoin_conversion_request_button == '1'">money</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.booked_students_button == '1'" [routerLink]="['/', 'students-group', element?.booking_ids]">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3174,15 +3278,23 @@
                   </ng-container>
 
                   <!-- Start time Column -->
-                  <ng-container matColumnDef="start_time">
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
                     <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
 
                   <!-- End time Column -->
-                  <ng-container matColumnDef="end_time">
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
                     <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -3214,7 +3326,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass(element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3223,11 +3335,8 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
+                      <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.booked_students_button == '1'" [routerLink]="['/', 'students-group', element?.booking_ids]">groups_2</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3266,15 +3375,23 @@
                   </ng-container>
 
                   <!-- Start time Column -->
-                  <ng-container matColumnDef="start_time">
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> Start time </th>
                     <td mat-cell *matCellDef="let element"> {{element.start_time | date:'h:mm a'}} </td>
                   </ng-container>
+                  <ng-container matColumnDef="start_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> Start time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                  </ng-container>
 
                   <!-- End time Column -->
-                  <ng-container matColumnDef="end_time">
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef> End time </th>
                     <td mat-cell *matCellDef="let element"> {{element.end_time | date:'h:mm a'}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="end_time" *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef> End time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.end_time'}} </td>
                   </ng-container>
 
                   <!-- Fee (In KlassCoins) Column -->
@@ -3298,7 +3415,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3317,8 +3434,8 @@
             <!-- Event Enrollment	end -->
 
             <!-- Salary request start -->
-            <!-- done start -->
-            <ion-col size="12" *ngIf="parms_slug == 'salary-request-done' || parms_slug == 'salary-request-pending'">
+            <!-- pending start -->
+            <ion-col size="12" *ngIf="parms_slug == 'salary-request-pending'">
               <div class="example-container mat-elevation-z8" tabindex="0">
                 <table mat-table [dataSource]="list_product">
 
@@ -3374,7 +3491,90 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="warn">visibility</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'credit-conversion-requests-pending', element?.id]">visibility</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <p *ngIf="tableData.length == 0" class="ion-text-center"><b>No items to display</b></p>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+              <ion-row *ngIf="userType == 'tutor'">
+                <ion-col size="12">
+                  <mat-divider></mat-divider>
+                  <ion-text color="success">
+                    <p>
+                      View your payment details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="warn">visibility</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <!-- done start -->
+            <ion-col size="12" *ngIf="parms_slug == 'salary-request-done'">
+              <div class="example-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="list_product">
+
+                  <!-- Booking Ref. No. -->
+                  <ng-container matColumnDef="booking_id">
+                    <th mat-header-cell *matHeaderCellDef> Booking Ref. No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.booking_id}} </td>
+                  </ng-container>
+
+                  <!-- KlassCoins acquired -->
+                  <ng-container matColumnDef="no_of_credits_to_be_converted">
+                    <th mat-header-cell *matHeaderCellDef> KlassCoins acquired </th>
+                    <td mat-cell *matCellDef="let element"> {{element.no_of_credits_to_be_converted}} </td>
+                  </ng-container>
+
+                  <!-- Admin commission val -->
+                  <ng-container matColumnDef="admin_commission_val">
+                    <th mat-header-cell *matHeaderCellDef> Admin commission val </th>
+                    <td mat-cell *matCellDef="let element"> {{element.admin_commission_val}} </td>
+                  </ng-container>
+
+                  <!-- Per KlassCoin Cost (₹) -->
+                  <ng-container matColumnDef="per_credit_cost">
+                    <th mat-header-cell *matHeaderCellDef> Per KlassCoin Cost (₹) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.per_credit_cost}} </td>
+                  </ng-container>
+
+                  <!-- Total Amount (₹) -->
+                  <ng-container matColumnDef="total_amount">
+                    <th mat-header-cell *matHeaderCellDef> Total Amount (₹) </th>
+                    <td mat-cell *matCellDef="let element"> {{element.total_amount}} </td>
+                  </ng-container>
+
+                  <!-- Type -->
+                  <ng-container matColumnDef="type_display">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                  </ng-container>
+
+                  <!-- Status of payment -->
+                  <ng-container matColumnDef="status_of_payment">
+                    <th mat-header-cell *matHeaderCellDef> Status of payment </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status_of_payment}} </td>
+                  </ng-container>
+
+                  <!-- Updated at -->
+                  <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef> Updated at </th>
+                    <td mat-cell *matCellDef="let element"> {{element.updated_at | date:'dd MMM yyy'}} </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
+                    <td mat-cell *matCellDef="let element" class="ion-text-center">
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'credit-conversion-requests-done', element?.id]">visibility</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3576,14 +3776,6 @@
               <ion-row *ngIf="userType == 'tutor'">
                 <ion-col size="12">
                   <mat-divider></mat-divider>
-                  <ion-text color="medium">
-                    <p>
-                      Change your course details before Klasszone Approval:
-                      <ion-button fill="clear" class="small-btn">
-                        <mat-icon color="accent">edit</mat-icon>
-                      </ion-button>
-                    </p>
-                  </ion-text>
                   <ion-text color="success">
                     <p>
                       Open your active course using this action button:
@@ -3645,7 +3837,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3813,7 +4005,7 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'reward-transactions', userData?.user_data?.id]">visibility</mat-icon>
                     </td>
                   </ng-container>
 
@@ -3822,7 +4014,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'booking-view', 'all', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass(element?.id)">duo</mat-icon>
+                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass('init', element?.id)">duo</mat-icon>
                       <mat-icon color="accent">money</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>

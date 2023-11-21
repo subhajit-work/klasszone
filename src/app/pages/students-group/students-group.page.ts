@@ -67,8 +67,7 @@ export class StudentsGroupPage implements OnInit {
     }else {
       this.profileSideMenuData = profileMenuData.studentMenuData;
     }
-    this.displayedColumns = ['s30a811f6','course_title', 'duration', 'fee', 'type','start_date', 'status'];
-    this.list_product.paginator = this.paginator;
+    
     this.userInfoData();
   }
 
@@ -82,9 +81,18 @@ export class StudentsGroupPage implements OnInit {
         console.log('userDetails@@', resData);
         if(resData.return_status > 0){
           this.userData = resData.return_data;
+          if(this.userType == 'tutor') {
+            this.displayedColumns = ['student_name','tutor_events', 'end_date', 'start_time', 'end_time', 'fee', 'status'];
+            this.list_product.paginator = this.paginator;
+            this.bookingView_url = 'tutor_event_enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getBookingView();
+          }else {
+            this.displayedColumns = ['s30a811f6','course_title', 'duration', 'fee', 'type','start_date', 'status'];
+            this.list_product.paginator = this.paginator;
+            this.bookingView_url = 'student_course_enquiries/course/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getBookingView();
+          }
           
-          this.bookingView_url = 'student_course_enquiries/course/'+this.parms_id+'?user_id='+this.userData.user_data.id;
-          this.getBookingView();
           
         }
         

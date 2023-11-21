@@ -69,6 +69,9 @@ export class CreditsTransactionsHistoryPage  implements OnInit {
     }else if (this.parms_type == 'reviews') {
       this.View_url = 'tutor_user_reviews/read/'+this.parms_id;
       this.getView();
+    }else if (this.parms_type == 'reward-transactions') {
+      this.View_url = 'credits_transactions_history/read/'+this.parms_id;
+      this.getView();
     }
     
 
@@ -86,7 +89,13 @@ export class CreditsTransactionsHistoryPage  implements OnInit {
         if(resData.return_status > 0){
           this.userData = resData.return_data;
           
-          
+          if (this.parms_type == 'credit-conversion-requests-pending') {
+            this.View_url = 'credit_conversion_requests/pending/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getView();
+          }else if (this.parms_type == 'credit-conversion-requests-done') {
+            this.View_url = 'credit_conversion_requests/done/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+            this.getView();
+          }
         }
         
       },
