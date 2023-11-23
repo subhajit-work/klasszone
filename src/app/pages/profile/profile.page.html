@@ -380,7 +380,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="floating"
-                  label="First Name" required></ion-input>
+                  label="First Name *" required></ion-input>
                 </div>
               </ion-col>
               <!-- Middle Name -->
@@ -438,7 +438,7 @@
               <!-- Address review -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-textarea required [(ngModel)]="model.address" name="address" labelPlacement="floating" label="Address"></ion-textarea>
+                  <ion-textarea required [(ngModel)]="model.address" name="address" labelPlacement="floating" label="Address *"></ion-textarea>
                 </div>
               </ion-col>
 
@@ -446,28 +446,28 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" [(ngModel)]="model.state" name="state" labelPlacement="floating"
-                  label="State" required></ion-input>
+                  label="State *" required></ion-input>
                 </div>
               </ion-col>
               <!-- City -->
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" required [(ngModel)]="model.city" name="city" labelPlacement="floating"
-                  label="City"></ion-input>
+                  label="City *"></ion-input>
                 </div>
               </ion-col>
               <!-- Landmark -->
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" required [(ngModel)]="model.land_mark" name="land_mark" labelPlacement="floating"
-                  label="Landmark"></ion-input>
+                  label="Landmark *"></ion-input>
                 </div>
               </ion-col>
               <!-- Country -->
               <ion-col size="12">
                 <div class="field-item">
                   <ion-select [(ngModel)]="model.country"
-                  name="country" required interface="action-sheet" labelPlacement="floating" label="Country">
+                  name="country" required interface="action-sheet" labelPlacement="floating" label="Country *">
                     <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.name">{{item?.name}}</ion-select-option>
                   </ion-select>
                 </div>
@@ -477,7 +477,7 @@
                 <div class="field-item">
                   <ion-input type="text"
                   [(ngModel)]="model.pin_code"
-                  name="pin_code" labelPlacement="floating" required label="Pincode"></ion-input>
+                  name="pin_code" labelPlacement="floating" required label="Pincode *"></ion-input>
                 </div>
               </ion-col>
               <!-- Phone Number -->
@@ -485,7 +485,7 @@
                 <div class="field-item">
                   <ion-input type="text"
                   [(ngModel)]="model.phone"
-                  name="phone" labelPlacement="floating" required label="Phone Number"></ion-input>
+                  name="phone" labelPlacement="floating" required label="Phone Number *"></ion-input>
                 </div>
               </ion-col>
               <!-- Type Of Classes -->
@@ -521,7 +521,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" [(ngModel)]="model.first_name" name="first_name" labelPlacement="floating"
-                  label="First Name" required></ion-input>
+                  label="First Name *" required></ion-input>
                 </div>
               </ion-col>
               <!-- Middle Name -->
@@ -535,7 +535,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <ion-input type="text" [(ngModel)]="model.last_name" name="last_name" labelPlacement="floating"
-                  label="Last Name" required></ion-input>
+                  label="Last Name *" required></ion-input>
                 </div>
               </ion-col>
               <!-- email -->
@@ -543,7 +543,7 @@
                 <div class="field-item">
                   <ion-input type="text" disabled
                   [(ngModel)]="model.email"
-                  name="email" labelPlacement="floating" label="Email" required></ion-input>
+                  name="email" type="email" email labelPlacement="floating" label="Email *" required></ion-input>
                 </div>
               </ion-col>
               <!-- Gender -->
@@ -689,35 +689,35 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.account_holder_name" name="account_holder_name" labelPlacement="floating"
-                      label="Account Holder Name" required></ion-input>
+                      label="Account Holder Name *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Account No. -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.account_number" name="account_number" labelPlacement="floating"
-                      label="Account No." required></ion-input>
+                      label="Account No. *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- IFSC Code -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.ifsc_code" name="ifsc_code" labelPlacement="floating"
-                      label="IFSC Code" required></ion-input>
+                      label="IFSC Code *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Name -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.bank_name" name="bank_name" labelPlacement="floating"
-                      label="Bank Name" required></ion-input>
+                      label="Bank Name *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Bank Branch Name -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.bank_address" name="bank_address" labelPlacement="floating"
-                      label="Branch Name" required></ion-input>
+                      label="Branch Name *" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -735,7 +735,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.paypal_email" name="paypal_email" labelPlacement="floating"
-                      label="UPI-ID/Mobile Number" required></ion-input>
+                      label="UPI-ID/Mobile Number *" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -900,21 +900,21 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.gate_score" name="gate_score" labelPlacement="floating"
-                      label="GATE Score" required></ion-input>
+                      label="GATE Score *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- TOFEL Score -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.tofel_score" name="tofel_score" labelPlacement="floating"
-                      label="TOFEL Score" required></ion-input>
+                      label="TOFEL Score *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- SAT Score -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.sat_score" name="sat_score" labelPlacement="floating"
-                      label="SAT Score" required></ion-input>
+                      label="SAT Score *" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -932,7 +932,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.teaching_experience" name="teaching_experience" labelPlacement="floating"
-                      label="Total Experiance Duration" required></ion-input>
+                      label="Total Experiance Duration *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Duration Type -->
@@ -948,28 +948,28 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.statistics_info" name="statistics_info" labelPlacement="floating"
-                      label="Experience in online classes (in hours)" required></ion-input>
+                      label="Experience in online classes (in hours) *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in CBSE (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.exp_cbse" name="exp_cbse" labelPlacement="floating"
-                      label="Experience in CBSE (in years)" required></ion-input>
+                      label="Experience in CBSE (in years) *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in ICSE (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.exp_icse" name="exp_icse" labelPlacement="floating"
-                      label="Experience in ICSE (in years)" required></ion-input>
+                      label="Experience in ICSE (in years) *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Experience in State Board (in years) -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.exp_stateboard" name="exp_stateboard" labelPlacement="floating"
-                      label="Experience in State Board (in years)" required></ion-input>
+                      label="Experience in State Board (in years) *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Award Recognitions Details in Brief -->
@@ -1010,7 +1010,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.bachelor_uni" name="bachelor_uni" labelPlacement="floating"
-                      label="Bachelor Degree University" required></ion-input>
+                      label="Bachelor Degree University *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Select Your Master Degree -->
@@ -1026,21 +1026,21 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.master_uni" name="master_uni" labelPlacement="floating"
-                      label="Master Degree University" required></ion-input>
+                      label="Master Degree University *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Any Other Degree/Diploma -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.other_qualification" name="other_qualification" labelPlacement="floating"
-                      label="Any Other Degree/Diploma" required></ion-input>
+                      label="Any Other Degree/Diploma *" required></ion-input>
                     </div>
                   </ion-col>
                   <!-- Other Degree University/Institute -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.other_uni" name="other_uni" labelPlacement="floating"
-                      label="Other Degree University/Institute" required></ion-input>
+                      label="Other Degree University/Institute *" required></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -1396,19 +1396,19 @@
               <!-- Current Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="old" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password" required></ion-input>
+                  <ion-input name="old" type="password" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password *" required></ion-input>
                 </div>
               </ion-col>
               <!-- New Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="new" [(ngModel)]="model.new" labelPlacement="floating" label="New Password" required></ion-input>
+                  <ion-input name="new" type="password" [(ngModel)]="model.new" labelPlacement="floating" label="New Password *" required></ion-input>
                 </div>
               </ion-col>
               <!-- Confirm Password -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input name="confirmPassword" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password" required></ion-input>
+                  <ion-input name="confirmPassword" type="password" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password *" required></ion-input>
                 </div>
               </ion-col>
               <!-- Button -->
@@ -1519,7 +1519,7 @@
                 <ion-col size="12">
                   <div class="field-item">
                     <ion-select [(ngModel)]="model.giftvoucher"
-                    name="giftvoucher" required interface="action-sheet" labelPlacement="floating" label="Select the Gift Voucher">
+                    name="giftvoucher" required interface="action-sheet" labelPlacement="floating" label="Select the Gift Voucher *">
                       <ion-select-option *ngFor="let item of redeemRewardData" [value]="item?.name">{{item?.name}}</ion-select-option>
                     </ion-select>
                   </div>
@@ -1529,7 +1529,7 @@
                 <ion-col size="12">
                   <div class="field-item">
                     <ion-input type="text" [(ngModel)]="model.points_to_redeem" name="points_to_redeem" labelPlacement="floating"
-                    label="Rewards Points to Redeem" required></ion-input>
+                    label="Rewards Points to Redeem *" required></ion-input>
                   </div>
                 </ion-col>
 

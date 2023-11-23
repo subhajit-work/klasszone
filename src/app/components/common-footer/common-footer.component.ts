@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { AlertController, MenuController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 
 @Component({
@@ -11,14 +12,19 @@ import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 export class CommonFooterComponent  implements OnInit {
   private userInfoDataSubscribe: Subscription | undefined;
   userDetails:any;
+  userType:any;
 
   constructor(
     public menuCtrl: MenuController,
     private navCtrl : NavController,
     private commonUtils : CommonUtils,
+    private alertController : AlertController,
+    private authService : AuthService,
   ) { }
 
   ngOnInit() {
+    this.userType = localStorage.getItem('user_type');
+    console.log('userType', this.userType)
     this.userInfoDataSubscribe = this.commonUtils.userInfoDataObservable.subscribe((res:any) => {
       console.log(' =========== HEADER  userdata observable  >>>>>>>>>>>', res);
       if(res){
@@ -41,5 +47,33 @@ export class CommonFooterComponent  implements OnInit {
 
     this.navCtrl.navigateRoot(_url);
   }
+
+  /* logout functionlity start */
+  async logOutUser(){
+    const alert = await this.alertController.create({
+      header: 'Log Out',
+      message: 'Are you sure you want to Log Out?',
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'cancelBtn',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            
+            this.authService.logout();
+          }
+        }
+      ]
+    });
+    await alert.present(); 
+  }
+  /* logout functionlity end */
 
 }

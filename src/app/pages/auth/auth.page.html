@@ -20,13 +20,13 @@
             <!-- email -->
             <ion-col size="12">
               <div class="field-item">
-                <ion-input name="identity" [(ngModel)]="model.identity" labelPlacement="stacked" placeholder="Enter your email" required></ion-input>
+                <ion-input name="identity" type="email" email [(ngModel)]="model.identity" labelPlacement="floating" label="Email *" required></ion-input>
               </div>
             </ion-col>
             <!-- password -->
             <ion-col size="12">
               <div class="field-item">
-                <ion-input name="password" [(ngModel)]="model.password" labelPlacement="stacked" placeholder="Enter your password" required></ion-input>
+                <ion-input name="password" type="password" [(ngModel)]="model.password" labelPlacement="floating" label="Password *" required></ion-input>
               </div>
             </ion-col>
             <ion-col size="12">

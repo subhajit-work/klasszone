@@ -502,7 +502,7 @@ export class ProfilePage implements OnInit {
           }else if (this.parms_slug == 'tutor-profile-information'){
             this.model = {
               photo : this.userData.user_data.path + this.userData.user_data.photo,
-              resume : this.userData.user_data.path+this.userData.user_data.resume,
+              resume : this.userData.user_data.path +'resumes/'+this.userData.user_data.resume,
               subject_details: this.userData.user_data.subject_details,
               experience_desc: this.userData.user_data.experience_desc,
               domain_knowledge_details: this.userData.user_data.domain_knowledge_details,

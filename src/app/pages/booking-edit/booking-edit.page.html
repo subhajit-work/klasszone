@@ -64,7 +64,7 @@
               <ion-col size="12" [hidden]="enquiriesEditData?.status.length == 0">
                 <div class="field-item">
                   <ion-select [(ngModel)]="enquiriesEditData.prev_status"
-                  name="status" interface="action-sheet" required cancelText="Close" placeholder="Select Change Status">
+                  name="status" interface="action-sheet" required cancelText="Close" label-placement="floating" label="Change Status *">
                     <ion-select-option *ngFor="let item of enquiriesEditData.status" [value]="item?.display_value">{{item?.display_name}}</ion-select-option>
                   </ion-select>
                 </div>
@@ -72,8 +72,8 @@
               <!-- Status desc -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-input type="text" [(ngModel)]="enquiriesEditData.status_desc" name="status_desc" labelPlacement="stacked"
-                    placeholder="Enter Status desc"></ion-input>
+                  <ion-input type="text" [(ngModel)]="enquiriesEditData.status_desc" name="status_desc" labelPlacement="floating"
+                  label="Status desc"></ion-input>
                 </div>
               </ion-col>
               
