@@ -48,6 +48,8 @@ export class ProfilePage implements OnInit {
   countryCodeUrl: any;
   private getRedeemRewardSubscribe: Subscription | undefined;
   redeemRewardUrl: any;
+  private getExperienceSubscribe: Subscription | undefined;
+  experienceUrl: any;
   private getSalaryRequestSubscribe: Subscription | undefined;
   salaryRequestUrl: any;
   private cloneEventSubscribe: Subscription | undefined;
@@ -426,6 +428,9 @@ export class ProfilePage implements OnInit {
             this.redeemRewardUrl = 'redeem_rewards_points/'+this.userData.user_data.id;
             this.getRedeemReward();
             this.form_api = 'redeem_rewards_points/';
+          }else if (this.parms_slug == 'experience') {
+            this.experienceUrl = 'experience/'+this.userData.user_data.id;
+            this.getExperience();
           } 
           this.tableListData();
           
@@ -565,6 +570,20 @@ export class ProfilePage implements OnInit {
 
         console.log('this.redeemRewardData', this.redeemRewardData);
 
+      },
+      errRes => {
+      }
+    );
+  }
+  // get redeem-rewards end
+
+  // get experience start
+  experienceData: any;
+  getExperience() {
+    this.getExperienceSubscribe = this.http.get(this.experienceUrl).subscribe(
+      (res: any) => {
+        this.experienceData = res.return_data.giftvouchers;
+        console.log('this.experienceData', this.experienceData);
       },
       errRes => {
       }
@@ -1463,6 +1482,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getRedeemRewardSubscribe !== undefined) {
       this.getRedeemRewardSubscribe.unsubscribe();
+    }
+    if (this.getExperienceSubscribe !== undefined) {
+      this.getExperienceSubscribe.unsubscribe();
     }
     if (this.getSalaryRequestSubscribe !== undefined) {
       this.getSalaryRequestSubscribe.unsubscribe();

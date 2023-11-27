@@ -82,7 +82,7 @@
             <ion-col size="12">
               <div class="field-item">
                 <ion-select [(ngModel)]="model.phone_code"
-                name="phone_code" interface="action-sheet" label-placement="floating" label="Phone code">
+                name="phone_code" interface="action-sheet" canSearch="true" label-placement="floating" label="Phone code">
                   <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.id">{{item?.name}}</ion-select-option>
                 </ion-select>
               </div>

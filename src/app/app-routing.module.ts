@@ -88,7 +88,12 @@ const routes: Routes = [
   {
     path: 'event-details/:slug',
     loadChildren: () => import('./pages/event-details/event-details.module').then( m => m.EventDetailsPageModule)
+  },
+  {
+    path: 'experience/:action/:id',
+    loadChildren: () => import('./pages/experience/experience.module').then( m => m.ExperiencePageModule)
   }
+
 
 
 

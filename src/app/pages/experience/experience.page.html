@@ -1,0 +1,315 @@
+<ion-content [fullscreen]="true" [class.example-is-mobile]="mobileQuery.matches">
+  <ion-header [translucent]="true" class="profile-head">
+
+    <!-- breadcumb start -->
+    <div class="head-inner">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">
+          Home
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">
+          Experiance {{parms_action}}
+          <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+      <ion-button menuToggle size="small" (click)="snav.toggle()">
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <!-- breadcumb end -->
+
+  </ion-header>
+
+
+
+  <mat-sidenav-container class="profile-sidenav-container example-sidenav-container">
+    <!-- side menu start -->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+      <mat-nav-list class="profile-menu">
+
+        <ion-accordion-group>
+          <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
+            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="menu?.subPages" slot="header">
+              <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
+              <ion-label>{{menu?.name}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+                <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
+                <ion-label>{{submenu?.name}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </mat-nav-list>
+    </mat-sidenav>
+    <!-- side menu end -->
+
+    <mat-sidenav-content>
+      <!-- View booking details start -->
+      <div class="view-booking" *ngIf="parms_action !== 'event'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="basic-details">
+                <div class="details-item" *ngIf="userType == 'tutor'">
+                  <div class="label">Student names:</div>
+                  <div class="data">{{bookingViewData?.student_names}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course Title:</div>
+                  <div class="data">{{bookingViewData?.course_title}}</div>
+                </div>
+                <div class="details-item" *ngIf="userType == 'student'">
+                  <div class="label">Tutor:</div>
+                  <div class="data">{{bookingViewData?.tutor_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course page :</div>
+                  <div class="data" [innerHTML]="bookingViewData?.course_page | safeHtml"></div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Category :</div>
+                  <div class="data">{{bookingViewData?.category_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Subcategory :</div>
+                  <div class="data">{{bookingViewData?.sub_category_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Sub subcategory :</div>
+                  <div class="data">{{bookingViewData?.sub_subcategories_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course Booked :</div>
+                  <div class="data"></div>
+                </div>
+                <div class="experience-item">
+                  <p><b>Learning objectives :</b></p>
+                  <p [innerHTML]="bookingViewData?.learning_objectives | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Course outline :</b></p>
+                  <p [innerHTML]="bookingViewData?.course_outline | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Recomended audience :</b></p>
+                  <p [innerHTML]="bookingViewData?.recomended_audience | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Demo class video :</b></p>
+                  <div [innerHTML]="bookingViewData?.demo_class_video | safeHtml"></div>
+                </div>
+                <div class="experience-item">
+                  <p><b>Pre-Requisites :</b></p>
+                  <div [innerHTML]="bookingViewData?.pre_req | safeHtml"></div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Duration (In days) :</div>
+                  <div class="data">{{bookingViewData?.duration}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Class Type :</div>
+                  <div class="data">{{bookingViewData?.type}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Fee per class (In KlassCoins) :</div>
+                  <div class="data">{{bookingViewData?.increased_fee}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Start Date :</div>
+                  <div class="data">{{bookingViewData?.start_date}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Booking status :</div>
+                  <div class="data">{{bookingViewData?.status | stringReplace : '_' : ' '}}</div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">edit</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">visibility</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="primary">duo</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">payment</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">star</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div class="view-booking" *ngIf="parms_action === 'event' && userType == 'tutor'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="basic-details">
+                <div class="details-item">
+                  <div class="label">Student names:</div>
+                  <div class="data">{{bookingViewData?.student_name}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Course:</div>
+                  <div class="data">{{bookingViewData?.category_name}}</div>
+                </div>
+                <div class="details-item" >
+                  <div class="label">Event:</div>
+                  <div class="data">{{bookingViewData?.tutor_events}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Event page :</div>
+                  <div class="data" [routerLink]="['/', 'event-details', bookingViewData?.event_page]">Open Event</div>
+                </div>
+                
+                <div class="experience-item">
+                  <p><b>Event description :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Pre-Requisites Information :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Other information :</b></p>
+                  <p [innerHTML]="bookingViewData?.content | safeHtml"></p>
+                </div>
+                <div class="experience-item">
+                  <p><b>Fee (In KlassCoins) :</b></p>
+                  <div class="data">{{bookingViewData?.fee}}</div>
+                </div>
+                <div class="experience-item">
+                  <p><b>Event date :</b></p>
+                  <div class="data">{{bookingViewData?.date}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Start time :</div>
+                  <div class="data">{{bookingViewData?.start_time | date:'h:mm a'}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">End time :</div>
+                  <div class="data">{{bookingViewData?.end_time | date:'h:mm a'}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Status :</div>
+                  <div class="data">{{bookingViewData?.status | stringReplace : '_' : ' '}}</div>
+                </div>
+                <div class="details-item">
+                  <div class="label">Created at :</div>
+                  <div class="data">{{bookingViewData?.created_at}}</div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+              </ion-text>
+              <ion-text color="tertiary">
+                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+              </ion-text>
+              <ion-text color="success">
+                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+              </ion-text>
+              <mat-divider></mat-divider>
+              <ion-text color="medium">
+                <p>
+                  Cancel your booking status of the course or update Klasszone Admin about class:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">edit</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="success">
+                <p>
+                  View your class and course details using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">visibility</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="medium">
+                <p>
+                  Join your classes at scheduled time using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="primary">duo</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="warning">
+                <p>
+                  Pay your Next month fee for your enrolled classes of your course:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="accent">payment</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+              <ion-text color="dark">
+                <p>
+                  Review your Tutor and provide Star Rating using this action button:
+                  <ion-button fill="clear" class="small-btn">
+                    <mat-icon color="warn">star</mat-icon>
+                  </ion-button>
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- View booking details end  -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+
+</ion-content>
+<common-footer></common-footer>

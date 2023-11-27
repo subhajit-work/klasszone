@@ -67,7 +67,7 @@
             shape="round">Edit Profile</ion-button>
           <h3 class="name">{{userData?.user_data?.username}}</h3>
           <p>Net KlassCoins: <b>{{userData?.user_data?.net_credits}}</b></p>
-          <p *ngIf="userType == 'tutor'">Per KlassCoin Value: <b>₹ {{userData?.user_data?.per_credit_value}}</b></p>
+          <p *ngIf="userType == 'tutor'">Per KlassCoin Value: <b>{{userData?.user_data?.per_credit_value}}</b></p>
           <p *ngIf="userType == 'student'">Net Rewards Points: <b>₹ {{userData?.user_data?.net_creditcoins}}</b></p>
         </div>
       </div>
@@ -752,9 +752,9 @@
                 <ion-row>
                   <!-- Account Holder Name -->
                   <ion-col size="12">
-                    <ion-label>{{model?.address}}, {{model?.state}}, {{model?.city}}, {{model?.land_mark}},</ion-label>
+                    <ion-label>{{model?.address}}<span *ngIf="model.state">,</span> {{model?.state}}<span *ngIf="model.city">,</span> {{model?.city}}<span *ngIf="model.land_mark">,</span> {{model?.land_mark}}</ion-label>
                     <br>
-                    <ion-label>{{userData?.user_data?.country}} - {{model?.pin_code}}</ion-label>
+                    <ion-label>{{userData?.user_data?.country}} <span *ngIf="model.pin_code">-</span> {{model?.pin_code}}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-card-content>
@@ -855,8 +855,8 @@
               <!-- Introduce Yourself Briefly: -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-label position="floating">Introduce Yourself Briefly:</ion-label>
-                  <angular-editor [(ngModel)]="model.profile" name="profile" [config]="config"></angular-editor>
+                  <ion-label position="floating">Introduce Yourself Briefly:*</ion-label>
+                  <angular-editor required [(ngModel)]="model.profile" name="profile" [config]="config"></angular-editor>
                 </div>
               </ion-col>
             </ion-row>
@@ -871,22 +871,22 @@
                   <!-- Highlight Your Subject Details: -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-label position="floating">Highlight Your Subject Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.subject_details" name="subject_details" [config]="config"></angular-editor>
+                      <ion-label position="floating">Highlight Your Subject Details:*</ion-label>
+                      <angular-editor required [(ngModel)]="model.subject_details" name="subject_details" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Briefly Provide Your Expertise Details: -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-label position="floating">Briefly Provide Your Expertise Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.experience_desc" name="experience_desc" [config]="config"></angular-editor>
+                      <ion-label position="floating">Briefly Provide Your Expertise Details:*</ion-label>
+                      <angular-editor required [(ngModel)]="model.experience_desc" name="experience_desc" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Summarize Your Domain Knowledge Details: -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-label position="floating">Summarize Your Domain Knowledge Details:</ion-label>
-                      <angular-editor [(ngModel)]="model.domain_knowledge_details" name="domain_knowledge_details" [config]="config"></angular-editor>
+                      <ion-label position="floating">Summarize Your Domain Knowledge Details:*</ion-label>
+                      <angular-editor required [(ngModel)]="model.domain_knowledge_details" name="domain_knowledge_details" [config]="config"></angular-editor>
                     </div>
                   </ion-col>
                   <!-- Any Book published Details: -->
@@ -938,8 +938,8 @@
                   <!-- Duration Type -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select multiple="true" [(ngModel)]="model.duration_of_experience" [value]="model.duration_of_experience"
-                      name="duration_of_experience" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Duration Type">
+                      <ion-select multiple="true" required [(ngModel)]="model.duration_of_experience" [value]="model.duration_of_experience"
+                      name="duration_of_experience" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Duration Type *">
                         <ion-select-option *ngFor="let item of durationType" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1000,8 +1000,8 @@
                   <!-- Select Your Bachelor Degree -->
                   <ion-col size="12">
                     <div class="field-item">
-                      <ion-select multiple="true" [(ngModel)]="model.qualification" [value]="model.qualification"
-                      name="qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Bachelor Degree">
+                      <ion-select multiple="true" required [(ngModel)]="model.qualification" [value]="model.qualification"
+                      name="qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Bachelor Degree *">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1026,21 +1026,21 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.master_uni" name="master_uni" labelPlacement="floating"
-                      label="Master Degree University *" required></ion-input>
+                      label="Master Degree University"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Any Other Degree/Diploma -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.other_qualification" name="other_qualification" labelPlacement="floating"
-                      label="Any Other Degree/Diploma *" required></ion-input>
+                      label="Any Other Degree/Diploma"></ion-input>
                     </div>
                   </ion-col>
                   <!-- Other Degree University/Institute -->
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-input type="text" [(ngModel)]="model.other_uni" name="other_uni" labelPlacement="floating"
-                      label="Other Degree University/Institute *" required></ion-input>
+                      label="Other Degree University/Institute"></ion-input>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -1385,6 +1385,61 @@
         </form>
       </div>
       <!-- profile edit end -->
+
+      <!-- experience start -->
+      <div class="view-booking"  *ngIf="parms_slug == 'experience' && userType == 'tutor'">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-card color="primary">
+                <ion-card-subtitle>
+                  Experience Summary
+                  <ion-button shape="round">
+                    <ion-icon slot="icon-only" name="add"></ion-icon>
+                  </ion-button>
+                </ion-card-subtitle>
+              </ion-card>
+            </ion-col>
+            <ion-col size="12" *ngFor="let item of userData?.user_data?.educations_data">
+              <ion-card>
+                <ion-card-content>
+                  <div class="basic-details">
+                    <div class="details-item">
+                      <div class="label">Institute/School/College/Company/Organization Name:</div>
+                      <div class="data">{{item?.company}}</div>
+                    </div>
+                    <div class="details-item">
+                      <div class="label">Describe Your Role:</div>
+                      <div class="data">{{item?.role}}</div>
+                    </div>
+                    <div class="details-item">
+                      <div class="label">Describe Your Job Description or Responsibilities:</div>
+                      <div class="data" [innerHTML]="item?.description | safeHtml"></div>
+                    </div>
+                    <div class="details-item">
+                      <div class="label">Associated From:</div>
+                      <div class="data">{{item?.from_date}}</div>
+                    </div>
+                    <div class="details-item">
+                      <div class="label">Associated Upto :</div>
+                      <div class="data">{{item?.to_date}}</div>
+                    </div>
+                  </div>
+                </ion-card-content>
+                <div class="custom-btn ion-text-center">
+                  <ion-button shape="round">
+                    Edit
+                  </ion-button>
+                  <ion-button shape="round" color="danger">
+                    Delete
+                  </ion-button>
+                </div>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <!-- experience end -->
 
       <!-- change-password start -->
       <div class="profile-edit" *ngIf="parms_slug == 'change-password'">
