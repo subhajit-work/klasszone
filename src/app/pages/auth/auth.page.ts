@@ -124,7 +124,7 @@ export class AuthPage implements OnInit {
                 this.btnloader = false;
                 if (resData.return_status > 0) {
                   this.router.navigateByUrl('/home');
-                  window.location.reload();
+                  // window.location.reload();
                   this.commonUtils.presentToast('success', resData.return_message);
                   
                 }else {
