@@ -466,7 +466,7 @@
               <!-- Country -->
               <ion-col size="12">
                 <div class="field-item">
-                  <ion-select [(ngModel)]="model.country"
+                  <ion-select cancelText="Cancel Choice" [(ngModel)]="model.country"
                   name="country" required interface="action-sheet" labelPlacement="floating" label="Country *">
                     <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.name">{{item?.name}}</ion-select-option>
                   </ion-select>
@@ -580,7 +580,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select multiple="true" [(ngModel)]="model.language_of_teaching" [value]="model.language_of_teaching"
-                      name="language_of_teaching" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Languages Known">
+                      name="language_of_teaching" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Languages Known">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -589,7 +589,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.listning"
-                      name="listning" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Listening skills">
+                      name="listning" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Listening skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -598,7 +598,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.reading"
-                      name="reading" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Reading Skills">
+                      name="reading" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Reading Skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -607,7 +607,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.writing"
-                      name="writing" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Writing skills">
+                      name="writing" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Writing skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -616,7 +616,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select [(ngModel)]="model.presentation"
-                      name="presentation" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Presentation skills">
+                      name="presentation" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Presentation skills">
                         <ion-select-option *ngFor="let item of skillRating" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -939,7 +939,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select multiple="true" required [(ngModel)]="model.duration_of_experience" [value]="model.duration_of_experience"
-                      name="duration_of_experience" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Duration Type *">
+                      name="duration_of_experience" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Duration Type *">
                         <ion-select-option *ngFor="let item of durationType" [value]="item?.name">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1001,7 +1001,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select multiple="true" required [(ngModel)]="model.qualification" [value]="model.qualification"
-                      name="qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Bachelor Degree *">
+                      name="qualification" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Bachelor Degree *">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1017,7 +1017,7 @@
                   <ion-col size="12">
                     <div class="field-item">
                       <ion-select multiple="true" [(ngModel)]="model.master_qualification" [value]="model.master_qualification"
-                      name="master_qualification" interface="action-sheet" cancelText="Close" labelPlacement="floating" label="Master Degree">
+                      name="master_qualification" interface="action-sheet" cancelText="Cancel Choice" labelPlacement="floating" label="Master Degree">
                         <ion-select-option *ngFor="let item of userData?.user_data?.language_options" [value]="item?.id">{{item?.name}}</ion-select-option>
                       </ion-select>
                     </div>
@@ -1066,15 +1066,15 @@
             <ion-row>
               <ion-col size="12">
                 <div class="field-item">
-                    <ion-label position="floating">High School/10th Marksheet/Passing Certificate</ion-label>
+                    <ion-label position="floating">High School/10th Marksheet/Passing Certificate *</ion-label>
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_5" type="file" (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_5" name="certificate_5" type="file" required (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
                       </span>
                       <img [hidden]="!fileValPathShow " class="form-upload-image" src="{{fileValPreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_5 && !fileValPathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_5}}" alt="image" />
+                      <img *ngIf="model.certificate_5 && !fileValPathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_5}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_5, 'certificate_5')" [hidden]="!model.certificate_5">
                           <ion-icon name="close"></ion-icon>
@@ -1084,15 +1084,15 @@
               </ion-col>
               <ion-col size="12">
                 <div class="field-item">
-                    <ion-label position="floating">Secondary School/12th/Intermediate Marksheet/Passing Certificate</ion-label>
+                    <ion-label position="floating">Secondary School/12th/Intermediate Marksheet/Passing Certificate *</ion-label>
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_7" type="file" (change)="normalFileUpload($event, model.certificate_7, 'certificate_7')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_7" name="certificate_7" type="file" required (change)="normalFileUpload($event, model.certificate_7, 'certificate_7')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
                       </span>
                       <img [hidden]="!fileVal1PathShow " class="form-upload-image" src="{{fileVal1PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_7 && !fileVal1PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_7}}" alt="image" />
+                      <img *ngIf="model.certificate_7 && !fileVal1PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_7}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_7, 'certificate_7')" [hidden]="!model.certificate_7">
                           <ion-icon name="close"></ion-icon>
@@ -1110,7 +1110,7 @@
                       </span>
                       <img [hidden]="!fileVal2PathShow " class="form-upload-image" src="{{fileVal2PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_10 && !fileVal2PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_10}}" alt="image" />
+                      <img *ngIf="model.certificate_10 && !fileVal2PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_10}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_10, 'certificate_10')" [hidden]="!model.certificate_10">
                           <ion-icon name="close"></ion-icon>
@@ -1128,7 +1128,7 @@
                       </span>
                       <img [hidden]="!fileVal3PathShow " class="form-upload-image" src="{{fileVal3PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_11 && !fileVal3PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_11}}" alt="image" />
+                      <img *ngIf="model.certificate_11 && !fileVal3PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_11}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_11, 'certificate_11')" [hidden]="!model.certificate_11">
                           <ion-icon name="close"></ion-icon>
@@ -1146,7 +1146,7 @@
                       </span>
                       <img [hidden]="!fileVal4PathShow " class="form-upload-image" src="{{fileVal4PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_12 && !fileVal4PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_12}}" alt="image" />
+                      <img *ngIf="model.certificate_12 && !fileVal4PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_12}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_12, 'certificate_12')" [hidden]="!model.certificate_12">
                           <ion-icon name="close"></ion-icon>
@@ -1164,7 +1164,7 @@
                       </span>
                       <img [hidden]="!fileVal5PathShow " class="form-upload-image" src="{{fileVal5PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_13 && !fileVal5PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_13}}" alt="image" />
+                      <img *ngIf="model.certificate_13 && !fileVal5PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_13}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_13, 'certificate_13')" [hidden]="!model.certificate_13">
                           <ion-icon name="close"></ion-icon>
@@ -1174,15 +1174,15 @@
               </ion-col>
               <ion-col size="12">
                 <div class="field-item">
-                    <ion-label position="floating">Aadhar Card as ID Proof </ion-label>
+                    <ion-label position="floating">Aadhar Card as ID Proof *</ion-label>
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_14" type="file" (change)="normalFileUpload($event, model.certificate_14, 'certificate_14')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_14" name="certificate_14" required type="file" (change)="normalFileUpload($event, model.certificate_14, 'certificate_14')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
                       </span>
                       <img [hidden]="!fileVal6PathShow " class="form-upload-image" src="{{fileVal6PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_14 && !fileVal6PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_14}}" alt="image" />
+                      <img *ngIf="model.certificate_14 && !fileVal6PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_14}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_14, 'certificate_14')" [hidden]="!model.certificate_14">
                           <ion-icon name="close"></ion-icon>
@@ -1200,7 +1200,7 @@
                       </span>
                       <img [hidden]="!fileVal7PathShow " class="form-upload-image" src="{{fileVal7PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_15 && !fileVal7PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_15}}" alt="image" />
+                      <img *ngIf="model.certificate_15 && !fileVal7PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_15}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_15, 'certificate_15')" [hidden]="!model.certificate_15">
                           <ion-icon name="close"></ion-icon>
@@ -1218,7 +1218,7 @@
                       </span>
                       <img [hidden]="!fileVal8PathShow " class="form-upload-image" src="{{fileVal8PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_16 && !fileVal8PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_16}}" alt="image" />
+                      <img *ngIf="model.certificate_16 && !fileVal8PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_16}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_16, 'certificate_16')" [hidden]="!model.certificate_16">
                           <ion-icon name="close"></ion-icon>
@@ -1236,7 +1236,7 @@
                       </span>
                       <img [hidden]="!fileVal9PathShow " class="form-upload-image" src="{{fileVal9PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_18 && !fileVal9PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_18}}" alt="image" />
+                      <img *ngIf="model.certificate_18 && !fileVal9PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_18}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_18, 'certificate_18')" [hidden]="!model.certificate_18">
                           <ion-icon name="close"></ion-icon>
@@ -1254,7 +1254,7 @@
                       </span>
                       <img [hidden]="!fileVal10PathShow " class="form-upload-image" src="{{fileVal10PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_20 && !fileVal10PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_20}}" alt="image" />
+                      <img *ngIf="model.certificate_20 && !fileVal10PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_20}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_20, 'certificate_20')" [hidden]="!model.certificate_20">
                           <ion-icon name="close"></ion-icon>
@@ -1272,7 +1272,7 @@
                       </span>
                       <img [hidden]="!fileVal11PathShow " class="form-upload-image" src="{{fileVal11PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_21 && !fileVal11PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_21}}" alt="image" />
+                      <img *ngIf="model.certificate_21 && !fileVal11PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_21}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_21, 'certificate_21')" [hidden]="!model.certificate_21">
                           <ion-icon name="close"></ion-icon>
@@ -1290,7 +1290,7 @@
                       </span>
                       <img [hidden]="!fileVal12PathShow " class="form-upload-image" src="{{fileVal12PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_22 && !fileVal12PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_22}}" alt="image" />
+                      <img *ngIf="model.certificate_22 && !fileVal12PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_22}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_22, 'certificate_22')" [hidden]="!model.certificate_22">
                           <ion-icon name="close"></ion-icon>
@@ -1308,7 +1308,7 @@
                       </span>
                       <img [hidden]="!fileVal13PathShow " class="form-upload-image" src="{{fileVal13PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_23 && !fileVal13PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_23}}" alt="image" />
+                      <img *ngIf="model.certificate_23 && !fileVal13PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_23}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_23, 'certificate_23')" [hidden]="!model.certificate_23">
                           <ion-icon name="close"></ion-icon>
@@ -1326,7 +1326,7 @@
                       </span>
                       <img [hidden]="!fileVal14PathShow " class="form-upload-image" src="{{fileVal14PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_24 && !fileVal14PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_24}}" alt="image" />
+                      <img *ngIf="model.certificate_24 && !fileVal14PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_24}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_24, 'certificate_24')" [hidden]="!model.certificate_24">
                           <ion-icon name="close"></ion-icon>
@@ -1344,7 +1344,7 @@
                       </span>
                       <img [hidden]="!fileVal15PathShow " class="form-upload-image" src="{{fileVal15PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_25 && !fileVal15PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_25}}" alt="image" />
+                      <img *ngIf="model.certificate_25 && !fileVal15PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_25}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_25, 'certificate_25')" [hidden]="!model.certificate_25">
                           <ion-icon name="close"></ion-icon>
@@ -1362,7 +1362,7 @@
                       </span>
                       <img [hidden]="!fileVal16PathShow " class="form-upload-image" src="{{fileVal16PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_26 && !fileVal16PathShow" class="form-upload-image" src="{{file_url}}/{{model.certificate_26}}" alt="image" />
+                      <img *ngIf="model.certificate_26 && !fileVal16PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_26}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_26, 'certificate_26')" [hidden]="!model.certificate_26">
                           <ion-icon name="close"></ion-icon>
@@ -1573,7 +1573,7 @@
                 <!-- Select the Gift Voucher -->
                 <ion-col size="12">
                   <div class="field-item">
-                    <ion-select [(ngModel)]="model.giftvoucher"
+                    <ion-select cancelText="Cancel Choice" [(ngModel)]="model.giftvoucher"
                     name="giftvoucher" required interface="action-sheet" labelPlacement="floating" label="Select the Gift Voucher *">
                       <ion-select-option *ngFor="let item of redeemRewardData" [value]="item?.name">{{item?.name}}</ion-select-option>
                     </ion-select>
@@ -3890,11 +3890,7 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'tutor'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="accent" [routerLink]="['/', 'booking-edit', element?.status, element?.id]">edit</mat-icon>
                       <mat-icon color="warn" [routerLink]="['/', 'view', 'transactions', element?.id]">visibility</mat-icon>
-                      <mat-icon color="primary" *ngIf="element?.status == 'session_initiated'" (click)="joinClass('init', element?.id)">duo</mat-icon>
-                      <mat-icon color="accent">money</mat-icon>
-                      <mat-icon color="warn" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
 

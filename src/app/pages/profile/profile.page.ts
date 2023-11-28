@@ -158,6 +158,7 @@ export class ProfilePage implements OnInit {
       },
     ]
   };
+  certificate_path:any;
 
   constructor(
     private menuCtrl: MenuController,
@@ -485,25 +486,27 @@ export class ProfilePage implements OnInit {
           }
 
           if (this.parms_slug == 'certificates') {
+            this.certificate_path = '/assets/uploads/certificates/';
             this.model = {
-              certificate_5 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[5],
-              certificate_7 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[7],
-              certificate_10 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[10],
-              certificate_11 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[11],
-              certificate_12 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[12],
-              certificate_13 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[13],
-              certificate_14 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[14],
-              certificate_15 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[15],
-              certificate_16 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[16],
-              certificate_18 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[18],
-              certificate_20 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[20],
-              certificate_21 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[21],
-              certificate_22 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[22],
-              certificate_23 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[23],
-              certificate_24 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[24],
-              certificate_25 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[25],
-              certificate_26 : 'assets/uploads/certificates/' + this.userData.user_data.user_uploads_arr[26],
+              certificate_5 :  this.userData.user_data.user_uploads_arr[5],
+              certificate_7 :  this.userData.user_data.user_uploads_arr[7],
+              certificate_10 :  this.userData.user_data.user_uploads_arr[10],
+              certificate_11 :  this.userData.user_data.user_uploads_arr[11],
+              certificate_12 :  this.userData.user_data.user_uploads_arr[12],
+              certificate_13 :  this.userData.user_data.user_uploads_arr[13],
+              certificate_14 :  this.userData.user_data.user_uploads_arr[14],
+              certificate_15 :  this.userData.user_data.user_uploads_arr[15],
+              certificate_16 :  this.userData.user_data.user_uploads_arr[16],
+              certificate_18 :  this.userData.user_data.user_uploads_arr[18],
+              certificate_20 :  this.userData.user_data.user_uploads_arr[20],
+              certificate_21 :  this.userData.user_data.user_uploads_arr[21],
+              certificate_22 :  this.userData.user_data.user_uploads_arr[22],
+              certificate_23 :  this.userData.user_data.user_uploads_arr[23],
+              certificate_24 :  this.userData.user_data.user_uploads_arr[24],
+              certificate_25 :  this.userData.user_data.user_uploads_arr[25],
+              certificate_26 :  this.userData.user_data.user_uploads_arr[26],
             }
+            console.log('certificates>>', this.model)
           }else if (this.parms_slug == 'tutor-profile-information'){
             this.model = {
               photo : this.userData.user_data.path + this.userData.user_data.photo,
