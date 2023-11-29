@@ -23,6 +23,9 @@ export class CommonFooterComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.menuCtrl.getMenus().then((menu) => {
+      menu[0].disabled = false;
+    })
     this.userType = localStorage.getItem('user_type');
     console.log('userType', this.userType)
     this.userInfoDataSubscribe = this.commonUtils.userInfoDataObservable.subscribe((res:any) => {

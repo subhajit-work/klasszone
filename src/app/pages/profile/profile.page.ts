@@ -177,6 +177,9 @@ export class ProfilePage implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    setInterval(() => {
+      this.tableListData();
+    }, 10000);
   }
 
   ngOnInit() {
@@ -196,8 +199,6 @@ export class ProfilePage implements OnInit {
     // this.menuCtrl.close('rightMenu');
 
     this.userInfoData();
-
-    
 
     this.updateProfileImageApi = 'student_profile_information/';
     this.menuCtrl.enable(true,'rightMenu');
@@ -275,6 +276,7 @@ export class ProfilePage implements OnInit {
 
   /* ------Table data list start------ */
   tableListData() {
+    
     this.tableListDataSubscribe = this.http.get(this.tableListData_url).subscribe(
       (res:any) => {
         this.tableData = res.return_data;

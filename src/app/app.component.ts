@@ -104,10 +104,6 @@ export class AppComponent {
     });
   }
 
-  subMenuClick(){
-    this.menuCtrl.enable(false);
-  }
-
   initializeApp() {
     this.department_url = 'fetch_categories';
     this.departmentData();
