@@ -23,10 +23,12 @@ import { StringReplacePipe } from '../pipe/string-replace.pipe';
 import { RatingComponent } from '../components/rating/rating.component';
 import { SafePipe } from '../pipe/safe-pipe.pipe';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SideNavComponent } from '../components/side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
     CommonFooterComponent,
+    SideNavComponent,
     SafeHtmlPipe,
     SafePipe,
     StringReplacePipe,
@@ -55,6 +57,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
   ],
   exports: [
     CommonFooterComponent,
+    SideNavComponent,
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,

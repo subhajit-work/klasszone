@@ -93,6 +93,10 @@ img {
     padding-bottom: 50px;
 }
 
+#main-profile-content {
+    --padding-top: 55px;
+}
+
 .field-item {
     .checkBox {
         margin-top: 10px;
@@ -1080,6 +1084,10 @@ mat-sidenav {
                 mat-icon {
                     margin-right: 10px;
                 }
+            }
+            ion-item:hover {
+                --background: linear-gradient(to left, #24243e, #11367A, #0f0c29);
+                color: #fff;
             }
         }
     }
