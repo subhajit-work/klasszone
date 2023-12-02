@@ -89,7 +89,7 @@
                 </div>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="userType == 'student'">
               <ion-col size="12">
                 <ion-text color="primary">
                   <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
@@ -138,6 +138,52 @@
                     Review your Tutor and provide Star Rating using this action button:
                     <ion-button fill="clear" class="small-btn">
                       <mat-icon color="warn">star</mat-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="userType == 'tutor'">
+              <ion-col size="12">
+                <mat-divider></mat-divider>
+                <ion-text color="medium">
+                  <p>
+                    Change your booking status of the course or update Klasszone Admin about class:
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="accent">edit</mat-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="success">
+                  <p>
+                    View your active course details using this action button:
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="warn">visibility</mat-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="medium">
+                  <p>
+                    Join your classes at scheduled time using this action button:
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="primary">duo</mat-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="warning">
+                  <p>
+                    Request for Payment for current month fee for active/completed classes of your course:
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="accent">payment</mat-icon>
+                    </ion-button>
+                  </p>
+                </ion-text>
+                <ion-text color="dark">
+                  <p>
+                    View the Group class active/non-active students:
+                    <ion-button fill="clear" class="small-btn">
+                      <mat-icon color="primary">groups_2</mat-icon>
                     </ion-button>
                   </p>
                 </ion-text>

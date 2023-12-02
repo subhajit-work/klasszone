@@ -159,6 +159,7 @@ export class ProfilePage implements OnInit {
     ]
   };
   certificate_path:any;
+  openMenu:any;
 
   constructor(
     private menuCtrl: MenuController,
@@ -194,9 +195,22 @@ export class ProfilePage implements OnInit {
       this.userData = res;
     })
     this.parms_slug = this.activatedRoute.snapshot.paramMap.get('slug');
-    console.log('parms_slug', this.parms_slug);
     this.pageName = this.parms_slug.replace(/-/g, " ");
     // this.menuCtrl.close('rightMenu');
+
+    /* Toggle open menu start */
+    for (let i = 0; i < this.profileSideMenuData.length; i++) {
+      if (this.parms_slug == this.profileSideMenuData[i].url) {
+        this.openMenu = this.profileSideMenuData[i].name;
+      }else{
+        for (let j = 0; j < this.profileSideMenuData[i].subPages.length; j++) {
+          if (this.parms_slug == this.profileSideMenuData[i].subPages[j].url) {
+            this.openMenu = this.profileSideMenuData[i].name;
+          }
+        }
+      }
+    }
+    /* Toggle open menu end */
 
     this.userInfoData();
 

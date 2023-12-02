@@ -3,7 +3,8 @@
         {
           "name" : "Student Dashboard",
           "url" : "dashboard",
-          "icon" : "speed"
+          "icon" : "speed",
+          "subPages" : []
         },
         {
           "name" : "My Enrolled Classes",
@@ -89,22 +90,26 @@
         {
           "name" : "KlassCoins History",
           "url" : "klassCoins-history",
-          "icon" : "history"
+          "icon" : "history",
+          "subPages" : []
         },
         {
           "name" : "Rewards Points",
           "url" : "rewards-points",
-          "icon" : "emoji_events"
+          "icon" : "emoji_events",
+          "subPages" : []
         },
         {
           "name" : "Redeem Rewards",
           "url" : "redeem-rewards",
-          "icon" : "redeem"
+          "icon" : "redeem",
+          "subPages" : []
         },
         {
           "name" : "Refer and Earn",
           "url" : "refer-and-earn",
-          "icon" : "share"
+          "icon" : "share",
+          "subPages" : []
         },
         {
           "name" : "Student Information",
@@ -133,7 +138,8 @@
         {
           "name" : "Tutor Dashboard",
           "url" : "dashboard",
-          "icon" : "speed"
+          "icon" : "speed",
+          "subPages" : []
         },
         {
           "name" : "Class Enrollments",
@@ -258,17 +264,20 @@
         {
           "name" : "KlassCoins History",
           "url" : "klassCoins-history",
-          "icon" : "history"
+          "icon" : "history",
+          "subPages" : []
         },
         {
           "name" : "Refer and Earn",
           "url" : "refer-and-earn",
-          "icon" : "emoji_events"
+          "icon" : "emoji_events",
+          "subPages" : []
         },
         {
           "name" : "Received Reviews",
           "url" : "received-reviews",
-          "icon" : "redeem"
+          "icon" : "redeem",
+          "subPages" : []
         },
         {
           "name" : "Tutor Information",
