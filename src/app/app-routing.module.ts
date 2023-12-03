@@ -58,7 +58,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/teacher-profile/teacher-profile.module').then( m => m.TeacherProfilePageModule)
   },
   {
-    path: 'booking-view/:status/:id',
+    path: 'booking-view/:page/:status/:id',
     loadChildren: () => import('./pages/booking-view/booking-view.module').then( m => m.BookingViewPageModule),
     canLoad: [AuthGuard]
   },

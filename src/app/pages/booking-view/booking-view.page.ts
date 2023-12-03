@@ -21,6 +21,7 @@ export class BookingViewPage implements OnInit {
   private _mobileQueryListener: () => void;
 
   parms_status:any;
+  parms_page:any;
   parms_id:any;
 
   private userDetailsSubscribe: Subscription | undefined;
@@ -32,7 +33,7 @@ export class BookingViewPage implements OnInit {
   bookingViewData:any;
 
   userType:any;
-
+  openMenu:any;
   profileSideMenuData:any;
 
   constructor(
@@ -49,6 +50,7 @@ export class BookingViewPage implements OnInit {
    }
 
   ngOnInit() {
+    this.parms_page = this.activatedRoute.snapshot.paramMap.get('page');
     this.parms_status = this.activatedRoute.snapshot.paramMap.get('status');
     this.parms_id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log('parms_status', this.parms_status);
@@ -61,6 +63,20 @@ export class BookingViewPage implements OnInit {
     }else {
       this.profileSideMenuData = profileMenuData.studentMenuData;
     }
+
+    /* Toggle open menu start */
+    for (let i = 0; i < this.profileSideMenuData.length; i++) {
+      if (this.parms_page == this.profileSideMenuData[i].url) {
+        this.openMenu = this.profileSideMenuData[i].name;
+      }else{
+        for (let j = 0; j < this.profileSideMenuData[i].subPages.length; j++) {
+          if (this.parms_page == this.profileSideMenuData[i].subPages[j].url) {
+            this.openMenu = this.profileSideMenuData[i].name;
+          }
+        }
+      }
+    }
+    /* Toggle open menu end */
 
     this.userInfoData();
   }
@@ -76,7 +92,7 @@ export class BookingViewPage implements OnInit {
         if(resData.return_status > 0){
           this.userData = resData.return_data;
           
-          if (this.parms_status == 'all') {
+          if (this.openMenu == 'Class Enrollments' || this.openMenu == 'My Enrolled Classes') {
             if (this.userType == 'student') {
               this.bookingView_url = 'enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
               this.getBookingView();
@@ -85,7 +101,7 @@ export class BookingViewPage implements OnInit {
               this.getBookingView();
             }
             
-          }else if (this.parms_status == 'event'){
+          }else if (this.openMenu == 'Manage Events' || this.openMenu == 'Event Enrollment'){
             if (this.userType == 'tutor') {
               this.bookingView_url = 'tutor_event_enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
               this.getBookingView();
