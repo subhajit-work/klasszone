@@ -26,7 +26,9 @@ export class RegisterPage implements OnInit {
 
   isLogin = true;
   userTypes: any;
-  model: any = {}
+  model: any = {};
+  form_api: any;
+  isIndian = true;
 
   constructor(
     private authService: AuthService,
@@ -43,8 +45,7 @@ export class RegisterPage implements OnInit {
   /*Variable Names*/
   private formSubmitSubscribe: Subscription | undefined;
   private getCountryCodeSubscribe: Subscription | undefined;
-  form_submit_text = 'Register';
-  form_api: any;
+  form_submit_text = 'Send OTP';
   parms_action_name: any;
   parms_action_id: any;
   countryCodeUrl: any;
@@ -65,17 +66,8 @@ export class RegisterPage implements OnInit {
 
     this.countryCodeUrl = 'country_code';
     this.getCountryCode();
-
-    if (this.parms_action_name == 'edit') {
-      // form submit api edit
-      this.form_api = 'student/signup/' + this.parms_action_id;
-
-      console.log('edit data<><><><>', this.form_api);
-    } else {
-      // form submit api add
-      this.form_api = 'student/signup?master=1';
-      console.log('edit data@@@@@@@@@@@@', this.form_api);
-    }
+    this.model.phone_code = '98_91';
+    this.form_api = 'otp';
   }
 
   ionViewWillEnter() {
@@ -94,10 +86,6 @@ export class RegisterPage implements OnInit {
     });
   }
 
-
-  onSwitchAuthMode() {
-    this.isLogin = !this.isLogin;
-  }
   // get login type start
   segmentValue: any;
   segmentChanged(e: any) {
@@ -122,81 +110,87 @@ export class RegisterPage implements OnInit {
   }
   // get country code end
 
-  // ======================== form submit start ===================
-  clickButtonTypeCheck = '';
-  form_submit_text_save = 'Register';
-  form_submit_text_save_another = 'Save & Add Another';
-
-  // click button type 
-  clickButtonType(_buttonType: any) {
-    this.clickButtonTypeCheck = _buttonType;
+  /*changePhoneCode start */
+  changePhoneCode(_event:any){
+    console.log('_event', _event);
+    if (_event.detail.value == '98_91') {
+      this.isIndian = true;
+      this.form_api = 'otp';
+      this.form_submit_text = 'Send OTP';
+    }else {
+      this.isIndian = false;
+      this.form_api = 'registration';
+      this.form_submit_text = 'Create an account';
+    }
   }
+  /*changePhoneCode end */
+
+  // ======================== form submit start ===================
 
   onSubmit(form: NgForm) {
     console.log("add form submit >", form.value);
-    localStorage.removeItem('registerData');
-    localStorage.setItem('registerData', JSON.stringify({
-      'center_id': form.value.center_id,
-      'first_name': form.value.first_name,
-      'last_name': form.value.last_name,
-      'identity': form.value.identity,
-      'password': form.value.password,
-      'confirm_password': form.value.confirm_password,
-      'mobile': form.value.mobile,
-      'phone_code': form.value.phone_code,
-      'referral_code': form.value.referral_code
-    }));
+    if (form.value.password == form.value.confirm_password) {
+      localStorage.removeItem('registerData');
+      localStorage.setItem('registerData', JSON.stringify({
+        'center_id': form.value.center_id,
+        'first_name': form.value.first_name,
+        'last_name': form.value.last_name,
+        'identity': form.value.identity,
+        'password': form.value.password,
+        'confirm_password': form.value.confirm_password,
+        'mobile': form.value.mobile,
+        'phone_code': form.value.phone_code,
+        'referral_code': form.value.referral_code,
+        'action': form.value.action,
+      }));
 
-    console.log('registerData',localStorage.getItem('registerData'));
+      console.log('registerData',localStorage.getItem('registerData'));
 
-    // this.router.navigateByUrl('/send-otp');
+      this.form_submit_text = 'Please wait...';
 
-    if (this.clickButtonTypeCheck == 'Register') {
-      this.form_submit_text_save = 'Please wait';
-    } else {
-      this.form_submit_text_save_another = 'Please wait';
-    }
+      // get form value
+      let fd = new FormData();
 
-    this.form_submit_text = 'Please wait';
-
-    // get form value
-    let fd = new FormData();
-
-    for (let val in form.value) {
-      if (form.value[val] == undefined) {
-        form.value[val] = '';
-      }
-      fd.append(val, form.value[val]);
-    };
-
-    console.log('value >', fd);
-
-    if (!form.valid) {
-      return;
-    }
-
-    this.formSubmitSubscribe = this.http.post("otp", fd).subscribe(
-      (response: any) => {
-
-        console.log("add form response >", response);
-        if (response.return_status > 0) {
-          this.router.navigateByUrl('/send-otp');
-          this.commonUtils.presentToast('success', response.return_message);
-          form.reset();
-        }else {
-          this.commonUtils.presentToast('error', response.return_message);
+      for (let val in form.value) {
+        if (form.value[val] == undefined) {
+          form.value[val] = '';
         }
-        
-      },
-      errRes => {
-        if (this.clickButtonTypeCheck == 'Register') {
-          this.form_submit_text_save = 'Register';
-        } else {
-          this.form_submit_text_save_another = 'Save & Add Another';
-        }
-        this.form_submit_text = 'Register';
+        fd.append(val, form.value[val]);
+      };
+
+      console.log('value >', fd);
+
+      if (!form.valid) {
+        return;
       }
-    );
+
+      this.formSubmitSubscribe = this.http.post(this.form_api, fd).subscribe(
+        (response: any) => {
+
+          console.log("add form response >", response);
+          if (response.return_status > 0) {
+            if (this.isIndian) {
+              this.router.navigateByUrl('/send-otp');
+              this.form_submit_text = 'Send OTP';
+            }else {
+              this.form_submit_text = 'Create an account';
+              this.router.navigateByUrl('/auth');
+            }
+            
+            this.commonUtils.presentToast('success', response.return_message);
+            form.reset();
+          }else {
+            this.commonUtils.presentToast('error', response.return_message);
+          }
+          
+        },
+        errRes => {
+        }
+      );
+    }else {
+      this.commonUtils.presentToast('info', 'Password & Confirm Password not match')
+    }
+    
 
   }
   // form submit end

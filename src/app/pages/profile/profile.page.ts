@@ -246,23 +246,29 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewDidEnter(){
+    console.log('ionViewDidEnter');
+    
     this.menuCtrl.enable(true,'rightMenu');
     // this.userInfoData();
     // this.menuCtrl.close('rightMenu');
   }
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
     this.menuCtrl.enable(true,'rightMenu');
-    
+    this.userInfoData();
   }
   ionViewWillLeave() {
+    console.log('ionViewWillLeave');
     this.menuCtrl.close('rightMenu');
     this.menuCtrl.enable(false,'rightMenu');
   }
   ionViewDidLeave() {
+    console.log('ionViewDidLeave');
     this.menuCtrl.close('rightMenu');
     this.menuCtrl.enable(false,'rightMenu');
   }
   ngAfterViewInit() {
+    console.log('ngAfterViewInit');
     // this.dataSource.paginator = this.paginator;
     this.list_product.paginator = this.paginator;
   }
@@ -793,6 +799,27 @@ export class ProfilePage implements OnInit {
 
   }
   // form submit end
+
+  /* Delete experiance start */
+  deleteExperiance(_id:any){
+    
+     // get form value
+     let fd = new FormData();
+
+    this.formSubmitSubscribe = this.http.post('experience/delete/'+_id, fd).subscribe(
+      (response: any) => {
+        if (response.return_status > 0) {
+          this.commonUtils.presentToast('success', response.return_message);
+          this.userInfoData();
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+        }
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Delete experiance end */
 
   /* change-password start */
   onSubmitChangePassword(form: NgForm) {

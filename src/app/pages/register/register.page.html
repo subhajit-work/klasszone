@@ -81,8 +81,8 @@
             <!-- Phone code -->
             <ion-col size="12">
               <div class="field-item">
-                <ion-select [(ngModel)]="model.phone_code"
-                name="phone_code" interface="action-sheet" canSearch="true" label-placement="floating" label="Phone code">
+                <ion-select [(ngModel)]="model.phone_code" (ionChange)="changePhoneCode($event)"
+                name="phone_code" interface="action-sheet" required label-placement="floating" label="Phone code *">
                   <ion-select-option *ngFor="let item of countryCodeData?.counrty_code" [value]="item?.id">{{item?.name}}</ion-select-option>
                 </ion-select>
               </div>
@@ -92,7 +92,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.mobile"
-                name="mobile" labelPlacement="floating" label="Phone Number"></ion-input>
+                name="mobile" labelPlacement="floating" required label="Phone Number *"></ion-input>
               </div>
             </ion-col>
             <ion-col size="12">
@@ -103,7 +103,7 @@
               <div class="custom-btn">
                 <ion-button type="submit" 
                 [disabled]="!userAddForm.valid" expand="block" shape="round">
-                  Send OTP
+                  {{form_submit_text}}
                 </ion-button>
               </div>
               <ion-button shape="round" class="home-btn" [routerLink]="['/home']" expand="block">Goto Home</ion-button>

@@ -127,25 +127,7 @@ export class SendOtpPage implements OnInit {
   // get login type end
 
   // ======================== form submit start ===================
-  clickButtonTypeCheck = '';
-  form_submit_text_save = 'Register';
-  form_submit_text_save_another = 'Save & Add Another';
-
-  // click button type 
-  clickButtonType(_buttonType: any) {
-    this.clickButtonTypeCheck = _buttonType;
-  }
-
   onSubmit(form: NgForm) {
-    
-
-    if (this.clickButtonTypeCheck == 'Register') {
-      this.form_submit_text_save = 'Please wait';
-    } else {
-      this.form_submit_text_save_another = 'Please wait';
-    }
-
-    this.form_submit_text = 'Please wait';
 
     // get form value
     let fd = new FormData();
@@ -165,15 +147,6 @@ export class SendOtpPage implements OnInit {
 
     this.formSubmitSubscribe = this.http.post("registration", fd).subscribe(
       (response: any) => {
-
-        if (this.clickButtonTypeCheck == 'Register') {
-          this.form_submit_text_save = 'Register';
-        } else {
-          this.form_submit_text_save_another = 'Save & Add Another';
-        }
-
-        console.log("add form response >", response);
-
         if (response.return_status > 0) {
           localStorage.removeItem('registerData');
           this.registrationData = {};
@@ -186,12 +159,6 @@ export class SendOtpPage implements OnInit {
 
       },
       errRes => {
-        if (this.clickButtonTypeCheck == 'Register') {
-          this.form_submit_text_save = 'Register';
-        } else {
-          this.form_submit_text_save_another = 'Save & Add Another';
-        }
-        this.form_submit_text = 'Register';
       }
     );
 
@@ -207,6 +174,35 @@ export class SendOtpPage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
+
+  /* Resend otp start */
+  resendOTP(){
+    let fd = new FormData();
+    fd.append('action', 'generate');
+    fd.append('center_id', this.registrationData.center_id);
+    fd.append('first_name', this.registrationData.first_name);
+    fd.append('last_name', this.registrationData.last_name);
+    fd.append('identity', this.registrationData.identity);
+    fd.append('password', this.registrationData.password);
+    fd.append('confirm_password', this.registrationData.confirm_password);
+    fd.append('referral_code', this.registrationData.referral_code);
+    fd.append('phone_code', this.registrationData.phone_code);
+    fd.append('mobile', this.registrationData.mobile);
+
+    this.formSubmitSubscribe = this.http.post("otp", fd).subscribe(
+      (response: any) => {
+        if (response.return_status > 0) {
+          this.commonUtils.presentToast('success', response.return_message);
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+        }
+
+      },
+      errRes => {
+      }
+    );
+  }
+  /* Resend otp end */
 
   // ----------- destroy subscription start ---------
   ngOnDestroy() {

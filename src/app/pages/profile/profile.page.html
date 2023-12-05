@@ -1394,7 +1394,7 @@
               <ion-card color="primary">
                 <ion-card-subtitle>
                   Experience Summary
-                  <ion-button shape="round">
+                  <ion-button shape="round" [routerLink]="['/', 'experience', 'add', 'id']">
                     <ion-icon slot="icon-only" name="add"></ion-icon>
                   </ion-button>
                 </ion-card-subtitle>
@@ -1427,10 +1427,10 @@
                   </div>
                 </ion-card-content>
                 <div class="custom-btn ion-text-center">
-                  <ion-button shape="round">
+                  <ion-button shape="round" [routerLink]="['/', 'experience', 'edit', item?.record_id]">
                     Edit
                   </ion-button>
-                  <ion-button shape="round" color="danger">
+                  <ion-button shape="round" (click)="deleteExperiance(item?.record_id)" color="danger" >
                     Delete
                   </ion-button>
                 </div>
