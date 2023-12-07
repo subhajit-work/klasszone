@@ -27,19 +27,18 @@
     <!-- side menu start -->
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
       <mat-nav-list class="profile-menu">
-
-        <ion-accordion-group>
+        <ion-accordion-group [multiple]="true" [value]="[openMenu]">
           <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
-            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+            <ion-item *ngIf="menu?.subPages.length == 0" routerLinkActive="router-link-active" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
-            <ion-item *ngIf="menu?.subPages" slot="header">
+            <ion-item *ngIf="menu?.subPages.length > 0" slot="header">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
-              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+            <div class="ion-padding" slot="content" *ngIf="menu?.subPages.length > 0">
+              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" routerLinkActive="router-link-active" [routerLink]="['/user/'+ submenu?.url]">
                 <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
                 <ion-label>{{submenu?.name}}</ion-label>
               </ion-item>
@@ -64,7 +63,7 @@
               <ion-col size="12" [hidden]="enquiriesEditData?.status.length == 0">
                 <div class="field-item">
                   <ion-select [(ngModel)]="enquiriesEditData.prev_status"
-                  name="status" interface="action-sheet" required cancelText="Close" label-placement="floating" label="Change Status *">
+                  name="status" interface="action-sheet" required cancelText="Cancel Choice" label-placement="floating" label="Change Status *">
                     <ion-select-option *ngFor="let item of enquiriesEditData.status" [value]="item?.display_value">{{item?.display_name}}</ion-select-option>
                   </ion-select>
                 </div>

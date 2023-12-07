@@ -63,7 +63,7 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'booking-edit/:status/:id',
+    path: 'booking-edit/:page/:status/:id',
     loadChildren: () => import('./pages/booking-edit/booking-edit.module').then( m => m.BookingEditPageModule),
     canLoad: [AuthGuard]
   },

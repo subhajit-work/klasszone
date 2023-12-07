@@ -25,7 +25,7 @@ export class BookingEditPage implements OnInit {
 
   parms_status:any;
   parms_id:any;
-
+  parms_page:any;
   profileSideMenuData:any;
 
   private userDetailsSubscribe: Subscription | undefined;
@@ -41,6 +41,7 @@ export class BookingEditPage implements OnInit {
   form_api: any;
 
   userType:any;
+  openMenu:any;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef, 
@@ -61,6 +62,7 @@ export class BookingEditPage implements OnInit {
     //   console.log('userInfoDataObservable res>>>>>>>>>>>>>>>>>>>.. >', res);
     //   this.userData = res;
     // })
+    this.parms_page = this.activatedRoute.snapshot.paramMap.get('page');
     this.parms_status = this.activatedRoute.snapshot.paramMap.get('status');
     this.parms_id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log('parms_status', this.parms_status);
@@ -73,6 +75,20 @@ export class BookingEditPage implements OnInit {
     }else {
       this.profileSideMenuData = profileMenuData.studentMenuData;
     }
+
+    /* Toggle open menu start */
+    for (let i = 0; i < this.profileSideMenuData.length; i++) {
+      if (this.parms_page == this.profileSideMenuData[i].url) {
+        this.openMenu = this.profileSideMenuData[i].name;
+      }else{
+        for (let j = 0; j < this.profileSideMenuData[i].subPages.length; j++) {
+          if (this.parms_page == this.profileSideMenuData[i].subPages[j].url) {
+            this.openMenu = this.profileSideMenuData[i].name;
+          }
+        }
+      }
+    }
+    /* Toggle open menu end */
 
     this.userInfoData();
   }

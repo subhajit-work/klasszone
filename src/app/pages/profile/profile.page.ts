@@ -46,6 +46,8 @@ export class ProfilePage implements OnInit {
   userSavedInfo:any;
   private getCountryCodeSubscribe: Subscription | undefined;
   countryCodeUrl: any;
+  private getTableNoteSubscribe: Subscription | undefined;
+  tableNoteUrl: any;
   private getRedeemRewardSubscribe: Subscription | undefined;
   redeemRewardUrl: any;
   private getExperienceSubscribe: Subscription | undefined;
@@ -97,6 +99,41 @@ export class ProfilePage implements OnInit {
       name: 'Years',
       id: 2
     },
+  ]
+
+  bachelorDegree = [
+    { name : 'Bachelors of Architecture'},
+    { name : 'Bachelors of Arts'},
+    { name : 'Bachelors of Business Administration'},
+    { name : 'Bachelors of Commerce'},
+    { name : 'Bachelors of Computer Application'},
+    { name : 'Bachelors of Computer Science and IT'},
+    { name : 'Bachelors of Design'},
+    { name : 'Bachelors of Engineering'},
+    { name : 'Bachelors of Fine Arts'},
+    { name : 'Bachelors of International Relations'},
+    { name : 'Bachelors of Language Studies'},
+    { name : 'Bachelors of Law'},
+    { name : 'Bachelors of Library and Information Science'},
+    { name : 'Bachelors of Management Studies'},
+    { name : 'Bachelors of Medicine'},
+    { name : 'Bachelors of Medicine (MBBS)'},
+    { name : 'Bachelors of Science'},
+    { name : 'Bachelors of Surgery'},
+    { name : 'Bachelors of Technology'},
+    { name : 'Bachelors of Tourism'},
+  ]
+  masterDegree = [
+    { name : 'Masters of Arts'},
+    { name : 'Masters of Business Administration'},
+    { name : 'Masters of Commerce'},
+    { name : 'Masters of Computer Applications'},
+    { name : 'Masters of Engineering'},
+    { name : 'Masters of Fine Arts'},
+    { name : 'Masters of Library and Information Science'},
+    { name : 'Masters of Science'},
+    { name : 'Masters of Social Work'},
+    { name : 'Masters of Technology'},
   ]
 
   fetchItems = [];
@@ -213,6 +250,7 @@ export class ProfilePage implements OnInit {
     /* Toggle open menu end */
 
     this.userInfoData();
+    this.tableNoteUrl = 'tableNote';
 
     this.updateProfileImageApi = 'student_profile_information/';
     this.menuCtrl.enable(true,'rightMenu');
@@ -450,6 +488,7 @@ export class ProfilePage implements OnInit {
             this.getExperience();
           } 
           this.tableListData();
+          this.getTableNote();
           
           this.model = {
             first_name : this.userData.user_data.first_name,
@@ -579,6 +618,20 @@ export class ProfilePage implements OnInit {
     );
   }
   // get country code end
+
+  // get table note start
+  tableNoteData: any;
+  getTableNote() {
+    this.getTableNoteSubscribe = this.http.get(this.tableNoteUrl).subscribe(
+      (res: any) => {
+        this.tableNoteData = res.return_data.field;
+
+      },
+      errRes => {
+      }
+    );
+  }
+  // get table note end
 
   // get redeem-rewards start
   redeemRewardData: any;
@@ -764,6 +817,8 @@ export class ProfilePage implements OnInit {
 
     for (let val in form.value) {
       if (form.value[val] == undefined) {
+        form.value[val] = '';
+      }else if (form.value[val] == '') {
         form.value[val] = '';
       }else if (form.value[val] == false) {
         form.value[val] = 'no';
@@ -1519,6 +1574,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getCountryCodeSubscribe !== undefined) {
       this.getCountryCodeSubscribe.unsubscribe();
+    }
+    if (this.getTableNoteSubscribe !== undefined) {
+      this.getTableNoteSubscribe.unsubscribe();
     }
     if (this.getRedeemRewardSubscribe !== undefined) {
       this.getRedeemRewardSubscribe.unsubscribe();
