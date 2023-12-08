@@ -36,6 +36,9 @@ export class BookingEditPage implements OnInit {
   enquiriesEdit_url:any;
   enquiriesEditData:any;
 
+  private getTableNoteSubscribe: Subscription | undefined;
+  tableNoteUrl: any;
+
   private formSubmitSubscribe: Subscription | undefined;
   form_submit_text = 'Save';
   form_api: any;
@@ -90,6 +93,8 @@ export class BookingEditPage implements OnInit {
     }
     /* Toggle open menu end */
 
+    this.tableNoteUrl = 'tableNote';
+    this.getTableNote();
     this.userInfoData();
   }
 
@@ -121,6 +126,19 @@ export class BookingEditPage implements OnInit {
       );
   }
   /* User detasils get end */
+
+  // get table note start
+  tableNoteData: any;
+  getTableNote() {
+    this.getTableNoteSubscribe = this.http.get(this.tableNoteUrl).subscribe(
+      (res: any) => {
+        this.tableNoteData = res.return_data.field;
+      },
+      errRes => {
+      }
+    );
+  }
+  // get table note end
 
   /* getBookingView start */
   getBookingView(){
@@ -202,6 +220,9 @@ export class BookingEditPage implements OnInit {
     if (this.enquiriesEditDataSubscribe !== undefined) {
       this.enquiriesEditDataSubscribe.unsubscribe();
     } 
+    if (this.getTableNoteSubscribe !== undefined) {
+      this.getTableNoteSubscribe.unsubscribe();
+    }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   // destroy subscription end

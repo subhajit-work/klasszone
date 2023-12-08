@@ -56,6 +56,10 @@
     // --width: 400px !important;
 }
 
+.ion-show {
+    display: block;
+}
+
 .my-tost-custom-class {
     --background: var(--ion-color-lighter-shade);
     border-radius: 2px;
@@ -1088,6 +1092,7 @@ mat-sidenav {
             ion-item:hover, ion-item.router-link-active {
                 --background: linear-gradient(to left, #24243e, #11367A, #0f0c29);
                 color: #fff;
+                --color: #fff;
             }
         }
     }

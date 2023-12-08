@@ -142,7 +142,7 @@
           </ion-row>
           <ion-row *ngIf="userType == 'student'">
             <ion-col size="12">
-              <ion-text color="primary">
+              <!-- <ion-text color="primary">
                 <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
               </ion-text>
               <ion-text color="tertiary">
@@ -150,7 +150,7 @@
               </ion-text>
               <ion-text color="success">
                 <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
-              </ion-text>
+              </ion-text> -->
               <mat-divider></mat-divider>
               <ion-text color="medium">
                 <p>
@@ -241,7 +241,7 @@
           </ion-row>
         </ion-grid>
       </div>
-      <div class="view-booking" *ngIf="parms_status !== 'event'">
+      <!-- <div class="view-booking" *ngIf="parms_status !== 'event'">
         <ion-grid>
           <ion-row>
             <ion-col size="12">
@@ -376,7 +376,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </div>
+      </div> -->
       <div class="view-booking" *ngIf="openMenu == 'Manage Events' || openMenu == 'Event Enrollment'">
         <ion-grid>
           <ion-row>
@@ -438,16 +438,16 @@
               </div>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="userType == 'student'">
+          <ion-row *ngIf="userType == 'student' && tableNoteData">
             <ion-col size="12">
               <ion-text color="primary">
-                <p><b>Note:</b> You will earn 100 Rewards Points per hour after successful completion of any course.</p>
+                <p><b>Note:</b> You will earn {{tableNoteData[73]?.field_output_value}} Rewards Points per hour after successful completion of any course.</p>
               </ion-text>
               <ion-text color="tertiary">
-                <p><b>Note:</b> You will earn 50 Rewards Points after adding any review for a Tutor.</p>
+                <p><b>Note:</b> You will earn {{tableNoteData[75]?.field_output_value}} Rewards Points after adding any review for a Tutor.</p>
               </ion-text>
               <ion-text color="success">
-                <p><b>Note:</b> Course Cancellation Deduction: 5% of Course Fee (in Klasscoin).</p>
+                <p><b>Note:</b> Course Cancellation Deduction: {{tableNoteData[32]?.field_output_value}}% of Course Fee (in Klasscoin).</p>
               </ion-text>
               <mat-divider></mat-divider>
               <ion-text color="medium">

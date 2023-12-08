@@ -1070,12 +1070,12 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_5" name="certificate_5" type="file" required (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_5" name="certificate_5" type="file" required (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
                       <img [hidden]="!fileValPathShow " class="form-upload-image" src="{{fileValPreviewImage}}" alt="image" />
 
                       <img *ngIf="model.certificate_5 && !fileValPathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_5}}" alt="image" />
-
+                      <!-- <mat-icon [ngClass] = "{'ion-show': model.certificate_5 | extension}">file_save</mat-icon> -->
                       <span class="image-clear img" (click)="fileCross(model.certificate_5, 'certificate_5')" [hidden]="!model.certificate_5">
                           <ion-icon name="close"></ion-icon>
                       </span>
@@ -3573,6 +3573,14 @@
                       </ion-button>
                     </p>
                   </ion-text>
+                  <ion-text>
+                    <p>
+                      View your payment details using this action button:
+                      <ion-button fill="clear" class="small-btn">
+                        <mat-icon color="primary">notifications</mat-icon>
+                      </ion-button>
+                    </p>
+                  </ion-text>
                 </ion-col>
               </ion-row>
             </ion-col>
@@ -3820,7 +3828,7 @@
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <!-- <mat-icon color="accent">edit</mat-icon> -->
-                      <mat-icon color="warn" [routerLink]="['/teacher-profile/'+ element?.view_link]">visibility</mat-icon>
+                      <mat-icon color="warn" [ngClass] = "{'disabled': element.status == 'Pending'}" [routerLink]="['/teacher-profile/'+ element?.view_link]">visibility</mat-icon>
                     </td>
                   </ng-container>
 

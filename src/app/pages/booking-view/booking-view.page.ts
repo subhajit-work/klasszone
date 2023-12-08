@@ -32,6 +32,9 @@ export class BookingViewPage implements OnInit {
   bookingView_url:any;
   bookingViewData:any;
 
+  private getTableNoteSubscribe: Subscription | undefined;
+  tableNoteUrl: any;
+
   userType:any;
   openMenu:any;
   profileSideMenuData:any;
@@ -78,6 +81,9 @@ export class BookingViewPage implements OnInit {
     }
     /* Toggle open menu end */
 
+    this.tableNoteUrl = 'tableNote';
+    this.getTableNote();
+
     this.userInfoData();
   }
 
@@ -120,6 +126,19 @@ export class BookingViewPage implements OnInit {
   }
   /* User detasils get end */
 
+  // get table note start
+  tableNoteData: any;
+  getTableNote() {
+    this.getTableNoteSubscribe = this.http.get(this.tableNoteUrl).subscribe(
+      (res: any) => {
+        this.tableNoteData = res.return_data.field;
+      },
+      errRes => {
+      }
+    );
+  }
+  // get table note end
+
   /* getBookingView start */
   getBookingView(){
     this.bookingViewDataSubscribe = this.http.get(this.bookingView_url).subscribe(
@@ -142,6 +161,9 @@ export class BookingViewPage implements OnInit {
     if (this.bookingViewDataSubscribe !== undefined) {
       this.bookingViewDataSubscribe.unsubscribe();
     } 
+    if (this.getTableNoteSubscribe !== undefined) {
+      this.getTableNoteSubscribe.unsubscribe();
+    }
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   // destroy subscription end

@@ -879,38 +879,40 @@ export class ProfilePage implements OnInit {
   /* change-password start */
   onSubmitChangePassword(form: NgForm) {
     console.log("add form submit >", form.value);
+    if (form.value.new == form.value.confirmPassword) {
+      // get form value
+      let fd = new FormData();
 
-    // get form value
-    let fd = new FormData();
-
-    for (let val in form.value) {
-      if (form.value[val] == undefined) {
-        form.value[val] = '';
-      }
-      fd.append(val, form.value[val]);
-    };
-
-    console.log('value >', fd);
-
-    if (!form.valid) {
-      return;
-    }
-
-    this.formSubmitSubscribe = this.http.post('change_password', fd).subscribe(
-      (response: any) => {
-        console.log("add form response >", response);
-        if (response.return_status > 0) {
-          this.commonUtils.presentToast('success', response.return_message);
-          
-        }else {
-          this.commonUtils.presentToast('error', response.return_message);
+      for (let val in form.value) {
+        if (form.value[val] == undefined) {
+          form.value[val] = '';
         }
-        
-      },
-      errRes => {
-      }
-    );
+        fd.append(val, form.value[val]);
+      };
 
+      console.log('value >', fd);
+
+      if (!form.valid) {
+        return;
+      }
+
+      this.formSubmitSubscribe = this.http.post('change_password', fd).subscribe(
+        (response: any) => {
+          console.log("add form response >", response);
+          if (response.return_status > 0) {
+            this.commonUtils.presentToast('success', response.return_message);
+            
+          }else {
+            this.commonUtils.presentToast('error', response.return_message);
+          }
+          
+        },
+        errRes => {
+        }
+      );
+    }else {
+      this.commonUtils.presentToast('info', 'New & Confirm Password not match')
+    }
   }
   /* change-password end */
 
@@ -1490,8 +1492,8 @@ export class ProfilePage implements OnInit {
 
           console.log('this.meetingData', this.meetingData);
           localStorage.setItem('big_blue_link', this.classData.url);
-          this.navCtrl.navigateRoot('big-blue-button');
-          // window.location.href=this.classData.url;
+          // this.navCtrl.navigateRoot('big-blue-button');
+          window.location.href=this.classData.url;
         }else {
           this.commonUtils.presentToast('error', res.return_message);
         }
@@ -1509,14 +1511,14 @@ export class ProfilePage implements OnInit {
       header:  this.classData.meeting_name,
       message: 'Are you sure want to join this course?',
       cssClass: 'custom-alert',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          value: this.classData.url,
-          placeholder: 'Meeting Link',
-        },
-      ],
+      // inputs: [
+      //   {
+      //     name: 'name',
+      //     type: 'text',
+      //     value: this.classData.url,
+      //     placeholder: 'Meeting Link',
+      //   },
+      // ],
       buttons: [{
         text: 'Cancel',
         role: 'cancel',
