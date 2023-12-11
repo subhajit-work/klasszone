@@ -150,6 +150,7 @@ img {
 
         ion-segment-button.segment-button-checked {
             --indicator-color: #11367a;
+            --background: #11367a;
             border-radius: 30px;
             --indicator-height: 48px;
             --color-checked: #fff;
@@ -189,6 +190,11 @@ img {
     }
 
     .datePicker {
+        ion-label {
+            font-size: 14px;
+            padding-bottom: 10px;
+            display: block;
+        }
         li-ionic4-datepicker {
             input {
                 font-size: 14px !important;
@@ -722,10 +728,10 @@ ion-header.profile-head {
 }
 
 .profile-sidenav-container {
-    margin-top: 55px;
+    margin-top: 52px;
     margin-bottom: 60px;
     mat-sidenav {
-        margin-top: 50px;
+        margin-top: 46px;
     }
 
     .dashboard {

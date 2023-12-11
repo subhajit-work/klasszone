@@ -98,7 +98,7 @@
               </div>
             </ion-card>
           </ion-col> -->
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/all-enrolement-classes']">
               <ion-card class="card-item sunkist">
                 <div class="card-wrapper">
                   <h2>
@@ -109,7 +109,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/session-initiated-enrolement-classes']">
               <ion-card class="card-item coal">
                 <div class="card-wrapper">
                   <h2>
@@ -120,7 +120,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/completed-enrolement-classes']">
               <ion-card class="card-item mini">
                 <div class="card-wrapper">
                   <h2>
@@ -131,7 +131,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/closed-enrolement-classes']">
               <ion-card class="card-item shalala">
                 <div class="card-wrapper">
                   <h2>
@@ -142,7 +142,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/manage-courses']">
               <ion-card class="card-item purplepine">
                 <div class="card-wrapper">
                   <h2>
@@ -153,7 +153,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/list-event']">
               <ion-card class="card-item mini">
                 <div class="card-wrapper">
                   <h2>
@@ -164,7 +164,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/all-enrolement']">
               <ion-card class="card-item shalala">
                 <div class="card-wrapper">
                   <h2>
@@ -175,7 +175,7 @@
                 </div>
               </ion-card>
             </ion-col>
-            <ion-col size="6" size-md="4" size-lg="2">
+            <ion-col size="6" size-md="4" size-lg="2" [routerLink]="['/user/received-reviews']">
               <ion-card class="card-item purplepine">
                 <div class="card-wrapper">
                   <h2>
@@ -413,6 +413,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <div class="datePicker">
+                    <ion-label>Year Of Birth *</ion-label>
                     <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
                       [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
                   </div>
@@ -562,6 +563,7 @@
               <ion-col size="12">
                 <div class="field-item">
                   <div class="datePicker">
+                    <ion-label>Year Of Birth *</ion-label>
                     <li-ionic4-datepicker name="dob" [(ngModel)]="model.dob" placeholder="Date of Birth"
                       [inputDateConfig]="datePickerObj" required></li-ionic4-datepicker>
                   </div>
@@ -819,7 +821,7 @@
                     </span>
                     <img [hidden]="!fileValphotoPathShow " class="form-upload-image" src="{{fileValphotoPreviewImage}}" alt="image" />
 
-                    <img *ngIf="model.photo && !fileValphotoPathShow" class="form-upload-image mm" src="{{file_url}}/{{model.photo}}" alt="image" />
+                    <img *ngIf="model.photo && !fileValphotoPathShow" class="form-upload-image mm" src="{{file_url}}/{{model.path}}{{model.photo}}" alt="image" />
 
                     <span class="image-clear img" (click)="fileCross(model.photo, 'photo')" [hidden]="!model.photo">
                         <ion-icon name="close"></ion-icon>
@@ -837,9 +839,14 @@
                       </span>
                       <!-- accept=".pdf,.jpg,.doc,.docx" -->
 
-                      <span [hidden]="!uploadresumePathShow" class="file-name">{{model.resume}}</span>
+                      <!-- <span [hidden]="!uploadresumePathShow" class="file-name">{{model.resume}}</span> -->
 
-                      <ion-button class="download-resume" shape="round" *ngIf="model.resume && !uploadresumePathShow" (click)="onExport('single', model.resume)">
+                      <ion-button class="download-resume" shape="round" *ngIf="uploadresumePathShow" (click)="onExport('single', model.resume)">
+                        <ion-icon slot="start" name="download"></ion-icon>
+                        Download Your Resume 
+                      </ion-button>
+
+                      <ion-button class="download-resume" shape="round" *ngIf="model.resume && !uploadresumePathShow" (click)="onExport('single', file_url+'/'+model.path+'resumes/'+model.resume)">
                           <ion-icon slot="start" name="download"></ion-icon>
                           Download Your Resume 
                       </ion-button>
@@ -1072,9 +1079,11 @@
                           Upload Picture
                           <input [(ngModel)]="model.certificate_5" name="certificate_5" type="file" required (change)="normalFileUpload($event, model.certificate_5, 'certificate_5')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileValPathShow " class="form-upload-image" src="{{fileValPreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_5 && !fileValPathShow" [innerHTML]="file_url + certificate_path + model.certificate_5 | extension | safeHtml"></div>
+                      <div *ngIf="fileValPathShow" [innerHTML]="fileValPreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_5 && !fileValPathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_5}}" alt="image" />
+                      <img [hidden]="!fileValPathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileValPreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_5 && !fileValPathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_5}}" alt="image" />
                       <!-- <mat-icon [ngClass] = "{'ion-show': model.certificate_5 | extension}">file_save</mat-icon> -->
                       <span class="image-clear img" (click)="fileCross(model.certificate_5, 'certificate_5')" [hidden]="!model.certificate_5">
                           <ion-icon name="close"></ion-icon>
@@ -1088,11 +1097,14 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_7" name="certificate_7" type="file" required (change)="normalFileUpload($event, model.certificate_7, 'certificate_7')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_7" name="certificate_7" type="file" required (change)="normalFileUpload($event, model.certificate_7, 'certificate_7')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal1PathShow " class="form-upload-image" src="{{fileVal1PreviewImage}}" alt="image" />
 
-                      <img *ngIf="model.certificate_7 && !fileVal1PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_7}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_7 && !fileVal1PathShow" [innerHTML]="file_url + certificate_path + model.certificate_7 | extension"></div>
+                      <div *ngIf="fileVal1PathShow" [innerHTML]="fileVal1PreviewImage | extension | safeHtml"></div> -->
+
+                      <img [hidden]="!fileVal1PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal1PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_7 && !fileVal1PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_7}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_7, 'certificate_7')" [hidden]="!model.certificate_7">
                           <ion-icon name="close"></ion-icon>
@@ -1106,11 +1118,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_10" type="file" (change)="normalFileUpload($event, model.certificate_10, 'certificate_10')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_10" type="file" (change)="normalFileUpload($event, model.certificate_10, 'certificate_10')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal2PathShow " class="form-upload-image" src="{{fileVal2PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_10 && !fileVal2PathShow" [innerHTML]="file_url + certificate_path + model.certificate_10 | extension"></div>
+                      <div *ngIf="fileVal2PathShow" [innerHTML]="fileVal2PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_10 && !fileVal2PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_10}}" alt="image" />
+                      <img [hidden]="!fileVal2PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal2PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_10 && !fileVal2PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_10}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_10, 'certificate_10')" [hidden]="!model.certificate_10">
                           <ion-icon name="close"></ion-icon>
@@ -1124,11 +1138,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_11" type="file" (change)="normalFileUpload($event, model.certificate_11, 'certificate_11')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_11" type="file" (change)="normalFileUpload($event, model.certificate_11, 'certificate_11')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal3PathShow " class="form-upload-image" src="{{fileVal3PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_11 && !fileVal3PathShow" [innerHTML]="file_url + certificate_path + model.certificate_11 | extension"></div>
+                      <div *ngIf="fileVal3PathShow" [innerHTML]="fileVal3PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_11 && !fileVal3PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_11}}" alt="image" />
+                      <img [hidden]="!fileVal3PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal3PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_11 && !fileVal3PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_11}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_11, 'certificate_11')" [hidden]="!model.certificate_11">
                           <ion-icon name="close"></ion-icon>
@@ -1142,11 +1158,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_12" type="file" (change)="normalFileUpload($event, model.certificate_12, 'certificate_12')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_12" type="file" (change)="normalFileUpload($event, model.certificate_12, 'certificate_12')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal4PathShow " class="form-upload-image" src="{{fileVal4PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_12 && !fileVal4PathShow" [innerHTML]="file_url + certificate_path + model.certificate_12 | extension"></div>
+                      <div *ngIf="fileVal4PathShow" [innerHTML]="fileVal4PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_12 && !fileVal4PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_12}}" alt="image" />
+                      <img [hidden]="!fileVal4PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal4PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_12 && !fileVal4PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_12}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_12, 'certificate_12')" [hidden]="!model.certificate_12">
                           <ion-icon name="close"></ion-icon>
@@ -1160,11 +1178,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_13" type="file" (change)="normalFileUpload($event, model.certificate_13, 'certificate_13')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_13" type="file" (change)="normalFileUpload($event, model.certificate_13, 'certificate_13')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal5PathShow " class="form-upload-image" src="{{fileVal5PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_13 && !fileVal5PathShow" [innerHTML]="file_url + certificate_path + model.certificate_13 | extension"></div>
+                      <div *ngIf="fileVal5PathShow" [innerHTML]="fileVal5PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_13 && !fileVal5PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_13}}" alt="image" />
+                      <img [hidden]="!fileVal5PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal5PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_13 && !fileVal5PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_13}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_13, 'certificate_13')" [hidden]="!model.certificate_13">
                           <ion-icon name="close"></ion-icon>
@@ -1178,11 +1198,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_14" name="certificate_14" required type="file" (change)="normalFileUpload($event, model.certificate_14, 'certificate_14')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_14" name="certificate_14" required type="file" (change)="normalFileUpload($event, model.certificate_14, 'certificate_14')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal6PathShow " class="form-upload-image" src="{{fileVal6PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_14 && !fileVal6PathShow" [innerHTML]="file_url + certificate_path + model.certificate_14 | extension"></div>
+                      <div *ngIf="fileVal6PathShow" [innerHTML]="fileVal6PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_14 && !fileVal6PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_14}}" alt="image" />
+                      <img [hidden]="!fileVal6PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal6PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_14 && !fileVal6PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_14}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_14, 'certificate_14')" [hidden]="!model.certificate_14">
                           <ion-icon name="close"></ion-icon>
@@ -1196,11 +1218,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_15" type="file" (change)="normalFileUpload($event, model.certificate_15, 'certificate_15')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_15" type="file" (change)="normalFileUpload($event, model.certificate_15, 'certificate_15')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal7PathShow " class="form-upload-image" src="{{fileVal7PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_15 && !fileVal7PathShow" [innerHTML]="file_url + certificate_path + model.certificate_15 | extension"></div>
+                      <div *ngIf="fileVal7PathShow" [innerHTML]="fileVal7PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_15 && !fileVal7PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_15}}" alt="image" />
+                      <img [hidden]="!fileVal7PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal7PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_15 && !fileVal7PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_15}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_15, 'certificate_15')" [hidden]="!model.certificate_15">
                           <ion-icon name="close"></ion-icon>
@@ -1214,11 +1238,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_16" type="file" (change)="normalFileUpload($event, model.certificate_16, 'certificate_16')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_16" type="file" (change)="normalFileUpload($event, model.certificate_16, 'certificate_16')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal8PathShow " class="form-upload-image" src="{{fileVal8PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_16 && !fileVal8PathShow" [innerHTML]="file_url + certificate_path + model.certificate_16 | extension"></div>
+                      <div *ngIf="fileVal8PathShow" [innerHTML]="fileVal8PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_16 && !fileVal8PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_16}}" alt="image" />
+                      <img [hidden]="!fileVal8PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal8PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_16 && !fileVal8PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_16}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_16, 'certificate_16')" [hidden]="!model.certificate_16">
                           <ion-icon name="close"></ion-icon>
@@ -1232,11 +1258,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_18" type="file" (change)="normalFileUpload($event, model.certificate_18, 'certificate_18')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_18" type="file" (change)="normalFileUpload($event, model.certificate_18, 'certificate_18')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal9PathShow " class="form-upload-image" src="{{fileVal9PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_18 && !fileVal9PathShow" [innerHTML]="file_url + certificate_path + model.certificate_18 | extension"></div>
+                      <div *ngIf="fileVal9PathShow" [innerHTML]="fileVal9PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_18 && !fileVal9PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_18}}" alt="image" />
+                      <img [hidden]="!fileVal9PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal9PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_18 && !fileVal9PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_18}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_18, 'certificate_18')" [hidden]="!model.certificate_18">
                           <ion-icon name="close"></ion-icon>
@@ -1250,11 +1278,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_20" type="file" (change)="normalFileUpload($event, model.certificate_20, 'certificate_20')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_20" type="file" (change)="normalFileUpload($event, model.certificate_20, 'certificate_20')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal10PathShow " class="form-upload-image" src="{{fileVal10PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_20 && !fileVal10PathShow" [innerHTML]="file_url + certificate_path + model.certificate_20 | extension"></div>
+                      <div *ngIf="fileVal10PathShow" [innerHTML]="fileVal10PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_20 && !fileVal10PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_20}}" alt="image" />
+                      <img [hidden]="!fileVal10PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal10PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_20 && !fileVal10PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_20}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_20, 'certificate_20')" [hidden]="!model.certificate_20">
                           <ion-icon name="close"></ion-icon>
@@ -1268,11 +1298,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_21" type="file" (change)="normalFileUpload($event, model.certificate_21, 'certificate_21')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_21" type="file" (change)="normalFileUpload($event, model.certificate_21, 'certificate_21')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal11PathShow " class="form-upload-image" src="{{fileVal11PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_21 && !fileVal11PathShow" [innerHTML]="file_url + certificate_path + model.certificate_21 | extension"></div>
+                      <div *ngIf="fileVal11PathShow" [innerHTML]="fileVal11PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_21 && !fileVal11PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_21}}" alt="image" />
+                      <img [hidden]="!fileVal11PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal11PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_21 && !fileVal11PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_21}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_21, 'certificate_21')" [hidden]="!model.certificate_21">
                           <ion-icon name="close"></ion-icon>
@@ -1286,11 +1318,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_22" type="file" (change)="normalFileUpload($event, model.certificate_22, 'certificate_22')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_22" type="file" (change)="normalFileUpload($event, model.certificate_22, 'certificate_22')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal12PathShow " class="form-upload-image" src="{{fileVal12PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_22 && !fileVal12PathShow" [innerHTML]="file_url + certificate_path + model.certificate_22 | extension"></div>
+                      <div *ngIf="fileVal12PathShow" [innerHTML]="fileVal12PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_22 && !fileVal12PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_22}}" alt="image" />
+                      <img [hidden]="!fileVal12PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal12PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_22 && !fileVal12PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_22}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_22, 'certificate_22')" [hidden]="!model.certificate_22">
                           <ion-icon name="close"></ion-icon>
@@ -1304,11 +1338,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_23" type="file" (change)="normalFileUpload($event, model.certificate_23, 'certificate_23')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_23" type="file" (change)="normalFileUpload($event, model.certificate_23, 'certificate_23')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal13PathShow " class="form-upload-image" src="{{fileVal13PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_23 && !fileVal13PathShow" [innerHTML]="file_url + certificate_path + model.certificate_23 | extension"></div>
+                      <div *ngIf="fileVal13PathShow" [innerHTML]="fileVal13PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_23 && !fileVal13PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_23}}" alt="image" />
+                      <img [hidden]="!fileVal13PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal13PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_23 && !fileVal13PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_23}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_23, 'certificate_23')" [hidden]="!model.certificate_23">
                           <ion-icon name="close"></ion-icon>
@@ -1322,11 +1358,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_24" type="file" (change)="normalFileUpload($event, model.certificate_24, 'certificate_24')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_24" type="file" (change)="normalFileUpload($event, model.certificate_24, 'certificate_24')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal14PathShow " class="form-upload-image" src="{{fileVal14PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_24 && !fileVal14PathShow" [innerHTML]="file_url + certificate_path + model.certificate_24 | extension"></div>
+                      <div *ngIf="fileVal14PathShow" [innerHTML]="fileVal14PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_24 && !fileVal14PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_24}}" alt="image" />
+                      <img [hidden]="!fileVal14PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal14PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_24 && !fileVal14PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_24}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_24, 'certificate_24')" [hidden]="!model.certificate_24">
                           <ion-icon name="close"></ion-icon>
@@ -1340,11 +1378,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_25" type="file" (change)="normalFileUpload($event, model.certificate_25, 'certificate_25')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_25" type="file" (change)="normalFileUpload($event, model.certificate_25, 'certificate_25')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal15PathShow " class="form-upload-image" src="{{fileVal15PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_25 && !fileVal15PathShow" [innerHTML]="file_url + certificate_path + model.certificate_25 | extension"></div>
+                      <div *ngIf="fileVal15PathShow" [innerHTML]="fileVal15PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_25 && !fileVal15PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_25}}" alt="image" />
+                      <img [hidden]="!fileVal15PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal15PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_25 && !fileVal15PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_25}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_25, 'certificate_25')" [hidden]="!model.certificate_25">
                           <ion-icon name="close"></ion-icon>
@@ -1358,11 +1398,13 @@
                     <div class="normal-file-uploading">
                       <span class="upload-file profile-upload">
                           Upload Picture
-                          <input [(ngModel)]="model.certificate_26" type="file" (change)="normalFileUpload($event, model.certificate_26, 'certificate_26')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept="image/*">
+                          <input [(ngModel)]="model.certificate_26" type="file" (change)="normalFileUpload($event, model.certificate_26, 'certificate_26')" placeholder="Upload file" [ngModelOptions]="{standalone: true}" accept=".jpg,.png,.jpeg,.pdf">
                       </span>
-                      <img [hidden]="!fileVal16PathShow " class="form-upload-image" src="{{fileVal16PreviewImage}}" alt="image" />
+                      <!-- <div *ngIf="model.certificate_26 && !fileVal16PathShow" [innerHTML]="file_url + certificate_path + model.certificate_26 | extension"></div>
+                      <div *ngIf="fileVal16PathShow" [innerHTML]="fileVal16PreviewImage | extension | safeHtml"></div> -->
 
-                      <img *ngIf="model.certificate_26 && !fileVal16PathShow" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_26}}" alt="image" />
+                      <img [hidden]="!fileVal16PathShow " onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{fileVal16PreviewImage}}" alt="image" />
+                      <img *ngIf="model.certificate_26 && !fileVal16PathShow" onError="this.src='assets/pdf.png'" class="form-upload-image" src="{{file_url}}{{certificate_path}}{{model.certificate_26}}" alt="image" />
 
                       <span class="image-clear img" (click)="fileCross(model.certificate_26, 'certificate_26')" [hidden]="!model.certificate_26">
                           <ion-icon name="close"></ion-icon>

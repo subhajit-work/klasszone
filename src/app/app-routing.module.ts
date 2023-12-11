@@ -79,7 +79,8 @@ const routes: Routes = [
   },
   {
     path: 'view/:type/:id',
-    loadChildren: () => import('./pages/credits-transactions-history/credits-transactions-history.module').then( m => m.CreditsTransactionsHistoryPageModule)
+    loadChildren: () => import('./pages/credits-transactions-history/credits-transactions-history.module').then( m => m.CreditsTransactionsHistoryPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'students-group/:id',
@@ -91,7 +92,8 @@ const routes: Routes = [
   },
   {
     path: 'experience/:action/:id',
-    loadChildren: () => import('./pages/experience/experience.module').then( m => m.ExperiencePageModule)
+    loadChildren: () => import('./pages/experience/experience.module').then( m => m.ExperiencePageModule),
+    canLoad: [AuthGuard]
   }
 
 

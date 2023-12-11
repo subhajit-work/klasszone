@@ -22,12 +22,13 @@
             <ion-col size="12">
               <div class="field-item">
                 <p class="ion-text-center">Register As</p>
-                <ion-segment (ionChange)="segmentChanged($event)" value="student">
+                <ion-segment (ionChange)="segmentChanged($event)" value="segmentValue">
                   <ion-segment-button *ngFor="let item of countryCodeData?.groups" [value]="item?.id">
                     <ion-label>{{item?.name}}</ion-label>
                   </ion-segment-button>
                 </ion-segment>
-                <input type="hidden" required [(ngModel)]="segmentValue" name="center_id">
+                <input *ngIf="isIndian" type="hidden" required [(ngModel)]="segmentValue" name="center_id">
+                <input *ngIf="!isIndian" type="hidden" required [(ngModel)]="segmentValue" name="user_belongs_group">
               </div>
             </ion-col>
             <!-- First Name -->
@@ -59,7 +60,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.password"
-                name="password" #password="ngModel" type="password" labelPlacement="floating" label="Password *" required></ion-input>
+                name="password" minlength="6" #password="ngModel" type="password" labelPlacement="floating" label="Password *" required></ion-input>
               </div>
             </ion-col>
             <!-- Confirm password -->
@@ -67,7 +68,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.confirm_password"
-                name="confirm_password" #confirmPassword="ngModel" type="password" labelPlacement="floating" label="Confirm password *" required></ion-input>
+                name="confirm_password" minlength="6" #confirmPassword="ngModel" type="password" labelPlacement="floating" label="Confirm password *" required></ion-input>
               </div>
             </ion-col>
             <!-- Referral code -->
@@ -92,7 +93,7 @@
               <div class="field-item">
                 <ion-input type="text"
                 [(ngModel)]="model.mobile"
-                name="mobile" labelPlacement="floating" required label="Phone Number *"></ion-input>
+                name="mobile" maxlength="10" minlength="10" labelPlacement="floating" required label="Phone Number *"></ion-input>
               </div>
             </ion-col>
             <ion-col size="12">

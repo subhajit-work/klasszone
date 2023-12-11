@@ -50,6 +50,7 @@ export class RegisterPage implements OnInit {
   parms_action_id: any;
   countryCodeUrl: any;
   OTPaction = 'generate';
+  registrationData:any;
 
   ngOnInit() {
     // menu hide
@@ -68,10 +69,28 @@ export class RegisterPage implements OnInit {
     this.getCountryCode();
     this.model.phone_code = '98_91';
     this.form_api = 'otp';
+    console.log('call1');
+    
   }
 
   ionViewWillEnter() {
-
+    console.log('call2');
+    this.registrationData = JSON.parse(localStorage.getItem('registerData') || '{}');
+    console.log('registrationData', this.registrationData);
+    if (this.registrationData) {
+      this.segmentValue = this.registrationData.center_id;
+      this.OTPaction = this.registrationData.action;
+      this.model = {
+        first_name: this.registrationData.first_name,
+        last_name:this.registrationData.last_name,
+        identity:this.registrationData.identity,
+        password:this.registrationData.password,
+        confirm_password:this.registrationData.confirm_password,
+        referral_code: this.registrationData.referral_code,
+        phone_code:this.registrationData.phone_code,
+        mobile: this.registrationData.mobile
+      }
+    }
     // this.appComponent.userInfoData();
 
     // menu hide
