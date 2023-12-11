@@ -50,6 +50,8 @@ export class ProfilePage implements OnInit {
   tableNoteUrl: any;
   private getRedeemRewardSubscribe: Subscription | undefined;
   redeemRewardUrl: any;
+  private getSalaryReminderSubscribe: Subscription | undefined;
+  salaryReminderUrl: any;
   private getExperienceSubscribe: Subscription | undefined;
   experienceUrl: any;
   private getSalaryRequestSubscribe: Subscription | undefined;
@@ -404,6 +406,8 @@ export class ProfilePage implements OnInit {
           }else if (this.parms_slug == 'salary-request-pending') {
             this.tableListData_url = 'credit_conversion_requests/pending?user_id='+this.userData.user_data.id;
             this.displayedColumns = ['booking_id', 'no_of_credits_to_be_converted', 'admin_commission_val', 'per_credit_cost', 'total_amount', 'type_display', 'status_of_payment', 'updated_at', 'actions'];
+            this.salaryReminderUrl = 'salary_reminder_notification/';
+
           } else if (this.parms_slug == 'manage-courses') {
             this.tableListData_url = 'tutor_manage_courses/'+this.userData.user_data.id;
             this.displayedColumns = ['course_title', 'category', 'sub_category', 'duration', 'fee', 'created_at', 'type_display', 'prev_status','actions'];
@@ -649,6 +653,23 @@ export class ProfilePage implements OnInit {
     );
   }
   // get redeem-rewards end
+
+  // get salaryReminder start
+  getSalaryReminder(_id:any) {
+    this.getSalaryReminderSubscribe = this.http.get(this.salaryReminderUrl+_id).subscribe(
+      (res: any) => {
+        if (res.return_status > 0) {
+          this.commonUtils.presentToast('success', res.return_message);
+        }else {
+          this.commonUtils.presentToast('error', res.return_message);
+        }
+
+      },
+      errRes => {
+      }
+    );
+  }
+  // get salaryReminder end
 
   // get experience start
   experienceData: any;
@@ -1583,6 +1604,9 @@ export class ProfilePage implements OnInit {
     }
     if (this.getRedeemRewardSubscribe !== undefined) {
       this.getRedeemRewardSubscribe.unsubscribe();
+    }
+    if (this.getSalaryReminderSubscribe !== undefined) {
+      this.getSalaryReminderSubscribe.unsubscribe();
     }
     if (this.getExperienceSubscribe !== undefined) {
       this.getExperienceSubscribe.unsubscribe();

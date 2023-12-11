@@ -70,7 +70,7 @@ export class CreditsTransactionsHistoryPage  implements OnInit {
       this.View_url = 'tutor_user_reviews/read/'+this.parms_id;
       this.getView();
     }else if (this.parms_type == 'reward-transactions') {
-      this.View_url = 'credits_transactions_history/read/'+this.parms_id;
+      this.View_url = 'creditcoins_transactions_view/'+this.parms_id;
       this.getView();
     }
     
@@ -109,7 +109,12 @@ export class CreditsTransactionsHistoryPage  implements OnInit {
   getView(){
     this.ViewDataSubscribe = this.http.get(this.View_url).subscribe(
       (res:any) => {
-        this.ViewData = res.return_data[0];
+        if (this.parms_type == 'reward-transactions'){
+          this.ViewData = res.return_data;
+        }else {
+          this.ViewData = res.return_data[0];
+        }
+        
 
         console.log('this.ViewData', this.ViewData);
       },
