@@ -97,7 +97,8 @@ export class BookingViewPage implements OnInit {
         console.log('userDetails@@', resData);
         if(resData.return_status > 0){
           this.userData = resData.return_data;
-          
+          console.log('openMenu>>', this.openMenu);
+
           if (this.openMenu == 'Class Enrollments' || this.openMenu == 'My Enrolled Classes') {
             if (this.userType == 'student') {
               this.bookingView_url = 'enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
@@ -110,6 +111,9 @@ export class BookingViewPage implements OnInit {
           }else if (this.openMenu == 'Manage Events' || this.openMenu == 'Event Enrollment'){
             if (this.userType == 'tutor') {
               this.bookingView_url = 'tutor_event_enquiries/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
+              this.getBookingView();
+            }else {
+              this.bookingView_url = 'enquiries/'+this.parms_status+'/read/'+this.parms_id+'?user_id='+this.userData.user_data.id;
               this.getBookingView();
             }
           }else {

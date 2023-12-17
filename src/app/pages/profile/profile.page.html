@@ -1698,7 +1698,9 @@
                   <!-- Weekly Schedule Column -->
                   <ng-container matColumnDef="message">
                     <th mat-header-cell *matHeaderCellDef> Weekly Schedule </th>
-                    <td mat-cell *matCellDef="let element" [innerHTML]="element.message | safeHtml"></td>
+                    <td mat-cell *matCellDef="let element">
+                      <div *ngIf="element.message !== null" [innerHTML]="element.message | safeHtml"></div>
+                    </td>
                   </ng-container>
 
                   <!-- Tutor Name Column -->
@@ -3120,7 +3122,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.event_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -4105,7 +4107,9 @@
                   <!-- purpose Column -->
                   <ng-container matColumnDef="purpose">
                     <th mat-header-cell *matHeaderCellDef> Purpose </th>
-                    <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+                    <td mat-cell *matCellDef="let element"> 
+                      <div [innerHTML]="element.purpose | safeHtml"></div>
+                    </td>
                   </ng-container>
 
                   <!-- Date of action Column -->
