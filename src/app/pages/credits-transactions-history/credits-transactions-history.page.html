@@ -29,7 +29,7 @@
       <mat-nav-list class="profile-menu">
         <ion-accordion-group [multiple]="true">
           <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
-            <ion-item *ngIf="menu?.subPages.length == 0" routerLinkActive="router-link-active" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+            <ion-item (click)="snav.toggle()" *ngIf="menu?.subPages.length == 0" routerLinkActive="router-link-active" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
@@ -38,7 +38,7 @@
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content" *ngIf="menu?.subPages.length > 0">
-              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" routerLinkActive="router-link-active" [routerLink]="['/user/'+ submenu?.url]">
+              <ion-item (click)="snav.toggle()" lines="none" *ngFor="let submenu of menu?.subPages" routerLinkActive="router-link-active" [routerLink]="['/user/'+ submenu?.url]">
                 <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
                 <ion-label>{{submenu?.name}}</ion-label>
               </ion-item>

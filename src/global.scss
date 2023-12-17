@@ -217,6 +217,16 @@ img {
         // }
     }
 }
+.field-item.password {
+    display: flex;
+    align-items: center;
+    ion-icon {
+        position: absolute;
+        right: 22px;
+        z-index: 9;
+        cursor: pointer;
+    }
+}
 
 .segment-button-indicator-background {
     border-radius: 30px;

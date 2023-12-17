@@ -25,8 +25,10 @@
             </ion-col>
             <!-- password -->
             <ion-col size="12">
-              <div class="field-item">
-                <ion-input name="password" type="password" [(ngModel)]="model.password" labelPlacement="floating" label="Password *" required></ion-input>
+              <div class="field-item password">
+                <ion-input *ngIf="showPasswordText" name="password" type="text" [(ngModel)]="model.password" labelPlacement="floating" label="Password *" required></ion-input>
+                <ion-input *ngIf="!showPasswordText" name="password" type="password" [(ngModel)]="model.password" labelPlacement="floating" label="Password *" required></ion-input>
+                <ion-icon name="{{showPasswordText ? 'eye' : 'eye-off'}}" (click)="showPasswordText = !showPasswordText"> </ion-icon>
               </div>
             </ion-col>
             <ion-col size="12">

@@ -26,6 +26,7 @@ export class AuthPage implements OnInit {
   private formSubmitSubscribe: Subscription | undefined;
   btnloader:any;
   message: any;
+  showPasswordText = false;
   model:any = {};
   
   constructor(

@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <div class="login-screen">
     <div class="login-header">
-      <h2>Register</h2>
+      <h2>Register {{OTPaction}}</h2>
       <p>We take the security and privacy of your information seriously, and we employ industry-standard measures to protect your data.</p>
     </div>
     <form #userAddForm="ngForm" (ngSubmit)="onSubmit(userAddForm)" (keyup.enter)="onSubmit(userAddForm)">
@@ -22,7 +22,7 @@
             <ion-col size="12">
               <div class="field-item">
                 <p class="ion-text-center">Register As</p>
-                <ion-segment (ionChange)="segmentChanged($event)" value="segmentValue">
+                <ion-segment (ionChange)="segmentChanged($event)" value="{{segmentValue}}">
                   <ion-segment-button *ngFor="let item of countryCodeData?.groups" [value]="item?.id">
                     <ion-label>{{item?.name}}</ion-label>
                   </ion-segment-button>
@@ -57,18 +57,18 @@
             </ion-col>
             <!-- password -->
             <ion-col size="12">
-              <div class="field-item">
-                <ion-input type="text"
-                [(ngModel)]="model.password"
-                name="password" minlength="6" #password="ngModel" type="password" labelPlacement="floating" label="Password *" required></ion-input>
+              <div class="field-item password">
+                <ion-input *ngIf="showPasswordText" [(ngModel)]="model.password" name="password" minlength="6" type="text" labelPlacement="floating" label="Password *" required></ion-input>
+                <ion-input *ngIf="!showPasswordText" [(ngModel)]="model.password" name="password" minlength="6" type="password" labelPlacement="floating" label="Password *" required></ion-input>
+                <ion-icon name="{{showPasswordText ? 'eye' : 'eye-off'}}" (click)="showPasswordText = !showPasswordText"> </ion-icon>
               </div>
             </ion-col>
             <!-- Confirm password -->
             <ion-col size="12">
-              <div class="field-item">
-                <ion-input type="text"
-                [(ngModel)]="model.confirm_password"
-                name="confirm_password" minlength="6" #confirmPassword="ngModel" type="password" labelPlacement="floating" label="Confirm password *" required></ion-input>
+              <div class="field-item password">
+                <ion-input *ngIf="showCPasswordText" [(ngModel)]="model.confirm_password" name="confirm_password" minlength="6" type="text" labelPlacement="floating" label="Confirm password *" required></ion-input>
+                <ion-input *ngIf="!showCPasswordText" [(ngModel)]="model.confirm_password" name="confirm_password" minlength="6" type="password" labelPlacement="floating" label="Confirm password *" required></ion-input>
+                <ion-icon name="{{showCPasswordText ? 'eye' : 'eye-off'}}" (click)="showCPasswordText = !showCPasswordText"> </ion-icon>
               </div>
             </ion-col>
             <!-- Referral code -->
@@ -95,10 +95,11 @@
                 [(ngModel)]="model.mobile"
                 name="mobile" maxlength="10" minlength="10" labelPlacement="floating" required label="Phone Number *"></ion-input>
               </div>
+              <input *ngIf="!isIndian" type="hidden" required [(ngModel)]="model.mobile" name="phone_number">
             </ion-col>
-            <ion-col size="12">
+            <!-- <ion-col size="12">
               <ion-label class="ion-float-right" [routerLink]="['/forgot-password']">Forgot Password?</ion-label>
-            </ion-col>
+            </ion-col> -->
             <!-- Button -->
             <ion-col size="12">
               <div class="custom-btn">

@@ -29,6 +29,8 @@ export class RegisterPage implements OnInit {
   model: any = {};
   form_api: any;
   isIndian = true;
+  showPasswordText = false;
+  showCPasswordText = false;
 
   constructor(
     private authService: AuthService,
@@ -49,7 +51,7 @@ export class RegisterPage implements OnInit {
   parms_action_name: any;
   parms_action_id: any;
   countryCodeUrl: any;
-  OTPaction = 'generate';
+  OTPaction:any;
   registrationData:any;
 
   ngOnInit() {
@@ -67,9 +69,9 @@ export class RegisterPage implements OnInit {
 
     this.countryCodeUrl = 'country_code';
     this.getCountryCode();
-    this.model.phone_code = '98_91';
+    
+    
     this.form_api = 'otp';
-    console.log('call1');
     
   }
 
@@ -77,7 +79,8 @@ export class RegisterPage implements OnInit {
     console.log('call2');
     this.registrationData = JSON.parse(localStorage.getItem('registerData') || '{}');
     console.log('registrationData', this.registrationData);
-    if (this.registrationData) {
+    if (this.registrationData.action) {
+      console.log('call>>');
       this.segmentValue = this.registrationData.center_id;
       this.OTPaction = this.registrationData.action;
       this.model = {
@@ -90,6 +93,13 @@ export class RegisterPage implements OnInit {
         phone_code:this.registrationData.phone_code,
         mobile: this.registrationData.mobile
       }
+      
+    }else {
+      console.log('call<<');
+      this.isIndian = true;
+      this.model.phone_code = '98_91';
+      this.OTPaction = 'generate';
+      this.form_submit_text = 'Send OTP';
     }
     // this.appComponent.userInfoData();
 
@@ -119,7 +129,8 @@ export class RegisterPage implements OnInit {
     this.getCountryCodeSubscribe = this.http.get(this.countryCodeUrl).subscribe(
       (res: any) => {
         this.countryCodeData = res.return_data;
-
+        this.model.phone_code = '98_91';
+        this.OTPaction = 'generate';
         console.log('this.countryCodeData', this.countryCodeData);
 
       },
@@ -194,12 +205,19 @@ export class RegisterPage implements OnInit {
             }else {
               this.form_submit_text = 'Create an account';
               this.router.navigateByUrl('/auth');
+              localStorage.removeItem('registerData');
+              this.registrationData = {};
             }
             
             this.commonUtils.presentToast('success', response.return_message);
             form.reset();
           }else {
             this.commonUtils.presentToast('error', response.return_message);
+            if (this.isIndian) {
+              this.form_submit_text = 'Send OTP';
+            }else {
+              this.form_submit_text = 'Create an account';
+            }
           }
           
         },

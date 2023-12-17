@@ -30,7 +30,7 @@
 
         <ion-accordion-group [multiple]="true" [value]="[openMenu]">
           <ion-accordion value="{{menu?.name}}" *ngFor="let menu of profileSideMenuData">
-            <ion-item *ngIf="menu?.subPages.length == 0" routerLinkActive="router-link-active" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+            <ion-item (click)="snav.toggle()" *ngIf="menu?.subPages.length == 0" routerLinkActive="router-link-active" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
@@ -39,7 +39,7 @@
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content" *ngIf="menu?.subPages.length > 0">
-              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" routerLinkActive="router-link-active" [routerLink]="['/user/'+ submenu?.url]">
+              <ion-item (click)="snav.toggle()" lines="none" *ngFor="let submenu of menu?.subPages" routerLinkActive="router-link-active" [routerLink]="['/user/'+ submenu?.url]">
                 <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
                 <ion-label>{{submenu?.name}}</ion-label>
               </ion-item>
@@ -745,7 +745,7 @@
             </ion-card>
 
             <!-- Address -->
-            <ion-card>
+            <ion-card *ngIf="model?.address || model?.state || model?.city || model?.land_mark || userData?.user_data?.country || model?.pin_code">
               <ion-card-header>
                 <ion-card-title>Address</ion-card-title>
               </ion-card-header>
@@ -1492,20 +1492,26 @@
               <input type="hidden" required [(ngModel)]="model.email" name="identity">
               <!-- Current Password -->
               <ion-col size="12">
-                <div class="field-item">
-                  <ion-input name="old" type="password" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password *" required></ion-input>
+                <div class="field-item password">
+                  <ion-input *ngIf="showOldPasswordText" name="old" type="text" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password *" required></ion-input>
+                  <ion-input *ngIf="!showOldPasswordText" name="old" type="password" [(ngModel)]="model.old" labelPlacement="floating" label="Current Password *" required></ion-input>
+                  <ion-icon name="{{showOldPasswordText ? 'eye' : 'eye-off'}}" (click)="showOldPasswordText = !showOldPasswordText"> </ion-icon>
                 </div>
               </ion-col>
               <!-- New Password -->
               <ion-col size="12">
-                <div class="field-item">
-                  <ion-input name="new" type="password" [(ngModel)]="model.new" labelPlacement="floating" label="New Password *" required></ion-input>
+                <div class="field-item password">
+                  <ion-input *ngIf="showNewPasswordText" name="new" type="text" [(ngModel)]="model.new" labelPlacement="floating" label="New Password *" required></ion-input>
+                  <ion-input *ngIf="!showNewPasswordText" name="new" type="password" [(ngModel)]="model.new" labelPlacement="floating" label="New Password *" required></ion-input>
+                  <ion-icon name="{{showNewPasswordText ? 'eye' : 'eye-off'}}" (click)="showNewPasswordText = !showNewPasswordText"> </ion-icon>
                 </div>
               </ion-col>
               <!-- Confirm Password -->
               <ion-col size="12">
-                <div class="field-item">
-                  <ion-input name="confirmPassword" type="password" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password *" required></ion-input>
+                <div class="field-item password">
+                  <ion-input *ngIf="showConfirmPasswordText" name="confirmPassword" type="text" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password *" required></ion-input>
+                  <ion-input *ngIf="!showConfirmPasswordText" name="confirmPassword" type="password" [(ngModel)]="model.confirmPassword" labelPlacement="floating" label="Confirm Password *" required></ion-input>
+                  <ion-icon name="{{showConfirmPasswordText ? 'eye' : 'eye-off'}}" (click)="showConfirmPasswordText = !showConfirmPasswordText"> </ion-icon>
                 </div>
               </ion-col>
               <!-- Button -->
@@ -1608,8 +1614,9 @@
           </ion-grid>
         </ion-card>
         <ion-card >
-          <form #redeemRewardForm="ngForm" (ngSubmit)="onSubmit(redeemRewardForm)"
-            (keyup.enter)="onSubmit(redeemRewardForm)">
+          <form #redeemRewardForm="ngForm" (ngSubmit)="onSubmitRedeemReward(redeemRewardForm)"
+            (keyup.enter)="onSubmitRedeemReward(redeemRewardForm)">
+            <input type="hidden" required [(ngModel)]="model.net_creditcoins" name="net_creditcoins">
             <ion-grid>
               <ion-row>
                 <!-- Select the Gift Voucher -->
@@ -1625,7 +1632,7 @@
                 <!-- Rewards Points to Redeem -->
                 <ion-col size="12">
                   <div class="field-item">
-                    <ion-input type="text" maxlength="{{model?.net_creditcoins}}" [(ngModel)]="model.points_to_redeem" name="points_to_redeem" labelPlacement="floating"
+                    <ion-input type="text" [(ngModel)]="model.points_to_redeem" name="points_to_redeem" labelPlacement="floating"
                     label="Rewards Points to Redeem *" required></ion-input>
                   </div>
                 </ion-col>
@@ -3113,7 +3120,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3270,7 +3277,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3427,7 +3434,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3618,7 +3625,7 @@
                   </ion-text>
                   <ion-text>
                     <p>
-                      View your payment details using this action button:
+                      Send the Payment Reminder to Klasszone:
                       <ion-button fill="clear" class="small-btn">
                         <mat-icon color="primary">notifications</mat-icon>
                       </ion-button>
@@ -4111,7 +4118,7 @@
                   <ng-container matColumnDef="actions" stickyEnd *ngIf="userType == 'student'">
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">Action</th>
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
-                      <mat-icon color="warn" [routerLink]="['/', 'view', 'reward-transactions', userData?.user_data?.id]">visibility</mat-icon>
+                      <mat-icon color="warn" [routerLink]="['/', 'view', 'reward-transactions', element?.id]">visibility</mat-icon>
                     </td>
                   </ng-container>
 

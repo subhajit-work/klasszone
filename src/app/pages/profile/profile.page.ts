@@ -199,6 +199,9 @@ export class ProfilePage implements OnInit {
   };
   certificate_path:any;
   openMenu:any;
+  showOldPasswordText = false;
+  showNewPasswordText = false;
+  showConfirmPasswordText = false;
 
   constructor(
     private menuCtrl: MenuController,
@@ -217,9 +220,9 @@ export class ProfilePage implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    // setInterval(() => {
-    //   this.tableListData();
-    // }, 10000);
+    setInterval(() => {
+      this.tableListData();
+    }, 10000);
   }
 
   ngOnInit() {
@@ -875,6 +878,51 @@ export class ProfilePage implements OnInit {
     );
 
   }
+
+  onSubmitRedeemReward(form: NgForm) {
+    console.log("add form submit >", form.value);
+
+    // get form value
+    let fd = new FormData();
+
+    for (let val in form.value) {
+      if (form.value[val] == undefined) {
+        form.value[val] = '';
+      }else if (form.value[val] == '') {
+        form.value[val] = '';
+      }else if (form.value[val] == false) {
+        form.value[val] = 'no';
+      }else if (form.value[val] == true) {
+        form.value[val] = 'yes';
+      }
+      fd.append(val, form.value[val]);
+    };
+
+    if (!form.valid) {
+      return;
+    }
+    let points_to_redeem: number = + form.value.points_to_redeem;
+    let net_creditcoins: number = + form.value.net_creditcoins;
+
+    if (points_to_redeem > net_creditcoins) {
+      this.commonUtils.presentToast('error', 'You do not have enough reward points.');
+    }else {
+      this.formSubmitSubscribe = this.http.post(this.form_api+this.userData.user_data.id, fd).subscribe(
+        (response: any) => {
+          console.log("add form response >", response);
+          if (response.return_status > 0) {
+            this.commonUtils.presentToast('success', response.return_message);
+            this.userInfoData();
+          }else {
+            this.commonUtils.presentToast('error', response.return_message);
+          }
+          
+        },
+        errRes => {
+        }
+      );
+    }
+  }
   // form submit end
 
   /* Delete experiance start */
@@ -1099,20 +1147,24 @@ export class ProfilePage implements OnInit {
     if (!form.valid) {
       return;
     }
-    console.log('value >', fd);
-    this.formSubmitSubscribe = this.http.post(this.certificatesFormApi+this.userData.user_data.id, fd).subscribe(
-      (response: any) => {
-        if (response.return_status > 0) {
-          this.commonUtils.presentToast('success', response.return_message);
-          this.userInfoData();
-        }else {
-          this.commonUtils.presentToast('error', response.return_message);
-        }
-      },
-      errRes => {
-      }
-    );
 
+    if ((this.model.certificate_5 || this.fileVal) && (this.model.certificate_7 || this.fileVal1) && (this.model.certificate_14 || this.fileVal14)) {
+      
+      this.formSubmitSubscribe = this.http.post(this.certificatesFormApi+this.userData.user_data.id, fd).subscribe(
+        (response: any) => {
+          if (response.return_status > 0) {
+            this.commonUtils.presentToast('success', response.return_message);
+            this.userInfoData();
+          }else {
+            this.commonUtils.presentToast('error', response.return_message);
+          }
+        },
+        errRes => {
+        }
+      );
+    }else {
+      this.commonUtils.presentToast('error', 'Invalid Form');
+    }
   }
   /* onSubmitCertificates end */
 
@@ -1528,10 +1580,10 @@ export class ProfilePage implements OnInit {
   /* Call for join meeting URL end */
 
   /* Aleart for open big blue button start */
-  async presentAlertConfirm() {
+  async presentAlertConfirm(_meetingType:any) {
     const alert = await this.alertController.create({
       header:  this.classData.meeting_name,
-      message: 'Are you sure want to join this course?',
+      message: 'Are you sure want to join this '+_meetingType+'?',
       cssClass: 'custom-alert',
       // inputs: [
       //   {
@@ -1547,7 +1599,7 @@ export class ProfilePage implements OnInit {
         cssClass: 'cancelBtn',
         handler: (blah) => {}
       }, {
-        text: 'Join Course Now',
+        text: 'Join '+_meetingType+' Now',
         handler: () => {
           this.joinMeeting();
         }
@@ -1560,13 +1612,19 @@ export class ProfilePage implements OnInit {
 
   /* Join Class start */
   joinClass(_type:any, _id:any){
+    let meetingType:any;
+    if (_type == 'init') {
+      meetingType = 'Course'
+    }else {
+      meetingType = 'Event'
+    }
     this.class_url = _type+'/'+_id+'?user_type='+this.userType+'&user_id='+this.userData.user_data.id;
     this.classDataSubscribe = this.http.get(this.class_url).subscribe(
       (res:any) => {
         if (res.return_status > 0) {
           this.classData = res.return_data;
           console.log('this.classData', this.classData);
-          this.presentAlertConfirm();
+          this.presentAlertConfirm(meetingType);
           this.meeting_url = 'course_attendance?message='+_id+'&user_id='+this.userData.user_data.id+'&type='+this.userType;
         }else {
           this.commonUtils.presentToast('error', res.return_message);

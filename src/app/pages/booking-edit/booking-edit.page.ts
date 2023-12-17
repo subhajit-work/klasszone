@@ -145,7 +145,9 @@ export class BookingEditPage implements OnInit {
     this.enquiriesEditDataSubscribe = this.http.get(this.enquiriesEdit_url).subscribe(
       (res:any) => {
         this.enquiriesEditData = res.return_data;
-
+        this.model = {
+          prev_status: res.return_data.prev_status,
+        }
         console.log('this.enquiriesEditData', this.enquiriesEditData);
       },
       errRes => {
@@ -188,9 +190,8 @@ export class BookingEditPage implements OnInit {
 
         console.log("add form response >", response);
         if (response.return_status > 0) {
-          form.reset();
           this.commonUtils.presentToast('success', response.return_message);
-          this.userInfoData();
+          // this.userInfoData();
           if(this.clickButtonTypeCheck == 'save-back'){
             this.backClicked();
           }

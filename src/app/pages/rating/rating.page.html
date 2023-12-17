@@ -30,7 +30,7 @@
 
         <ion-accordion-group>
           <ion-accordion value="{{menu?.name}}" *ngFor="let menu of studentMenuData">
-            <ion-item *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
+            <ion-item (click)="snav.toggle()" *ngIf="!menu?.subPages" [routerLink]="['/user/'+ menu?.url]" slot="header" class="no-subMenu">
               <mat-icon aria-hidden="false" fontIcon="{{menu?.icon}}"></mat-icon>
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
@@ -39,7 +39,7 @@
               <ion-label>{{menu?.name}}</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content" *ngIf="menu?.subPages">
-              <ion-item lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
+              <ion-item (click)="snav.toggle()" lines="none" *ngFor="let submenu of menu?.subPages" [routerLink]="['/user/'+ submenu?.url]">
                 <mat-icon aria-hidden="false" fontIcon="{{submenu?.icon}}"></mat-icon>
                 <ion-label>{{submenu?.name}}</ion-label>
               </ion-item>
