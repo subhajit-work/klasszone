@@ -1579,11 +1579,13 @@
 
         <div class="share-input">
             <div class="field-item">
-              <ion-input type="text" [(ngModel)]="referAndEarnData" labelPlacement="floating"
-              label="First Name"></ion-input>
+              <ion-input type="text" [(ngModel)]="referAndEarnData" labelPlacement="floating"></ion-input>
             </div>
-            <ion-button shape="round">
+            <ion-button color="tertiary" class="icon-btn" shape="round" (click)="copyText(referAndEarnData)">
               <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+            </ion-button>
+            <ion-button color="success" class="icon-btn" shape="round" (click)="socialShare(referAndEarnData)">
+              <ion-icon slot="icon-only" name="share-social"></ion-icon>
             </ion-button>
         </div>
       </div>

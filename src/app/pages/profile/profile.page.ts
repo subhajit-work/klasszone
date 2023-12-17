@@ -13,6 +13,8 @@ import {MediaMatcher} from '@angular/cdk/layout';
 
 import profileMenuData from 'src/app/services/profilemenu.json';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Browser } from '@capacitor/browser';
+import { Share } from '@capacitor/share';
 
 interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
@@ -1558,16 +1560,18 @@ export class ProfilePage implements OnInit {
   // Normal file upload end
 
   /* Call for join meeting start */
-  joinMeeting(){
+  async joinMeeting(){
     this.meetingDataSubscribe = this.http.get(this.meeting_url).subscribe(
-      (res:any) => {
+      async (res:any) => {
         if (res.return_status > 0) {
           this.meetingData = res.return_data;
 
           console.log('this.meetingData', this.meetingData);
           localStorage.setItem('big_blue_link', this.classData.url);
           // this.navCtrl.navigateRoot('big-blue-button');
-          window.location.href=this.classData.url;
+          // window.location.href=this.classData.url;
+          await Browser.open({ url: this.classData.url });
+          
         }else {
           this.commonUtils.presentToast('error', res.return_message);
         }
@@ -1578,6 +1582,19 @@ export class ProfilePage implements OnInit {
     );
   }
   /* Call for join meeting URL end */
+
+  /* social share start */
+  async socialShare(_url:any){
+    await Share.share({
+      url: _url,
+    });
+  }
+  /* social share end */
+
+  copyText(_url:any) {
+    navigator.clipboard.writeText(_url);
+    this.commonUtils.presentToast('info', 'Text Copied!');
+  }
 
   /* Aleart for open big blue button start */
   async presentAlertConfirm(_meetingType:any) {
