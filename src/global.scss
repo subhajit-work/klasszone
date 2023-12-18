@@ -818,6 +818,22 @@ ion-header.profile-head {
                 ion-text.status {
                     color: var(--ion-color-primary);
                     text-transform: capitalize;
+                    .alert-danger {
+                        border-color: #d73814 !important;
+                        color: #d73814;
+                        border: 1px solid;
+                    }
+                    .alert {
+                        padding: 5px;
+                        border-radius: 4px;
+                        background-color: #fafafa;
+                        border-left: 6px solid #7f7f84;
+                        margin-bottom: 10px;
+                        -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+                        -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+                        box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+                        display: table-cell;
+                    }
                 }
                 ion-text.status.success {
                     color: var(--ion-color-success);
@@ -825,7 +841,7 @@ ion-header.profile-head {
                 ion-text.status.cancelled {
                     color: var(--ion-color-danger);
                 }
-                .blink b {
+                .blink {
                     animation: blinker 1s linear infinite;
                 }
                 

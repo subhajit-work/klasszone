@@ -83,6 +83,8 @@ export class ProfilePage implements OnInit {
   class_url:any;
   classData:any;
 
+  private payCouseFeeDataSubscribe: Subscription | undefined;
+
   bookingStatus = [
     {
       name: 'Cancel Booking',
@@ -222,9 +224,9 @@ export class ProfilePage implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    setInterval(() => {
-      this.tableListData();
-    }, 10000);
+    // setInterval(() => {
+    //   this.tableListData();
+    // }, 10000);
   }
 
   ngOnInit() {
@@ -729,13 +731,14 @@ export class ProfilePage implements OnInit {
 
   /* Refer and earn start */
   referAndEarnData:any;
+  referText:any;
   referAndEarn() {
     this.referAndEarnUrl = 'refer_and_earn/'+this.userData.user_data.id;
     this.referAndEarnSubscribe = this.http.get(this.referAndEarnUrl).subscribe(
       (res: any) => {
-        this.referAndEarnData = this.api_url + res.return_data.code
+        this.referAndEarnData = this.file_url + '/auth/login/'+ res.return_data.code;
         console.log('referAndEarnData', this.referAndEarnData);
-        
+        this.referText = 'Click the below link and Register Or register using my Referral code ('+ res.return_data.code +') to recieve '+this.tableNoteData[34]?.field_output_value+' Rewards Points on your first KlassCoins Purchase if you register as student. If you registered as Tutor you will recieve '+this.tableNoteData[31]?.field_output_value+' KlassCoins on first KlassCoins Purchase.'
       },
       errRes => {
       }
@@ -1586,15 +1589,18 @@ export class ProfilePage implements OnInit {
   /* social share start */
   async socialShare(_url:any){
     await Share.share({
+      text: this.referText,
       url: _url,
     });
   }
   /* social share end */
 
+  /* copyText start */
   copyText(_url:any) {
     navigator.clipboard.writeText(_url);
     this.commonUtils.presentToast('info', 'Text Copied!');
   }
+  /* copyText end */
 
   /* Aleart for open big blue button start */
   async presentAlertConfirm(_meetingType:any) {
@@ -1654,6 +1660,40 @@ export class ProfilePage implements OnInit {
   }
   /* Join Class end */
 
+  /* pay course fee start */
+  async payCouseFeeAlert(_bookingId:any) {
+    const alert = await this.alertController.create({
+      header:  'Pay Fee',
+      message: 'Are you sure want to pay fee for 1 month?',
+      cssClass: 'custom-alert',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'cancelBtn',
+        handler: (blah) => {}
+      }, {
+        text: 'Ok',
+        handler: () => {
+          this.payCouseFeeDataSubscribe = this.http.get('make_payment/'+_bookingId).subscribe(
+            (res:any) => {
+              if (res.return_status > 0) {
+                this.commonUtils.presentToast('success', res.return_message);
+              }else {
+                this.commonUtils.presentToast('error', res.return_message);
+              }
+              
+            },
+            errRes => {
+            }
+          );
+        }
+      }]
+    });
+  
+    await alert.present();
+  }
+  /* pay course fee end */
+
   // ----------- destroy subscription start ---------
   ngOnDestroy() {
     if(this.userDetailsSubscribe !== undefined){
@@ -1667,6 +1707,9 @@ export class ProfilePage implements OnInit {
     }
     if(this.classDataSubscribe !== undefined){
       this.classDataSubscribe.unsubscribe();
+    }
+    if(this.payCouseFeeDataSubscribe !== undefined){
+      this.payCouseFeeDataSubscribe.unsubscribe();
     }
     if (this.klassCoinDataSubscribe !== undefined) {
       this.klassCoinDataSubscribe.unsubscribe();

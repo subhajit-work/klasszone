@@ -1570,12 +1570,13 @@
       <!-- View booking details end  -->
 
       <!-- refer-and-earn start -->
-      <div class="refer-and-earn" *ngIf="parms_slug == 'refer-and-earn'">
+      <div class="refer-and-earn" *ngIf="parms_slug == 'refer-and-earn' && tableNoteData">
         <img src="assets/refer-and-earn.jpg">
         <p><b>1) Invite your friends to join Klasszone using your referral code.</b></p>
-        <p><b>2.1) If registered as Student, they will recieve 250 Rewards Points on their first KlassCoins Package Purchase.</b></p>
-        <p><b>2.2) If registered as Tutor, they will recieve 100 KlassCoin on their first KlassCoins Purchase.</b></p>
-        <p><b>3) You earn 250 KlassCoins after their first KlassCoins Package Purchase.</b></p>
+        <p><b>2.1) If registered as Student, they will recieve {{tableNoteData[34]?.field_output_value}} Rewards Points on their first KlassCoins Package Purchase.</b></p>
+        <p><b>2.2) If registered as Tutor, they will recieve {{tableNoteData[31]?.field_output_value}} KlassCoin on their first KlassCoins Purchase.</b></p>
+        <p *ngIf="userType == 'student'"><b>3) You earn {{tableNoteData[33]?.field_output_value}} Rewards Points after their first KlassCoins Package Purchase.</b></p>
+        <p *ngIf="userType == 'tutor'"><b>3) You earn {{tableNoteData[35]?.field_output_value}} KlassCoins after their first KlassCoins Package Purchase.</b></p>
 
         <div class="share-input">
             <div class="field-item">
@@ -1743,7 +1744,7 @@
                   <ng-container matColumnDef="prev_status">
                     <th mat-header-cell *matHeaderCellDef> Booking status </th>
                     <td mat-cell *matCellDef="let element">
-                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}" [innerHTML]="element.status | stringReplace : '_' : ' ' | safeHtml"></ion-text>
                       <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
                     </td>
                   </ng-container>
@@ -1755,7 +1756,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'" (click)="payCouseFeeAlert(element?.booking_id)">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -2116,7 +2117,7 @@
                    <ng-container matColumnDef="prev_status">
                     <th mat-header-cell *matHeaderCellDef> Booking status </th>
                     <td mat-cell *matCellDef="let element">
-                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}">{{element.status | stringReplace : '_' : ' '}}</ion-text>
+                      <ion-text class="status" [ngClass] = "{'success': element.status == 'approved' || element.status == 'completed'}" [innerHTML]="element.status | stringReplace : '_' : ' ' | safeHtml"></ion-text>
                       <!-- <ion-text color="success" *ngIf="element.status == 'approved' || element.status == 'completed'">{{element.status}}</ion-text> -->
                     </td>
                   </ng-container>
@@ -2128,7 +2129,7 @@
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
                       <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('init', element?.booking_id)">duo</mat-icon>
-                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
+                      <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'" (click)="payCouseFeeAlert(element?.booking_id)">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
                   </ng-container>
@@ -3281,7 +3282,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.event_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
@@ -3438,7 +3439,7 @@
                     <td mat-cell *matCellDef="let element" class="ion-text-center">
                       <mat-icon color="accent" *ngIf="element?.edit_button == '1'" [routerLink]="['/', 'booking-edit', parms_slug, element?.status, element?.booking_id]">edit</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.view_button == '1'" [routerLink]="['/', 'booking-view', parms_slug, 'all', element?.booking_id]">visibility</mat-icon>
-                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.booking_id)">duo</mat-icon>
+                      <mat-icon color="primary" [ngClass] = "{'disabled': element?.join_link_button == '2'}" *ngIf="element?.join_link_button == '1' || element?.join_link_button == '2'" (click)="joinClass('event_init', element?.event_id)">duo</mat-icon>
                       <mat-icon color="accent" [ngClass] = "{'disabled': element?.pay_fee_button == '2'}" *ngIf="element?.pay_fee_button == '1' || element?.pay_fee_button == '2'">money</mat-icon>
                       <mat-icon color="warn" *ngIf="element?.rate_tutor_button == '1'" [routerLink]="['/', 'rating', element?.status, element?.booking_id]">star</mat-icon>
                     </td>
