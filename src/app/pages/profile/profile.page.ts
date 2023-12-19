@@ -224,9 +224,9 @@ export class ProfilePage implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    // setInterval(() => {
-    //   this.tableListData();
-    // }, 10000);
+    setInterval(() => {
+      this.tableListData();
+    }, 10000);
   }
 
   ngOnInit() {
@@ -1634,12 +1634,19 @@ export class ProfilePage implements OnInit {
   /* Aleart for open big blue button end */
 
   /* Join Class start */
-  joinClass(_type:any, _id:any){
+  joinClass(_type:any, _id:any, _eventId:any){
     let meetingType:any;
     if (_type == 'init') {
-      meetingType = 'Course'
+      meetingType = 'Course';
+      this.meeting_url = 'course_attendance?course_id='+_id+'&user_id='+this.userData.user_data.id+'&user_type='+this.userType;
     }else {
-      meetingType = 'Event'
+      meetingType = 'Event';
+      if (this.userType == 'tutor') {
+        this.meeting_url = 'event_attendance?event_id='+_eventId+'&user_id='+this.userData.user_data.id+'&user_type='+this.userType;
+      }else {
+        this.meeting_url = 'event_attendance?event_id='+_id+'&user_id='+this.userData.user_data.id+'&user_type='+this.userType;
+      }
+      
     }
     this.class_url = _type+'/'+_id+'?user_type='+this.userType+'&user_id='+this.userData.user_data.id;
     this.classDataSubscribe = this.http.get(this.class_url).subscribe(
@@ -1648,7 +1655,7 @@ export class ProfilePage implements OnInit {
           this.classData = res.return_data;
           console.log('this.classData', this.classData);
           this.presentAlertConfirm(meetingType);
-          this.meeting_url = 'course_attendance?message='+_id+'&user_id='+this.userData.user_data.id+'&type='+this.userType;
+          
         }else {
           this.commonUtils.presentToast('error', res.return_message);
         }
@@ -1680,6 +1687,7 @@ export class ProfilePage implements OnInit {
                 this.commonUtils.presentToast('success', res.return_message);
               }else {
                 this.commonUtils.presentToast('error', res.return_message);
+                this.router.navigateByUrl('/user/klassCoins-packages');
               }
               
             },
