@@ -15,6 +15,7 @@ import profileMenuData from 'src/app/services/profilemenu.json';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
+import { Checkout } from 'capacitor-razorpay';
 
 interface DatetimeCustomEvent extends CustomEvent {
   detail: DatetimeChangeEventDetail;
@@ -633,11 +634,12 @@ export class ProfilePage implements OnInit {
 
   // get table note start
   tableNoteData: any;
+  razorpayKey:any;
   getTableNote() {
     this.getTableNoteSubscribe = this.http.get(this.tableNoteUrl).subscribe(
       (res: any) => {
         this.tableNoteData = res.return_data.field;
-
+        this.razorpayKey = res.return_data.razorpay_field[1].field_output_value;
       },
       errRes => {
       }
@@ -1666,6 +1668,57 @@ export class ProfilePage implements OnInit {
     );
   }
   /* Join Class end */
+
+  /* razorpay integration start */
+  async payWithRazorpay(){
+    const options = {
+      key: this.razorpayKey,
+      amount: '100',
+      description: 'Great offers',
+      image: 'https://i.imgur.com/3g7nmJC.jpg',
+      order_id: 'order_Cp10EhSaf7wLbS',//Order ID generated in Step 1
+      currency: 'INR',
+      name: 'Acme Corp',
+      prefill: {
+        email: 'gaurav.kumar@example.com',
+        contact: '9191919191'
+      },
+      theme: {
+        color: '#3399cc'
+      }
+    }
+    try {
+      let data = (await Checkout.open(options));
+      console.log("AcmeCorp", data.response);
+      console.log("JSON.stringify", JSON.stringify(data))
+    } catch (error) {
+      //it's paramount that you parse the data into a JSONObject
+      console.log('error>><<>>', error);
+      
+      // let errorObj = JSON.parse(error['code'])
+      // alert(errorObj.description);
+      // alert(errorObj.code);
+
+      // alert(errorObj.reason);
+      // alert(errorObj.step);
+      // alert(errorObj.source);
+      // alert(errorObj.metadata.order_id);
+      // alert(errorObj.metadata.payment_id);
+
+    }
+  }
+
+  // async presentAlert(response: string){
+  //   console.log("message"+ response['razorpay_payment_id']);
+  //   const alert = await this.alertController.create({
+  //     message:response['razorpay_payment_id'],
+  //     backdropDismiss: true,
+  //   });
+
+  //   await alert.present();
+  // }
+  
+  /* razorpay integration end */
 
   /* pay course fee start */
   async payCouseFeeAlert(_bookingId:any) {

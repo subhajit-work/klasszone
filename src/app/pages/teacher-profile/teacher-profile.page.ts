@@ -41,6 +41,7 @@ export class TeacherProfilePage implements OnInit {
   parms_tutor:any;
   parms_category:any;
   parms_course:any;
+  courseType:any;
 
   constructor(
     private http : HttpClient,
@@ -58,6 +59,8 @@ export class TeacherProfilePage implements OnInit {
     this.teacherProfile_url = 'tutor_profile/'+this.parms_tutor+'/'+this.parms_category+'/'+this.parms_course;
     this.teacherProfileDetails(); 
 
+    this.courseType = 'onetoone';
+
     // user details
     this.commonUtils.userInfoDataObservable.subscribe(res =>{
       console.log('userInfoDataObservable res>>>>>>>>>>>>>>>>>>>.. >', res);
@@ -65,9 +68,50 @@ export class TeacherProfilePage implements OnInit {
     })
   }
 
+  courseChanged(e: any) {
+    this.courseType = e.detail.value;
+    console.log('courseType', this.courseType);
+  }
+
+  /* selectSlot start */
+  selectSlot(_day:any, _time:any) {
+    console.log('_day>', _day ,'_time>', _time);
+    if (this.classSlots[_day].timing[_time].checked == false) {
+      for (let k = 0; k < this.classSlots[_day].timing.length; k++) {
+        this.classSlots[_day].timing[k].checked = false;
+      }
+      this.classSlots[_day].timing[_time].checked = true;
+    }else if (this.classSlots[_day].timing[_time].checked == true)  {
+      this.classSlots[_day].timing[_time].checked = false;
+    }
+    console.log('this.classSlots', this.classSlots);
+    this.calculateSummary();
+  }
+  /* selectSlot end */
+
+  /* Calculate summary start */
+  numberOfClass = 0;
+  payFee = 0;
+  calculateSummary(){
+    let selectedSlot = 0;
+    for (let i = 0; i < this.classSlots.length; i++) {
+      for (let j = 0; j < this.classSlots[i].timing.length; j++) {
+        if (this.classSlots[i].timing[j].checked == true) {
+          selectedSlot = selectedSlot + 1;
+        }
+      }
+      
+    }
+    console.log('selectedSlot', selectedSlot);
+    this.numberOfClass = 4*selectedSlot;
+    this.payFee = this.teacherProfileData?.tutor_individual_courses?.increased_fee * this.numberOfClass;
+  }
+  /* Calculate summary end */
+
   /* Klasscoin package start */
+  classSlots:any = [];
   teacherProfileDetails(){
-    this.teacherProfileDataSubscribe = this.http.get(this.teacherProfile_url).subscribe(
+    this.teacherProfileDataSubscribe = this.http.get('tutor_profile/geetha-g/academic-classes/class-12-tuition/cbse/physics12').subscribe(
       (res:any) => {
         this.teacherProfileData = res.return_data;
         this.tutorDetails = res.return_data.tutor_details[0];
@@ -77,8 +121,20 @@ export class TeacherProfilePage implements OnInit {
         let exp_cbse:number = +this.tutorDetails?.exp_cbse;
         let exp_icse:number = +this.tutorDetails?.exp_icse;
         this.tutorExp = exp_cbse + exp_icse;
-        console.log('this.tutorExp', this.tutorExp);
         
+        // start class slot
+        for (let i = 0; i < res.return_data?.tutor_individual_courses?.course_timing.length; i++) {
+          if (res.return_data?.tutor_individual_courses?.course_timing[i].timing) {
+            this.classSlots.push(res.return_data?.tutor_individual_courses?.course_timing[i]);
+            for (let j = 0; j < this.classSlots.length; j++) {
+              for (let k = 0; k < this.classSlots[j].timing.length; k++) {
+                Object.assign(this.classSlots[j].timing[k], {"checked": false});
+              }
+            }   
+          }
+        }
+        // end class slot
+        console.log('this.classSlots', this.classSlots);
       },
       errRes => {
       }

@@ -101,6 +101,34 @@ img {
     --padding-top: 55px;
 }
 
+ion-segment {
+    background: #EEEEEE;
+    padding: 5px;
+    width: 80%;
+    border-radius: 30px;
+    margin: auto;
+
+    ion-segment-button {
+        border-radius: 30px;
+        --border-radius: 30px;
+        overflow: hidden;
+        --color: #000;
+        font-weight: 700;
+    }
+
+    ion-segment-button.segment-button-checked {
+        --indicator-color: #11367a;
+        --background: #11367a;
+        border-radius: 30px;
+        --indicator-height: 48px;
+        --color-checked: #fff;
+        --color: #fff;
+        --indicator-box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
+        --border-radius: 30px;
+        font-weight: 700;
+    }
+}
+
 .field-item {
     .checkBox {
         margin-top: 10px;
@@ -131,34 +159,6 @@ img {
         --padding-start: 20px;
         --padding-end: 20px;
         --highlight-color-focused: unset;
-    }
-
-    ion-segment {
-        background: #EEEEEE;
-        padding: 5px;
-        width: 80%;
-        border-radius: 30px;
-        margin: auto;
-
-        ion-segment-button {
-            border-radius: 30px;
-            --border-radius: 30px;
-            overflow: hidden;
-            --color: #000;
-            font-weight: 700;
-        }
-
-        ion-segment-button.segment-button-checked {
-            --indicator-color: #11367a;
-            --background: #11367a;
-            border-radius: 30px;
-            --indicator-height: 48px;
-            --color-checked: #fff;
-            --color: #fff;
-            --indicator-box-shadow: 0 0 5px rgba(0, 0, 0, 0.16);
-            --border-radius: 30px;
-            font-weight: 700;
-        }
     }
 
     ng-otp-input {
@@ -1818,6 +1818,59 @@ mat-sidenav {
             column-gap: 0.75rem;
             font-size: 1rem;
             font-weight: 600;
+        }
+    }
+    .course-booking {
+        .course-info {
+            div {
+                display: flex;
+                ion-icon {
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+        .slot-booking {
+            .slot-heading {
+                text-align: center;
+                font-weight: bold;
+                font-size: 18px;
+                text-transform: uppercase;
+            }
+            ion-item-group {
+                ion-item-divider {
+                    color: #000;
+                    font-weight: 800;
+                }
+                ion-radio-group {
+                    ion-item {
+                        .radio-wrapper {
+                            .radio-inner {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .booking-summury {
+            .booking-heading {
+                text-align: center;
+                font-weight: bold;
+                font-size: 18px;
+                text-transform: uppercase;
+            }
+            ion-list {
+                ion-item {
+                    ion-icon {
+                        width: 20px;
+                    }
+                    ion-note {
+                        font-size: 16px;
+                    }
+                }
+            }
         }
     }
 }
