@@ -36,6 +36,7 @@
     "@ionic/storage": "^2.2.0",
     "@kolkov/angular-editor": "^3.0.0-beta.0",
     "@logisticinfotech/ionic4-datepicker": "^1.4.3",
+    "capacitor-razorpay": "github:razorpay/razorpay-capacitor",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-lottie-splashscreen": "github:timbru31/cordova-plugin-lottie-splashscreen",
     "cordova-sqlite-storage": "^6.1.0",
