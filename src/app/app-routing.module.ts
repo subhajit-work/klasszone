@@ -54,7 +54,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/teacher-list/teacher-list.module').then( m => m.TeacherListPageModule)
   },
   {
-    path: 'teacher-profile/:tutor/:category/:course',
+    path: 'teacher-profile/:tutor/:category/:course/:board/:subject',
     loadChildren: () => import('./pages/teacher-profile/teacher-profile.module').then( m => m.TeacherProfilePageModule)
   },
   {

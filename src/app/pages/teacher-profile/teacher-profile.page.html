@@ -16,7 +16,7 @@
       <div class="teacher-profile">
         <div class="profile_top">
           <div class="profile__picture {{teacherProfileData?.tutor_details[0]?.is_online}}" >
-            <img src="{{file_url}}/assets/uploads/profiles/{{teacherProfileData?.tutor_details[0]?.photo}}" alt="ananddavis">
+            <img src="{{teacherProfileData?.og_image}}" alt="ananddavis">
           </div>
           <div class="profile__header">
             <div class="profile__account">
@@ -40,7 +40,7 @@
               <div class="profile__icon profile__icon--gold">
                 <mat-icon>star_rate</mat-icon>
               </div>
-              <div class="profile__value">{{tutorExp}} Years
+              <div class="profile__value">{{tutorDetails?.teaching_experience}} Years
                 <div class="profile__key">Experience</div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                   </div>
                   <div class="details-item">
                     <div class="label">Experiance</div>
-                    <div class="data">{{tutorExp}} Years</div>
+                    <div class="data">{{tutorDetails?.teaching_experience}} Years</div>
                   </div>
                   <div class="details-item">
                     <div class="label">Qualification</div>
@@ -549,7 +549,7 @@
                             <b>Total Experiance:</b>
                           </ion-col>
                           <ion-col size="6">
-                            {{tutorExp}}
+                            {{tutorDetails?.teaching_experience}}
                           </ion-col>
                         </ion-row>
                         <ion-row>
@@ -756,13 +756,16 @@
         </div>
         <div class="course-booking">
           <ion-segment (ionChange)="courseChanged($event)" [value]="courseType">
-            <ion-segment-button value="onetoone">
+            <ion-segment-button value="individual">
               <ion-label>One to one</ion-label>
             </ion-segment-button>
             <ion-segment-button value="group">
               <ion-label>Group</ion-label>
             </ion-segment-button>
           </ion-segment>
+          <div class="individual-course">
+
+          </div>
           <div class="course-info">
             <ion-grid>
               <ion-row>
@@ -794,7 +797,7 @@
                 <ion-label>{{day?.day}}</ion-label>
               </ion-item-divider>
             
-              <ion-item *ngFor="let time of day?.timing; let j = index">
+              <ion-item *ngFor="let time of day?.timing; let j = index" lines="none">
                 <ion-checkbox (ionChange)="selectSlot(i, j)" [checked]=time.checked>{{ time.time }}</ion-checkbox>
               </ion-item>
             </ion-item-group>
@@ -818,6 +821,21 @@
                 <ion-note slot="end">1</ion-note>
               </ion-item>
             </ion-list>
+            <div class="field-item">
+              <div class="datePicker">
+                <ion-label>Start Date</ion-label>
+                <li-ionic4-datepicker [(ngModel)]="classStartDate" placeholder="Start Date"
+                  [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="custom-btn">
+            <ion-button [disabled]="numberOfClass == 0 && classStartDate" (click)="scheduleClass()" shape="round">
+              Schedule Class
+            </ion-button>
+            <ion-button [routerLink]="['/', 'user', 'klassCoins-packages']" color="tertiary" shape="round">
+              Buy Klasscoins
+            </ion-button>
           </div>
         </div>
       </div>

@@ -91,7 +91,7 @@
         <ion-grid *ngIf="courseItem?.tutors.length !== 0">
           <ion-row>
             <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of courseItem?.tutors">
-              <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, teacherAllData.category_slug, courseItem.slug]" >
+              <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, tutorItem.category_slug, tutorItem.sub_category_slug, tutorItem.sub_subcategory_slug, tutorItem.course_slug]" >
                 <div class="profile-top">
                   <div class="profile-img">
                     <img onError="this.src='assets/default-student-male.png'" src="{{file_url}}/assets/uploads/profiles/thumbs/{{tutorItem?.photo}}">

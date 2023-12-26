@@ -6,7 +6,7 @@ import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import { IonicSlides } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
 register();
 
@@ -25,8 +25,9 @@ export class TeacherProfilePage implements OnInit {
   tutorDetails:any;
   tutorAge:any;
   tutorExp:any;
-  private userDetailsSubscribe: Subscription | undefined;
   userData:any;
+  private formSubmitSubscribe: Subscription | undefined;
+  form_api: any;
 
   swiperModules = [IonicSlides];
   @ViewChild('swiper')
@@ -41,10 +42,14 @@ export class TeacherProfilePage implements OnInit {
   parms_tutor:any;
   parms_category:any;
   parms_course:any;
+  parms_board:any;
+  parms_subject:any;
   courseType:any;
+  userType:any;
 
   constructor(
     private http : HttpClient,
+    private router: Router,
     private authService : AuthService,
     private commonUtils: CommonUtils,
     private activatedRoute : ActivatedRoute,
@@ -54,12 +59,24 @@ export class TeacherProfilePage implements OnInit {
     this.parms_tutor = this.activatedRoute.snapshot.paramMap.get('tutor');
     this.parms_category = this.activatedRoute.snapshot.paramMap.get('category');
     this.parms_course = this.activatedRoute.snapshot.paramMap.get('course');
+    this.parms_board = this.activatedRoute.snapshot.paramMap.get('board');
+    this.parms_subject = this.activatedRoute.snapshot.paramMap.get('subject');
+    console.log(this.parms_board, '/', this.parms_subject);
+    
 
 
-    this.teacherProfile_url = 'tutor_profile/'+this.parms_tutor+'/'+this.parms_category+'/'+this.parms_course;
+    this.teacherProfile_url = '/'+this.parms_tutor+'/'+this.parms_category+'/'+this.parms_course;
+    if (this.parms_board && this.parms_subject) {
+      this.teacherProfile_url = this.teacherProfile_url + '/' +this.parms_board + '/' +this.parms_subject;
+    }else if (this.parms_subject) {
+      this.teacherProfile_url = this.teacherProfile_url + '/' +this.parms_subject;
+    }
     this.teacherProfileDetails(); 
 
-    this.courseType = 'onetoone';
+    this.courseType = 'individual';
+    this.userType = localStorage.getItem('user_type');
+
+    this.form_api = 'book_tutor';
 
     // user details
     this.commonUtils.userInfoDataObservable.subscribe(res =>{
@@ -111,7 +128,7 @@ export class TeacherProfilePage implements OnInit {
   /* Klasscoin package start */
   classSlots:any = [];
   teacherProfileDetails(){
-    this.teacherProfileDataSubscribe = this.http.get('tutor_profile/geetha-g/academic-classes/class-12-tuition/cbse/physics12').subscribe(
+    this.teacherProfileDataSubscribe = this.http.get('tutor_profile'+this.teacherProfile_url).subscribe(
       (res:any) => {
         this.teacherProfileData = res.return_data;
         this.tutorDetails = res.return_data.tutor_details[0];
@@ -142,5 +159,57 @@ export class TeacherProfilePage implements OnInit {
   }
   /* Klasscoin package end */
 
+  /* ========= datepicker start ======= */
+  datePickerObj: any = {
+    dateFormat: 'YYYY-MM-DD', // default DD MMM YYYY
+    closeOnSelect: true,
+    yearInAscending: true
+  }
+  /* datepicker end */
+
+  /* schedule class start */
+  classStartDate:any;
+  scheduleClass(){
+    let course_booked_timing:any = [];
+    for (let i = 0; i < this.classSlots.length; i++) {
+      for (let j = 0; j < this.classSlots[i].timing.length; j++) {
+        if (this.classSlots[i].timing[j].checked == true) {
+          course_booked_timing.push(this.classSlots[i].timing[j].id)
+        }
+      }
+      
+    }
+    
+    let fd = new FormData();
+
+    fd.append('tutor_id', this.teacherProfileData.tutor_individual_courses.tutor_id);
+    fd.append('tutor_slug', this.tutorDetails.slug);
+    fd.append('course_link', '/tutor-profile'+this.teacherProfile_url);
+    fd.append('course_type', this.teacherProfileData.tutor_individual_courses.type);
+    fd.append('course_id', this.teacherProfileData.tutor_individual_courses.id);
+    fd.append('start_date', this.classStartDate);
+    fd.append('user_type', this.userType);
+    fd.append('user_id', this.userData.user_data.user_id);
+    fd.append('course_booked_timing', course_booked_timing);
+
+    console.log('value >', fd);
+
+    this.formSubmitSubscribe = this.http.post(this.form_api, fd).subscribe(
+      (response: any) => {
+
+        console.log("add form response >", response);
+        if (response.return_status > 0) {
+          this.commonUtils.presentToast('success', response.return_message);
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+          this.router.navigateByUrl(response.redirect_url);
+        }
+        
+      },
+      errRes => {
+      }
+    );
+  }
+  /* schedule class end */
 
 }
