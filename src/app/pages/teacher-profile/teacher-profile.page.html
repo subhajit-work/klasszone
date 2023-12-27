@@ -754,7 +754,7 @@
             </mat-tab>
           </mat-tab-group>
         </div>
-        <div class="course-booking">
+        <div class="course-booking" *ngIf="teacherProfileData">
           <ion-segment (ionChange)="courseChanged($event)" [value]="courseType">
             <ion-segment-button value="individual">
               <ion-label>One to one</ion-label>
@@ -763,80 +763,181 @@
               <ion-label>Group</ion-label>
             </ion-segment-button>
           </ion-segment>
-          <div class="individual-course">
-
-          </div>
-          <div class="course-info">
-            <ion-grid>
-              <ion-row>
-                <ion-col size="12">
-                  <div>
-                    <ion-icon color="danger" name="book"></ion-icon>
-                    <ion-label>{{teacherProfileData?.tutor_individual_courses?.course_title}}</ion-label>
+          <form #scheduleClassForm="ngForm" (ngSubmit)="scheduleClass(scheduleClassForm)" (keyup.enter)="scheduleClass(scheduleClassForm)">
+            <div class="individual-course" *ngIf="teacherProfileData?.tutor_individual_courses !== null && courseType == 'individual'">
+              <div class="course-info">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12">
+                      <div>
+                        <ion-icon color="danger" name="book"></ion-icon>
+                        <ion-label>{{teacherProfileData?.tutor_individual_courses?.course_title}}</ion-label>
+                      </div>
+                    </ion-col>
+                    <ion-col size="6">
+                      <div>
+                        <ion-icon color="success" name="alarm"></ion-icon>
+                        <ion-label>{{teacherProfileData?.tutor_individual_courses?.duration / 30}} Months</ion-label>
+                      </div>
+                    </ion-col>
+                    <ion-col size="6">
+                      <div>
+                        <ion-icon color="tertiary" name="color-filter"></ion-icon>
+                        <ion-label>{{teacherProfileData?.tutor_individual_courses?.increased_fee}} KlassCoins/Class</ion-label>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+              <div class="slot-booking">
+                <p class="slot-heading">Choose your slot</p>
+                <ion-item-group *ngFor="let day of classSlots; let i = index">
+                  <ion-item-divider>
+                    <ion-label>{{day?.day}}</ion-label>
+                  </ion-item-divider>
+                
+                  <ion-item *ngFor="let time of day?.timing; let j = index" lines="none">
+                    <ion-checkbox (ionChange)="selectSlot(i, j)" [checked]=time.checked>{{ time.time }}</ion-checkbox>
+                  </ion-item>
+                </ion-item-group>
+              </div>
+              <div class="booking-summury">
+                <p class="booking-heading">Booking Summary</p>
+                <ion-list>
+                  <ion-item>
+                    <ion-icon color="danger" slot="start" name="book"></ion-icon>
+                    <ion-label>Number of Class Booked</ion-label>
+                    <ion-note slot="end">{{numberOfClass}}</ion-note>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon color="tertiary" slot="start" name="color-filter"></ion-icon>
+                    <ion-label>Fee need to pay (in KlassCoin)</ion-label>
+                    <ion-note slot="end">{{payFee}}</ion-note>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon color="success" slot="start" name="calendar"></ion-icon>
+                    <ion-label>Booking for (Month)</ion-label>
+                    <ion-note slot="end">1</ion-note>
+                  </ion-item>
+                </ion-list>
+                <div class="field-item">
+                  <div class="datePicker">
+                    <ion-label>Start Date</ion-label>
+                    <li-ionic4-datepicker required name="start_date" [(ngModel)]="classStartDate" placeholder="Start Date"
+                      [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
                   </div>
-                </ion-col>
-                <ion-col size="6">
-                  <div>
-                    <ion-icon color="success" name="alarm"></ion-icon>
-                    <ion-label>{{teacherProfileData?.tutor_individual_courses?.duration / 30}} Months</ion-label>
-                  </div>
-                </ion-col>
-                <ion-col size="6">
-                  <div>
-                    <ion-icon color="tertiary" name="color-filter"></ion-icon>
-                    <ion-label>{{teacherProfileData?.tutor_individual_courses?.increased_fee}} KlassCoins/Class</ion-label>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div class="slot-booking">
-            <p class="slot-heading">Choose your slot</p>
-            <ion-item-group *ngFor="let day of classSlots; let i = index">
-              <ion-item-divider>
-                <ion-label>{{day?.day}}</ion-label>
-              </ion-item-divider>
-            
-              <ion-item *ngFor="let time of day?.timing; let j = index" lines="none">
-                <ion-checkbox (ionChange)="selectSlot(i, j)" [checked]=time.checked>{{ time.time }}</ion-checkbox>
-              </ion-item>
-            </ion-item-group>
-          </div>
-          <div class="booking-summury">
-            <p class="booking-heading">Booking Summary</p>
-            <ion-list>
-              <ion-item>
-                <ion-icon color="danger" slot="start" name="book"></ion-icon>
-                <ion-label>Number of Class Booked</ion-label>
-                <ion-note slot="end">{{numberOfClass}}</ion-note>
-              </ion-item>
-              <ion-item>
-                <ion-icon color="tertiary" slot="start" name="color-filter"></ion-icon>
-                <ion-label>Fee need to pay (in KlassCoin)</ion-label>
-                <ion-note slot="end">{{payFee}}</ion-note>
-              </ion-item>
-              <ion-item>
-                <ion-icon color="success" slot="start" name="calendar"></ion-icon>
-                <ion-label>Booking for (Month)</ion-label>
-                <ion-note slot="end">1</ion-note>
-              </ion-item>
-            </ion-list>
-            <div class="field-item">
-              <div class="datePicker">
-                <ion-label>Start Date</ion-label>
-                <li-ionic4-datepicker [(ngModel)]="classStartDate" placeholder="Start Date"
-                  [inputDateConfig]="datePickerObj"></li-ionic4-datepicker>
+                </div>
+              </div>
+              <!-- Hidden data -->
+              <input type="hidden" required [(ngModel)]="teacherProfileData.tutor_individual_courses.tutor_id" name="tutor_id">
+              <input type="hidden" required [(ngModel)]="tutorDetails.slug" name="tutor_slug">
+              <input type="hidden" required [(ngModel)]="teacherProfileData.tutor_individual_courses.id" name="course_id">
+              <div class="custom-btn">
+                <ion-button type="submit" [disabled]="!scheduleClassForm.valid" shape="round">
+                  Schedule Class
+                </ion-button>
+                <ion-button [routerLink]="['/', 'user', 'klassCoins-packages']" color="tertiary" shape="round">
+                  Buy Klasscoins
+                </ion-button>
               </div>
             </div>
-          </div>
-          <div class="custom-btn">
-            <ion-button [disabled]="numberOfClass == 0 && classStartDate" (click)="scheduleClass()" shape="round">
-              Schedule Class
-            </ion-button>
-            <ion-button [routerLink]="['/', 'user', 'klassCoins-packages']" color="tertiary" shape="round">
-              Buy Klasscoins
-            </ion-button>
-          </div>
+            <div class="batch-course" *ngIf="teacherProfileData?.tutor_batch_courses.length > 0 && courseType == 'group'">
+              <ion-radio-group (ionChange)="chooseGroupClass($event)">
+                <div *ngFor="let batchItem of teacherProfileData?.tutor_batch_courses; let b = index">
+                  <mat-divider></mat-divider>
+                  <ion-radio [value]="batchItem">{{ batchItem?.course_title }}</ion-radio>
+                  <!-- hidden data -->
+                  <input type="hidden" required [(ngModel)]="batchItem.id" name="course_id">
+                  <input type="hidden" required [(ngModel)]="batchItem.start_date" name="start_date">
+                  <div class="course-info">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="12">
+                          <div>
+                            <ion-icon color="danger" name="book"></ion-icon>
+                            <ion-label>{{batchItem?.course_title}}</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div>
+                            <ion-icon color="success" name="alarm"></ion-icon>
+                            <ion-label>{{batchItem?.duration / 30}} Months</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div>
+                            <ion-icon color="tertiary" name="color-filter"></ion-icon>
+                            <ion-label>{{batchItem?.increased_fee}} KlassCoins/Class</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div>
+                            <ion-icon color="warning" name="people"></ion-icon>
+                            <ion-label>{{batchItem?.total_students}} Maximum Students</ion-label>
+                          </div>
+                        </ion-col>
+                        <ion-col size="6">
+                          <div>
+                            <ion-icon color="secondary" name="calendar"></ion-icon>
+                            <ion-label>{{batchItem?.start_date}} Start Date</ion-label>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                  <div class="slot-booking">
+                    <input type="hidden" required [(ngModel)]="classSlots[b]" name="classSlot">
+                    <ion-item-group *ngFor="let day of classSlots[b]; let i = index">
+                      <ion-item-divider>
+                        <ion-label>{{day?.day}}</ion-label>
+                      </ion-item-divider>
+                    
+                      <ion-item *ngFor="let time of day?.timing; let j = index" lines="none">
+                        <ion-checkbox [checked]=time.checked>{{ time.time }}</ion-checkbox>
+                      </ion-item>
+                    </ion-item-group>
+                  </div>
+                </div>
+              </ion-radio-group>
+              <div class="booking-summury">
+                <p class="booking-heading">Booking Summary</p>
+                <ion-list>
+                  <ion-item>
+                    <ion-icon color="danger" slot="start" name="book"></ion-icon>
+                    <ion-label>Number of Class Booked</ion-label>
+                    <ion-note slot="end">{{numberOfClass}}</ion-note>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon color="tertiary" slot="start" name="color-filter"></ion-icon>
+                    <ion-label>Fee need to pay (in KlassCoin)</ion-label>
+                    <ion-note slot="end">{{payFee}}</ion-note>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon color="success" slot="start" name="calendar"></ion-icon>
+                    <ion-label>Booking for (Month)</ion-label>
+                    <ion-note slot="end">1</ion-note>
+                  </ion-item>
+                </ion-list>
+              </div>
+              <!-- Hidden data -->
+              <input type="hidden" required [(ngModel)]="teacherProfileData.tutor_individual_courses.tutor_id" name="tutor_id">
+              <input type="hidden" required [(ngModel)]="tutorDetails.slug" name="tutor_slug">
+              
+              <div class="custom-btn">
+                <ion-button type="submit" [disabled]="!scheduleClassForm.valid" shape="round">
+                  Schedule Class
+                </ion-button>
+                <ion-button [routerLink]="['/', 'user', 'klassCoins-packages']" color="tertiary" shape="round">
+                  Buy Klasscoins
+                </ion-button>
+              </div>
+            </div>
+            <div *ngIf="(teacherProfileData?.tutor_individual_courses == null && courseType == 'individual') || (teacherProfileData?.tutor_batch_courses.length == 0 && courseType == 'group')">
+              <ion-text color="danger">
+                <p class="ion-text-center"><b>No Active Course Available.</b></p>
+              </ion-text>
+            </div>
+          </form>
         </div>
       </div>
     </ion-grid>

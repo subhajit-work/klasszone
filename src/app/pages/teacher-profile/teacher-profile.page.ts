@@ -8,6 +8,7 @@ import { IonicSlides } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
+import { NgForm } from '@angular/forms';
 register();
 
 @Component({
@@ -63,17 +64,17 @@ export class TeacherProfilePage implements OnInit {
     this.parms_subject = this.activatedRoute.snapshot.paramMap.get('subject');
     console.log(this.parms_board, '/', this.parms_subject);
     
-
+    this.courseType = 'individual';
 
     this.teacherProfile_url = '/'+this.parms_tutor+'/'+this.parms_category+'/'+this.parms_course;
-    if (this.parms_board && this.parms_subject) {
+    if (this.parms_board !== 'null' && this.parms_subject !== 'null') {
       this.teacherProfile_url = this.teacherProfile_url + '/' +this.parms_board + '/' +this.parms_subject;
-    }else if (this.parms_subject) {
+    }else if (this.parms_subject !== 'null') {
       this.teacherProfile_url = this.teacherProfile_url + '/' +this.parms_subject;
     }
     this.teacherProfileDetails(); 
 
-    this.courseType = 'individual';
+    
     this.userType = localStorage.getItem('user_type');
 
     this.form_api = 'book_tutor';
@@ -88,6 +89,9 @@ export class TeacherProfilePage implements OnInit {
   courseChanged(e: any) {
     this.courseType = e.detail.value;
     console.log('courseType', this.courseType);
+    this.numberOfClass = 0;
+    this.payFee = 0;
+    this.teacherProfileDetails();
   }
 
   /* selectSlot start */
@@ -102,14 +106,28 @@ export class TeacherProfilePage implements OnInit {
       this.classSlots[_day].timing[_time].checked = false;
     }
     console.log('this.classSlots', this.classSlots);
-    this.calculateSummary();
+    this.calculateIndividualSummary();
   }
   /* selectSlot end */
+
+  /* Select group class start */
+  chooseGroupClass(ev:any) {
+    console.log('Current value:', ev.target.value);
+    for (let i = 0; i < this.teacherProfileData?.tutor_batch_courses.length; i++) {
+      if (this.teacherProfileData?.tutor_batch_courses[i].id == ev.target.value.id) {
+        
+        this.numberOfClass = 4*this.classSlots[i].length;
+        this.payFee = ev.target.value.increased_fee * this.numberOfClass;
+      }
+      
+    }
+  }
+  /* Select group class end */
 
   /* Calculate summary start */
   numberOfClass = 0;
   payFee = 0;
-  calculateSummary(){
+  calculateIndividualSummary(){
     let selectedSlot = 0;
     for (let i = 0; i < this.classSlots.length; i++) {
       for (let j = 0; j < this.classSlots[i].timing.length; j++) {
@@ -140,16 +158,37 @@ export class TeacherProfilePage implements OnInit {
         this.tutorExp = exp_cbse + exp_icse;
         
         // start class slot
-        for (let i = 0; i < res.return_data?.tutor_individual_courses?.course_timing.length; i++) {
-          if (res.return_data?.tutor_individual_courses?.course_timing[i].timing) {
-            this.classSlots.push(res.return_data?.tutor_individual_courses?.course_timing[i]);
-            for (let j = 0; j < this.classSlots.length; j++) {
-              for (let k = 0; k < this.classSlots[j].timing.length; k++) {
-                Object.assign(this.classSlots[j].timing[k], {"checked": false});
+        if (this.courseType == 'individual') {
+          this.classSlots = [];
+          for (let i = 0; i < res.return_data?.tutor_individual_courses?.course_timing.length; i++) {
+            if (res.return_data?.tutor_individual_courses?.course_timing[i].timing) {
+              this.classSlots.push(res.return_data?.tutor_individual_courses?.course_timing[i]);
+              for (let j = 0; j < this.classSlots.length; j++) {
+                for (let k = 0; k < this.classSlots[j].timing.length; k++) {
+                  Object.assign(this.classSlots[j].timing[k], {"checked": false});
+                }
+              }   
+            }
+          }
+        }else {
+          this.classSlots = [];
+          for (let item = 0; item < res.return_data.tutor_batch_courses.length; item++) {
+            let courseTiming:any = [];
+            for (let i = 0; i < res.return_data.tutor_batch_courses[item].course_timing.length; i++) {
+              
+              if (res.return_data.tutor_batch_courses[item].course_timing[i].timing) {
+                courseTiming.push(res.return_data.tutor_batch_courses[item].course_timing[i]);
+                for (let j = 0; j < courseTiming.length; j++) {
+                  for (let k = 0; k < courseTiming[j].timing.length; k++) {
+                    Object.assign(courseTiming[j].timing[k], {"checked": false});
+                  }
+                }
               }
-            }   
+            }
+            this.classSlots.push(courseTiming);
           }
         }
+        
         // end class slot
         console.log('this.classSlots', this.classSlots);
       },
@@ -169,25 +208,43 @@ export class TeacherProfilePage implements OnInit {
 
   /* schedule class start */
   classStartDate:any;
-  scheduleClass(){
+  scheduleClass(form: NgForm){
+    console.log("add form submit >", form.value);
+
     let course_booked_timing:any = [];
-    for (let i = 0; i < this.classSlots.length; i++) {
-      for (let j = 0; j < this.classSlots[i].timing.length; j++) {
-        if (this.classSlots[i].timing[j].checked == true) {
-          course_booked_timing.push(this.classSlots[i].timing[j].id)
+    if (this.courseType == 'individual') {
+      for (let i = 0; i < this.classSlots.length; i++) {
+        for (let j = 0; j < this.classSlots[i].timing.length; j++) {
+          if (this.classSlots[i].timing[j].checked == true) {
+            course_booked_timing.push(this.classSlots[i].timing[j].id)
+          }
         }
+        
       }
-      
+    }else {
+      for (let i = 0; i < form.value.classSlot.length; i++) {
+        for (let j = 0; j < form.value.classSlot[i].timing.length; j++) {
+          if (form.value.classSlot[i].timing[j].checked == true) {
+            course_booked_timing.push(form.value.classSlot[i].timing[j].id)
+          }
+        }
+        
+      }
     }
     
+    
     let fd = new FormData();
+    for (let val in form.value) {
+      if (form.value[val] == undefined) {
+        form.value[val] = '';
+      }
+      fd.append(val, form.value[val]);
+    };
 
-    fd.append('tutor_id', this.teacherProfileData.tutor_individual_courses.tutor_id);
-    fd.append('tutor_slug', this.tutorDetails.slug);
+    console.log('course_booked_timing', course_booked_timing);
+    
+
     fd.append('course_link', '/tutor-profile'+this.teacherProfile_url);
-    fd.append('course_type', this.teacherProfileData.tutor_individual_courses.type);
-    fd.append('course_id', this.teacherProfileData.tutor_individual_courses.id);
-    fd.append('start_date', this.classStartDate);
     fd.append('user_type', this.userType);
     fd.append('user_id', this.userData.user_data.user_id);
     fd.append('course_booked_timing', course_booked_timing);
@@ -202,7 +259,7 @@ export class TeacherProfilePage implements OnInit {
           this.commonUtils.presentToast('success', response.return_message);
         }else {
           this.commonUtils.presentToast('error', response.return_message);
-          this.router.navigateByUrl(response.redirect_url);
+          // this.router.navigateByUrl(response.redirect_url);
         }
         
       },

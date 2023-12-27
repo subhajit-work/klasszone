@@ -1838,6 +1838,8 @@ mat-sidenav {
                 font-size: 18px;
                 text-transform: uppercase;
             }
+        }
+        .individual-course {
             ion-item-group {
                 display: flex;
                 flex-wrap: wrap;
@@ -1853,6 +1855,36 @@ mat-sidenav {
                     }
                     ion-checkbox::part(container) {
                         // display: none;
+                    }
+                }
+            }
+        }
+        .batch-course {
+            ion-radio-group {
+                ion-radio {
+                    flex-direction: column;
+                    display: flex;
+                    align-items: center;
+                    font-weight: 700;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    text-transform: uppercase;
+                }
+            }
+            ion-item-group {
+                width: 50%;
+                display: inline-block;
+                ion-item-divider {
+                    color: #000;
+                    font-weight: 800;
+                    width: 100%;
+                }
+                ion-item {
+                    ion-checkbox {
+                        text-align: center;
+                    }
+                    ion-checkbox::part(container) {
+                        display: none;
                     }
                 }
             }
