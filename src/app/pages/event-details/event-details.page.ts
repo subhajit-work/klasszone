@@ -1,13 +1,13 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 import profileMenuData from 'src/app/services/profilemenu.json';
-import { IonicSlides } from '@ionic/angular';
+import { AlertController, IonicSlides } from '@ionic/angular';
 import moment from 'moment';
 
 @Component({
@@ -29,8 +29,9 @@ export class EventDetailsPage implements OnInit {
   private eventViewDataSubscribe: Subscription | undefined;
   eventView_url:any;
   eventViewData:any;
-
+  private formSubmitSubscribe: Subscription | undefined;
   userType:any;
+  userId:any;
 
   swiperModules = [IonicSlides];
   @ViewChild('swiper')
@@ -49,6 +50,8 @@ export class EventDetailsPage implements OnInit {
     private http : HttpClient,
     private activatedRoute : ActivatedRoute,
     private authService : AuthService,
+    private alertController : AlertController,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -56,7 +59,10 @@ export class EventDetailsPage implements OnInit {
     console.log('parms_slug', this.parms_slug);
 
     this.userType = localStorage.getItem('user_type');
+    this.userId = localStorage.getItem('userId');
 
+    console.log('userId', this.userId);
+    
     this.eventView_url = 'event_details/'+this.parms_slug;
     this.getEventView();
 
@@ -98,6 +104,64 @@ export class EventDetailsPage implements OnInit {
     );
   }
   /* getEventView end */
+
+  /* bookEvent start */
+  bookEvent(){
+    let fd = new FormData();
+
+    fd.append('event_id', this.eventViewData.event_details.id);
+    fd.append('event_slug', this.eventViewData.event_details.slug);
+    fd.append('tutor_id', this.eventViewData.event_details.tutor_id);
+    fd.append('tutor_slug', this.eventViewData.tutor_details.slug);
+    fd.append('event_link', '/event-details/'+this.eventViewData.event_details.slug);
+    fd.append('user_type', this.userType);
+    fd.append('user_id', this.userId);
+
+    console.log('value >', fd);
+
+    this.formSubmitSubscribe = this.http.post('book_event', fd).subscribe(
+      (response: any) => {
+
+        console.log("add form response >", response);
+        if (response.return_status == 1) {
+          this.commonUtils.presentToast('success', response.return_message);
+        }else if (response.return_status == 2) {
+          this.presentAlertConfirm(response.return_message);
+          this.router.navigateByUrl(response.redirect_url);
+        }else {
+          this.commonUtils.presentToast('error', response.return_message);
+          // this.router.navigateByUrl(response.redirect_url);
+        }
+        
+      },
+      errRes => {
+      }
+    );
+  }
+  /* bookEvent end */
+
+  /* Aleart for open big blue button start */
+  async presentAlertConfirm(_meetingType:any) {
+    const alert = await this.alertController.create({
+      header:  'Aleart!',
+      message: _meetingType,
+      cssClass: 'custom-alert',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'cancelBtn',
+        handler: (blah) => {}
+      }, {
+        text: 'Okay',
+        handler: () => {
+          
+        }
+      }]
+    });
+  
+    await alert.present();
+  }
+  /* Aleart for open big blue button end */
 
   // ----------- destroy subscription start ---------
   ngOnDestroy() {

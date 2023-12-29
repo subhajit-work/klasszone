@@ -122,7 +122,7 @@ export class AuthService {
   //login service call end
 
   //======================= logout functionlity start ==============
-  logout() {4
+  logout() {
     localStorage.setItem('user_type', '');
     this.storage.clear().then(() => {
       console.log('all stroage data cleared');

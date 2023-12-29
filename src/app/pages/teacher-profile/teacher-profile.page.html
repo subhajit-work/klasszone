@@ -842,13 +842,14 @@
               </div>
             </div>
             <div class="batch-course" *ngIf="teacherProfileData?.tutor_batch_courses.length > 0 && courseType == 'group'">
-              <ion-radio-group (ionChange)="chooseGroupClass($event)">
+              <ion-radio-group [(ngModel)]="groupClass" required name="course" (ionChange)="chooseGroupClass($event)">
                 <div *ngFor="let batchItem of teacherProfileData?.tutor_batch_courses; let b = index">
                   <mat-divider></mat-divider>
                   <ion-radio [value]="batchItem">{{ batchItem?.course_title }}</ion-radio>
                   <!-- hidden data -->
                   <input type="hidden" required [(ngModel)]="batchItem.id" name="course_id">
-                  <input type="hidden" required [(ngModel)]="batchItem.start_date" name="start_date">
+                  <input type="hidden" required [(ngModel)]="batchItem.tutor_id" name="tutor_id">
+                  <!-- <input type="hidden" required [(ngModel)]="batchItem.start_date" name="start_date"> -->
                   <div class="course-info">
                     <ion-grid>
                       <ion-row>
@@ -886,7 +887,7 @@
                     </ion-grid>
                   </div>
                   <div class="slot-booking">
-                    <input type="hidden" required [(ngModel)]="classSlots[b]" name="classSlot">
+                    <!-- <input type="hidden" required [(ngModel)]="classSlots[b]" name="classSlot"> -->
                     <ion-item-group *ngFor="let day of classSlots[b]; let i = index">
                       <ion-item-divider>
                         <ion-label>{{day?.day}}</ion-label>
@@ -920,7 +921,6 @@
                 </ion-list>
               </div>
               <!-- Hidden data -->
-              <input type="hidden" required [(ngModel)]="teacherProfileData.tutor_individual_courses.tutor_id" name="tutor_id">
               <input type="hidden" required [(ngModel)]="tutorDetails.slug" name="tutor_slug">
               
               <div class="custom-btn">

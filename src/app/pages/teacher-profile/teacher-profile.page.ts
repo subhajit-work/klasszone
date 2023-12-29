@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
-import { IonicSlides } from '@ionic/angular';
+import { AlertController, IonicSlides } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
@@ -50,6 +50,7 @@ export class TeacherProfilePage implements OnInit {
 
   constructor(
     private http : HttpClient,
+    private alertController : AlertController,
     private router: Router,
     private authService : AuthService,
     private commonUtils: CommonUtils,
@@ -91,6 +92,7 @@ export class TeacherProfilePage implements OnInit {
     console.log('courseType', this.courseType);
     this.numberOfClass = 0;
     this.payFee = 0;
+    this.groupClass = null;
     this.teacherProfileDetails();
   }
 
@@ -111,6 +113,7 @@ export class TeacherProfilePage implements OnInit {
   /* selectSlot end */
 
   /* Select group class start */
+  groupClass:any;
   chooseGroupClass(ev:any) {
     console.log('Current value:', ev.target.value);
     for (let i = 0; i < this.teacherProfileData?.tutor_batch_courses.length; i++) {
@@ -221,15 +224,6 @@ export class TeacherProfilePage implements OnInit {
         }
         
       }
-    }else {
-      for (let i = 0; i < form.value.classSlot.length; i++) {
-        for (let j = 0; j < form.value.classSlot[i].timing.length; j++) {
-          if (form.value.classSlot[i].timing[j].checked == true) {
-            course_booked_timing.push(form.value.classSlot[i].timing[j].id)
-          }
-        }
-        
-      }
     }
     
     
@@ -242,7 +236,6 @@ export class TeacherProfilePage implements OnInit {
     };
 
     console.log('course_booked_timing', course_booked_timing);
-    
 
     fd.append('course_link', '/tutor-profile'+this.teacherProfile_url);
     fd.append('user_type', this.userType);
@@ -255,8 +248,11 @@ export class TeacherProfilePage implements OnInit {
       (response: any) => {
 
         console.log("add form response >", response);
-        if (response.return_status > 0) {
+        if (response.return_status == 1) {
           this.commonUtils.presentToast('success', response.return_message);
+        }else if (response.return_status == 2) {
+          this.presentAlertConfirm(response.return_message);
+          this.router.navigateByUrl(response.redirect_url);
         }else {
           this.commonUtils.presentToast('error', response.return_message);
           // this.router.navigateByUrl(response.redirect_url);
@@ -268,5 +264,28 @@ export class TeacherProfilePage implements OnInit {
     );
   }
   /* schedule class end */
+
+  /* Aleart for open big blue button start */
+  async presentAlertConfirm(_meetingType:any) {
+    const alert = await this.alertController.create({
+      header:  'Aleart!',
+      message: _meetingType,
+      cssClass: 'custom-alert',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'cancelBtn',
+        handler: (blah) => {}
+      }, {
+        text: 'Okay',
+        handler: () => {
+          
+        }
+      }]
+    });
+  
+    await alert.present();
+  }
+  /* Aleart for open big blue button end */
 
 }
