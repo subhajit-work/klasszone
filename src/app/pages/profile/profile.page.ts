@@ -225,9 +225,9 @@ export class ProfilePage implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    setInterval(() => {
-      this.tableListData();
-    }, 10000);
+    // setInterval(() => {
+    //   this.tableListData();
+    // }, 10000);
   }
 
   ngOnInit() {

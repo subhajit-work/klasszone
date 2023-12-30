@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Events
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-inner">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="field-item">
+            <ion-select interface="action-sheet" labelPlacement="floating" label="Event Category" placeholder="Select Event Category" [multiple]="true" (ionChange)="onChangeDepartment($event)">
+              <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
+            </ion-select>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <div class="event-card">
+            <ion-card>
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              <ion-card-header>
+                <ion-card-subtitle>Test Event 20dec23 (Edge Technologies)</ion-card-subtitle>
+              </ion-card-header>
+            
+              <ion-card-content>
+                <ion-text color="danger"><ion-icon name="calendar-number"></ion-icon>1st January, 2024 at 11:10 AM</ion-text><br>
+                <ion-text color="success"><ion-icon name="color-filter"></ion-icon>135 KlassCoins</ion-text>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+<common-footer></common-footer>

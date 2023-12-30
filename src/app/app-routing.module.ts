@@ -94,7 +94,16 @@ const routes: Routes = [
     path: 'experience/:action/:id',
     loadChildren: () => import('./pages/experience/experience.module').then( m => m.ExperiencePageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'event',
+    loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
+  },
+  {
+    path: 'cms/:action',
+    loadChildren: () => import('./pages/cms/cms.module').then( m => m.CmsPageModule)
   }
+
 
 
 
