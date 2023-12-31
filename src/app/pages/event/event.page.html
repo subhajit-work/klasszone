@@ -12,34 +12,52 @@
 
 <ion-content [fullscreen]="true">
   <div class="page-inner">
+    <!-- page refresh start -->
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing..."
+      >
+      </ion-refresher-content>
+    </ion-refresher>
+    <!-- page refresh end -->
     <ion-grid>
       <ion-row>
         <ion-col>
           <div class="field-item">
             <ion-select interface="action-sheet" labelPlacement="floating" label="Event Category" placeholder="Select Event Category" [multiple]="true" (ionChange)="onChangeDepartment($event)">
-              <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
+              <ion-select-option *ngFor="let item of departmentAllData" [value]="item?.slug">{{item?.name}}</ion-select-option>
             </ion-select>
           </div>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="6" *ngFor="let item of viewData; let index">
           <div class="event-card">
-            <ion-card>
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+            <ion-card [routerLink]="['/', 'event-details', item?.event_slug]">
+              <img *ngIf="item.photo" alt="Event photo" src="{{file_url}}/assets/front/images/{{item?.photo}}" />
+              <img *ngIf="!item.photo" alt="Event photo" src="assets/dummy.png" />
               <ion-card-header>
-                <ion-card-subtitle>Test Event 20dec23 (Edge Technologies)</ion-card-subtitle>
+                <ion-card-subtitle>{{item?.name}}</ion-card-subtitle>
               </ion-card-header>
             
               <ion-card-content>
-                <ion-text color="danger"><ion-icon name="calendar-number"></ion-icon>1st January, 2024 at 11:10 AM</ion-text><br>
-                <ion-text color="success"><ion-icon name="color-filter"></ion-icon>135 KlassCoins</ion-text>
+                <ion-text color="danger"><ion-icon name="calendar-number"></ion-icon> {{item?.start_time | date:'dd MMM yyy'}}</ion-text><br>
+                <ion-text color="tertiary"><ion-icon name="alarm"></ion-icon> {{item?.start_time | date:'h:mm a'}}</ion-text><br>
+                <ion-text color="success"><ion-icon name="color-filter"></ion-icon> {{item?.increased_fee}} KlassCoins</ion-text>
               </ion-card-content>
             </ion-card>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
+    <!-- on scroll refresh start -->
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <!-- on scroll refresh end -->
   </div>
 </ion-content>
 <common-footer></common-footer>
