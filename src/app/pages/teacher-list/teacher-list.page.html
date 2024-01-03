@@ -12,6 +12,17 @@
 
 <ion-content [fullscreen]="true">
   <div class="page-inner">
+    <!-- page refresh start -->
+    <ion-refresher *ngIf="filterEnabled" slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="chevron-down-circle-outline"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing..."
+      >
+      </ion-refresher-content>
+    </ion-refresher>
+    <!-- page refresh end -->
     <div class="filter-section">
       <mat-accordion>
         <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
@@ -21,77 +32,147 @@
               Please specific with your selection:
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <form #filterForm="ngForm" (ngSubmit)="onSubmitFilter(filterForm)" (keyup.enter)="onSubmitFilter(filterForm)">
-            <div class="filter-inner">
+          <div class="filter-inner">
               
-                <ion-grid>
-                  <ion-row>
-                    <!-- Department -->
-                    <ion-col size="12">
-                      <div class="field-item" *ngIf="model.department">
-                        <ion-select interface="action-sheet" placeholder="Select an option" name="department" [(ngModel)]="model.department" (ionChange)="onChangeDepartment($event)">
-                          <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
-                        </ion-select>
-                      </div>
-                    </ion-col>
-                    <!-- Class -->
-                    <ion-col size="12" *ngIf="model.department && classAllData.length !== 0">
-                      <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Select an option" name="class" [(ngModel)]="model.class" (ionChange)="onChangeClass($event)">
-                          <ion-select-option value="">Select an option</ion-select-option>
-                          <ion-select-option *ngFor="let item of classAllData" [value]="item">{{item?.name}}</ion-select-option>
-                        </ion-select>
-                      </div>
-                    </ion-col>
-                    <!-- Board -->
-                    <ion-col size="12" *ngIf="model.class && boardAllData.length !== 0">
-                      <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Select an option" name="board" [(ngModel)]="model.board" (ionChange)="onChangeBoard($event)">
-                          <ion-select-option value="">Select an option</ion-select-option>
-                          <ion-select-option *ngFor="let item of boardAllData" [value]="item">{{item?.name}}</ion-select-option>
-                        </ion-select>
-                      </div>
-                    </ion-col>
-                    <!-- Subject -->
-                    <ion-col size="12" *ngIf="model.board && subjectAllData.length !== 0">
-                      <div class="field-item">
-                        <ion-select interface="action-sheet" placeholder="Select an option" name="categories" [(ngModel)]="model.subject" (ionChange)="onChangeSubject($event)">
-                          <ion-select-option value="">Select an option</ion-select-option>
-                          <ion-select-option *ngFor="let item of subjectAllData" [value]="item">{{item?.name}}</ion-select-option>
-                        </ion-select>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-            </div>
-            <mat-action-row>
-              <button (click)="togglePanel()" type="button" mat-button color="warn">Close</button>
-              <button type="submit" mat-button color="primary">Search</button>
-            </mat-action-row>
-          </form>
+            <ion-grid>
+              <ion-row>
+                <!-- Department -->
+                <ion-col size="12">
+                  <div class="field-item" *ngIf="dropdown_department">
+                    <ion-select interface="action-sheet" placeholder="Select an option" name="department" [(ngModel)]="dropdown_department" (ionChange)="onChangeDepartment($event)">
+                      <ion-select-option *ngFor="let item of departmentAllData" [value]="item">{{item?.name}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                </ion-col>
+                <!-- Class -->
+                <ion-col size="12" *ngIf="dropdown_department && classAllData.length !== 0">
+                  <div class="field-item">
+                    <ion-select interface="action-sheet" placeholder="Select an option" name="class" [(ngModel)]="dropdown_class" (ionChange)="onChangeClass($event)">
+                      <ion-select-option value="">Select an option</ion-select-option>
+                      <ion-select-option *ngFor="let item of classAllData" [value]="item">{{item?.name}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                </ion-col>
+                <!-- Board -->
+                <ion-col size="12" *ngIf="dropdown_class && boardAllData.length !== 0">
+                  <div class="field-item">
+                    <ion-select interface="action-sheet" placeholder="Select an option" name="board" [(ngModel)]="dropdown_board" (ionChange)="onChangeBoard($event)">
+                      <ion-select-option value="">Select an option</ion-select-option>
+                      <ion-select-option *ngFor="let item of boardAllData" [value]="item">{{item?.name}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                </ion-col>
+                <!-- Subject -->
+                <ion-col size="12" *ngIf="dropdown_board && subjectAllData.length !== 0">
+                  <div class="field-item">
+                    <ion-select interface="action-sheet" placeholder="Select an option" name="categories" [(ngModel)]="dropdown_subject" (ionChange)="onChangeSubject($event)">
+                      <ion-select-option value="">Select an option</ion-select-option>
+                      <ion-select-option *ngFor="let item of subjectAllData" [value]="item">{{item?.name}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </div>
+        <mat-action-row>
+          <button (click)="togglePanel()" type="button" mat-button color="warn">Close</button>
+          <button (click)="onSubmitFilter()" mat-button color="primary">Search</button>
+        </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div *ngIf="teacherAllData?.courses instanceof Array">
-      <div class="section-item" *ngFor="let courseItem of teacherAllData?.courses">
-        <ion-grid *ngIf="courseItem?.tutors.length !== 0">
+    <div *ngIf="!filterEnabled">
+      <div *ngIf="teacherAllData?.courses instanceof Array">
+        <div class="section-item" *ngFor="let courseItem of teacherAllData?.courses">
+          <ion-grid *ngIf="courseItem?.tutors.length !== 0">
+            <ion-row>
+              <ion-col>
+                <div class="top-bar">
+                  <h2 class="section_title">
+                    <p><span *ngIf="className">{{className}} /</span> <span *ngIf="boardName">{{boardName}}/</span> {{courseItem?.name}}</p>
+                    <!-- <span class="section_subtitle">CBSE</span> -->
+                  </h2>
+                  <ion-icon *ngIf="courseItem?.sub_subcategories == null" [routerLink]="['/teacher-list/'+ parms_department +'/'+ parms_class +'/'+ courseItem.slug +'/'+ parms_subject]" name="chevron-forward-circle-outline"></ion-icon>
+                  <ion-icon *ngIf="courseItem?.sub_subcategories !== null" [routerLink]="['/teacher-list/'+ parms_department +'/'+ parms_class +'/'+ parms_board +'/'+ courseItem.slug]" name="chevron-forward-circle-outline"></ion-icon>
+                </div>
+                <mat-divider></mat-divider>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid *ngIf="courseItem?.tutors.length !== 0">
+            <ion-row>
+              <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of courseItem?.tutors">
+                <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, tutorItem.category_slug, tutorItem.sub_category_slug, tutorItem.sub_subcategory_slug, tutorItem.course_slug]" >
+                  <div class="profile-top">
+                    <div class="profile-img">
+                      <img onError="this.src='assets/default-student-male.png'" src="{{file_url}}/assets/uploads/profiles/thumbs/{{tutorItem?.photo}}">
+                    </div>
+                    <div class="profile-details">
+                      <p class="name">{{tutorItem?.username}}</p>
+                      <p class="designation">
+                        {{tutorItem?.course_title}} 
+                        <br>
+                        <b *ngIf="tutorItem?.type == 'individual'">One-to-One Class</b>
+                        <b *ngIf="tutorItem?.type == 'batch'">- Group Class</b>
+                        <b *ngIf="tutorItem?.discount_offer !== '0'">
+                          <i> - {{tutorItem?.discount_offer}}0% Off</i>
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="profile-bottom">
+                    <div class="reward">
+                      <mat-icon>account_balance_wallet</mat-icon>
+                      <span>{{tutorItem?.increased_fee}} KlassCoin</span>
+                    </div>
+                    <div class="rating" *ngIf="tutorItem?.avg_rating !== null">
+                      <div class="rating-bar">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star-half-outline"></ion-icon>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </ion-col>
+              <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0">
+                <img class="no-tutor" src="../../../assets/no-tutor.jpg">
+                <h3 class="ion-text-center">Tutor(s) not available.</h3>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+        </div>
+      </div>
+      <div class="section-item" *ngIf="teacherAllData?.courses.length == 0 || noTutors">
+        <img class="no-tutor" src="../../../assets/no-tutor.jpg">
+        <h3 class="ion-text-center">Tutor(s) not available.</h3>
+      </div>
+    </div>
+    
+    <!-- infinite scroll start -->
+    <div *ngIf="filterEnabled">
+      <div class="section-item">
+        <ion-grid>
           <ion-row>
             <ion-col>
               <div class="top-bar">
                 <h2 class="section_title">
-                  <p>{{courseItem?.name}}</p>
+                  <p>{{className}} / <span *ngIf="boardName">{{boardName}}/</span> {{subjectName}}</p>
                   <!-- <span class="section_subtitle">CBSE</span> -->
                 </h2>
-                <ion-icon name="chevron-forward-circle-outline"></ion-icon>
               </div>
               <mat-divider></mat-divider>
             </ion-col>
           </ion-row>
         </ion-grid>
-        <ion-grid *ngIf="courseItem?.tutors.length !== 0">
+        <ion-grid>
           <ion-row>
-            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of courseItem?.tutors">
-              <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, tutorItem.category_slug, tutorItem.sub_category_slug, tutorItem.sub_subcategory_slug, tutorItem.course_slug]" >
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let tutorItem of infiniteTeacherData">
+              <div class="profile-card" [routerLink]="['/', 'teacher-profile', tutorItem.user_slug, parms_department, parms_class, parms_board, parms_subject]" >
                 <div class="profile-top">
                   <div class="profile-img">
                     <img onError="this.src='assets/default-student-male.png'" src="{{file_url}}/assets/uploads/profiles/thumbs/{{tutorItem?.photo}}">
@@ -127,7 +208,7 @@
                 
               </div>
             </ion-col>
-            <ion-col size="12" size-md="6" size-lg="4" *ngIf="courseItem?.tutors.length == 0">
+            <ion-col size="12" size-md="6" size-lg="4" *ngIf="infiniteTeacherData.length == 0">
               <img class="no-tutor" src="../../../assets/no-tutor.jpg">
               <h3 class="ion-text-center">Tutor(s) not available.</h3>
             </ion-col>
@@ -137,10 +218,13 @@
       </div>
     </div>
     
-    <div class="section-item" *ngIf="teacherAllData?.courses.length == 0 || noTutors">
-      <img class="no-tutor" src="../../../assets/no-tutor.jpg">
-      <h3 class="ion-text-center">Tutor(s) not available.</h3>
-    </div>
+    
+
+    <!-- on scroll refresh start -->
+    <ion-infinite-scroll *ngIf="filterEnabled" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <!-- on scroll refresh end -->
   </div>
 
   <ion-menu *ngIf="filterEnabled" side="end" menuId="filterMenu" contentId="filterMenu">

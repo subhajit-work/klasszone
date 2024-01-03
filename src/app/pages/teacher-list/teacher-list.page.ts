@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, MenuController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { CommonUtils } from 'src/app/services/common-utils/common-utils';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -19,6 +20,14 @@ export class TeacherListPage implements OnInit {
   model: any = {};
   parms_class:any;
   parms_department:any;
+  parms_board:any;
+  parms_subject:any;
+  dropdown_department:any;
+  dropdown_class:any;
+  dropdown_board:any;
+  dropdown_subject:any;
+
+
   private departmentDataSubscribe: Subscription | undefined;
   departmentLoadData:any;
   department_url:any;
@@ -50,24 +59,42 @@ export class TeacherListPage implements OnInit {
   noTutors = false;
   panelOpenState: boolean = false;
   pageName:any;
+  className:any;
+  boardName:any;
+  subjectName:any;
 
   constructor(
     private menuCtrl: MenuController,
     private activatedRoute : ActivatedRoute,
     private http : HttpClient,
+    private commonUtils: CommonUtils,
   ) { }
 
   ngOnInit() {
     this.parms_department = this.activatedRoute.snapshot.paramMap.get('department');
     this.parms_class = this.activatedRoute.snapshot.paramMap.get('class');
-    console.log('parms_department', this.parms_department);
-    console.log('parms_class', this.parms_class);
-    this.pageName = this.parms_department.replace(/-/g, " ");
+    this.parms_board = this.activatedRoute.snapshot.paramMap.get('board');
+    this.parms_subject = this.activatedRoute.snapshot.paramMap.get('subject');
+
     this.pageLoad_url = "all_courses/"+this.parms_department+"/"+this.parms_class;
-    this. onPageLoadFilter();
+
+    if (this.parms_board !== 'null') {
+      this.pageLoad_url = this.pageLoad_url + '/'+ this.parms_board;
+    }
+    if (this.parms_board !== 'null' && this.parms_subject !== 'null') {
+      this.pageLoad_url = this.pageLoad_url + '/'+ this.parms_subject;
+    }
+
+    console.log('parms_board', this.parms_board);
+    console.log('parms_subject', this.parms_subject);
+    this.pageName = this.parms_department.replace(/-/g, " ");
+    this.className = this.parms_class.replace(/-/g, " ");
+    
+    this.onPageLoadFilter();
 
     this.department_url = 'fetch_categories';
     this.departmentData();
+
     this.model = {
       afternoon: false,
       batch: false,
@@ -99,77 +126,107 @@ export class TeacherListPage implements OnInit {
   }
 
   /* --------onSubmitFilter start-------- */
-  onSubmitFilter(form: NgForm){
+  onSubmitFilter(){
     this.noTutors = false;
-    console.log("onSubmitFilter >", form.value);
-    this.pageName = form.value.department.slug.replace(/-/g, " ");
-    if (form.value.department) {
-      this.teacher_url = "all_courses/"+form.value.department.slug;
+    this.pageName = this.dropdown_department.slug.replace(/-/g, " ");
+    this.boardName = '';
+    this.subjectName = '';
+    if (this.dropdown_department) {
+      this.teacher_url = "all_courses/"+this.dropdown_department.slug;
     }
-    if (form.value.class) {
-      this.teacher_url = "all_courses/"+form.value.department.slug+"/"+form.value.class.slug;
+    if (this.dropdown_class) {
+      this.teacher_url = "all_courses/"+this.dropdown_department.slug+"/"+this.dropdown_class.slug;
     } 
-    if (form.value.board) {
-      this.teacher_url = "all_courses/"+form.value.department.slug+"/"+form.value.class.slug+"/"+form.value.board.slug
+    if (this.dropdown_board) {
+      this.boardName = this.dropdown_board.name;
+      this.teacher_url = "all_courses/"+this.dropdown_department.slug+"/"+this.dropdown_class.slug+"/"+this.dropdown_board.slug
     }
-    if (form.value.categories) {
-      this.teacher_url = "all_courses/"+form.value.department.slug+"/"+form.value.class.slug+"/"+form.value.board.slug+"/"+form.value.categories.slug
-    }
-    if (form.value.tutor) {
-      this.teacher_url = "all_courses/"+form.value.department.slug+"/"+form.value.class.slug+"/"+form.value.board.slug+"/"+form.value.categories.slug+"/"+form.value.tutor.slug
+    if (this.dropdown_subject) {
+      this.subjectName = this.dropdown_subject.name;
+      this.teacher_url = "all_courses/"+this.dropdown_department.slug+"/"+this.dropdown_class.slug+"/"+this.dropdown_board.slug+"/"+this.dropdown_subject.slug
     }
     
-    
-    this.teacherDataSubscribe = this.http.get(this.teacher_url).subscribe(
-      (res:any) => {
-        this.teacherLoadData = false;
-        this.teacherAllData = res.return_data;
-        if (this.openFilter == true) {
-          this.filterEnabled = true;
-        }else {
-          this.filterEnabled = false;
+    if (this.openFilter == true) {
+      this.filterEnabled = true;
+      this.onPageLoadFilter();
+    }else {
+      this.filterEnabled = false;
+      this.teacherDataSubscribe = this.http.get(this.teacher_url).subscribe(
+        (res:any) => {
+          this.teacherLoadData = false;
+          this.teacherAllData = res.return_data;
+          
+          console.log('this.teacherAllData', this.teacherAllData);
+          const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
+  
+          if (allInnerArraysEmpty) {
+            this.noTutors = true;
+          } else {
+            this.noTutors = false;
+          }
+        },
+        errRes => {
+          this.teacherLoadData = false;
         }
-        console.log('this.teacherAllData', this.teacherAllData);
-        const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
-
-        if (allInnerArraysEmpty) {
-          this.noTutors = true;
-        } else {
-          this.noTutors = false;
-        }
-      },
-      errRes => {
-        this.teacherLoadData = false;
-      }
-    );
-
+      );
+    }
   }
   /* --------onSubmitFilter end-------- */
 
   /* onPageLoadFilter start */
+  offset:any = 0;
+  limit:any = 8;
+  filterQuery:any = '';
+  infiniteTeacherData:any = [];
   onPageLoadFilter(){
     this.noTutors = false;
     console.log('model>>>', this.model);
     
-    this.teacherDataSubscribe = this.http.get(this.pageLoad_url).subscribe(
-      (res:any) => {
-        this.teacherLoadData = false;
-        this.teacherAllData = res.return_data;
+    if (this.filterEnabled) {
+      let fd = new FormData();
 
-        console.log('this.teacherAllData', this.teacherAllData);
+      fd.append('limit', this.limit);
+      fd.append('offset', this.offset);
+      fd.append('category_slug', this.parms_department);
+      fd.append('sub_category_slug', this.parms_class);
+      fd.append('sub_subcategory_slug', this.parms_board);
+      fd.append('course_slug', this.parms_subject);
+      fd.append('filter_query_string', this.filterQuery);
 
-        const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
 
-        if (allInnerArraysEmpty) {
-          this.noTutors = true;
-        } else {
-          this.noTutors = false;
+      this.teacherDataSubscribe = this.http.post('load_more_tutors2', fd).subscribe(
+        (res:any) => {
+          this.teacherLoadData = false;
+          this.infiniteTeacherData = this.infiniteTeacherData.concat(res.return_data.result);
+          this.offset = res.return_data.offset;
+          this.limit = res.return_data.limit;
+          if (res.return_data.result.length == 0) {
+            this.commonUtils.presentToast('error', 'No more data available');
+          }
+        },
+        errRes => {
+          this.teacherLoadData = false;
         }
-      },
-      errRes => {
-        this.teacherLoadData = false;
-      }
-    );
+      );
+    }else {
+      this.teacherDataSubscribe = this.http.get(this.pageLoad_url).subscribe(
+        (res:any) => {
+          this.teacherLoadData = false;
+          this.teacherAllData = res.return_data;
+          const allInnerArraysEmpty = this.teacherAllData.courses.every((item: { tutors: string | any[]; }) => item.tutors.length === 0);
+  
+          if (allInnerArraysEmpty) {
+            this.noTutors = true;
+          } else {
+            this.noTutors = false;
+          }
+        },
+        errRes => {
+          this.teacherLoadData = false;
+        }
+      );
+    }
+    
 
   }
   /* onPageLoadFilter end */
@@ -269,6 +326,7 @@ export class TeacherListPage implements OnInit {
       
       
       let maiApi = modeClass+avgReview+price+discount+classAvailiability+hour+interacted+sort;
+      this.filterQuery = maiApi;
       console.log('maiApi<<>>', maiApi);
       this.pageLoad_url = this.teacher_url+'?'+maiApi;
       this.onPageLoadFilter();
@@ -294,8 +352,8 @@ export class TeacherListPage implements OnInit {
         console.log('this.departmentAllData', this.departmentAllData);
         for (let i = 0; i < this.departmentAllData.length; i++) {
           if (this.departmentAllData[i].slug == this.parms_department) {
-            this.model.department = this.departmentAllData[i];
-            console.log('this.model.department',this.model.department);
+            this.dropdown_department = this.departmentAllData[i];
+            console.log('this.dropdown_department',this.dropdown_department);
             this.classData();
           }
         }
@@ -309,11 +367,12 @@ export class TeacherListPage implements OnInit {
     console.log(event?.detail?.value);
 
     this.parms_class = '';
-    this.parms_department = '';
+    this.parms_department = event?.detail?.value?.slug;
     
-    this.model.class = '';
-    this.model.board = '';
-    this.model.subject = '';
+    this.dropdown_class = '';
+    this.className = '';
+    this.dropdown_board = '';
+    this.dropdown_subject = '';
 
 
     this.classData();
@@ -323,7 +382,7 @@ export class TeacherListPage implements OnInit {
   /* --------Class start-------- */
   classData(){
     this.classLoadData = true;
-    this.classDataSubscribe = this.http.get('fetch_sub_categories_using_categories?selected_categories='+ this.model.department.id).subscribe(
+    this.classDataSubscribe = this.http.get('fetch_sub_categories_using_categories?selected_categories='+ this.dropdown_department.id).subscribe(
       (res:any) => {
         this.classLoadData = false;
         this.classAllData = res.return_data;
@@ -337,8 +396,8 @@ export class TeacherListPage implements OnInit {
 
         for (let i = 0; i < this.classAllData.length; i++) {
           if (this.classAllData[i].slug == this.parms_class) {
-            this.model.class = this.classAllData[i];
-            console.log('this.model.class',this.model.class);
+            this.dropdown_class = this.classAllData[i];
+            console.log('this.dropdown_class',this.dropdown_class);
             this.boardData();
           }
         }
@@ -350,8 +409,10 @@ export class TeacherListPage implements OnInit {
   }
   onChangeClass(event:any) {
     console.log(event?.detail?.value);
-    this.model.board = '';
-    this.model.subject = '';
+    this.dropdown_board = '';
+    this.parms_class = event?.detail?.value?.slug;
+    this.className = event?.detail?.value?.name;
+    this.dropdown_subject = '';
     this.boardData();
   }
   /* Class end */
@@ -359,7 +420,7 @@ export class TeacherListPage implements OnInit {
   /* --------board start-------- */
   boardData(){
     this.boardLoadData = true;
-    this.boardDataSubscribe = this.http.get('fetch_sub_subcategories_using_sub_categories?selected_categories='+this.model.department.id+'&selected_sub_categories='+ this.model.class.id).subscribe(
+    this.boardDataSubscribe = this.http.get('fetch_sub_subcategories_using_sub_categories?selected_categories='+this.dropdown_department.id+'&selected_sub_categories='+ this.dropdown_class.id).subscribe(
       (res:any) => {
         this.boardLoadData = false;
         this.boardAllData = res.return_data;
@@ -378,8 +439,9 @@ export class TeacherListPage implements OnInit {
   }
   onChangeBoard(event:any) {
     console.log(event?.detail?.value);
-    this.model.subject = '';
-    this.subject_url = 'fetch_courses_using_sub_subcategories?selected_categories='+this.model.department.id+'&selected_sub_categories='+this.model.class.id+'&selected_sub_subcategories='+event?.detail?.value?.id;
+    this.dropdown_subject = '';
+    this.parms_board = event?.detail?.value?.slug;
+    this.subject_url = 'fetch_courses_using_sub_subcategories?selected_categories='+this.dropdown_department.id+'&selected_sub_categories='+this.dropdown_class.id+'&selected_sub_subcategories='+event?.detail?.value?.id;
     this.subjectData();
   }
   /* board end */
@@ -391,7 +453,11 @@ export class TeacherListPage implements OnInit {
       (res:any) => {
         this.subjectLoadData = false;
         this.subjectAllData = res.return_data;
-        this.openFilter = true;
+        if (res.return_data.length == 0) {
+          this.openFilter = true;
+        }else {
+          this.openFilter = false;
+        }
 
         console.log('this.subjectAllData', this.subjectAllData);
       },
@@ -402,8 +468,39 @@ export class TeacherListPage implements OnInit {
   }
   onChangeSubject(event:any) {
     console.log(event?.detail?.value);
+    this.parms_subject = event?.detail?.value?.slug;
+    if (event?.detail?.value) {
+      this.openFilter = true;
+    }else {
+      this.openFilter = false;
+    }
+    
   }
   /* subject end */
+
+  /* Infinite scroll start */
+  onIonInfinite(ev:any) {
+    console.log('infinite calling...');
+    this.onPageLoadFilter();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+  /* Infinite scroll end */
+
+  /* page refresher start */
+  handleRefresh(event:any) {
+    console.log('refresh calling...');
+    this.offset = 0;
+    this.limit = 8;
+    this.filterQuery = '';
+    this.infiniteTeacherData = [];
+    this.onPageLoadFilter();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+  /* page refresher end */
 
   menuOpen = false;
   openFilterMenu() {

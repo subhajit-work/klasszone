@@ -14,21 +14,23 @@
                     <ion-label>Home</ion-label>
                   </ion-item>
               </ion-accordion>
-              <ion-accordion value="tutor">
-                <ion-item slot="header"  >
-                  <mat-icon aria-hidden="false" fontIcon="people"></mat-icon>
-                  <ion-label>Tutors</ion-label>
+              <!-- dynamic main menu start -->
+              <ion-accordion *ngFor="let item of mainMenuAllData" value="{{item.id}}">
+                <ion-item slot="header" [routerLink]="[item?.app_slug]" [ngClass] = "{'no-subMenu': item.child.length == 0}">
+                  <mat-icon aria-hidden="false" fontIcon="{{item?.icon_name}}"></mat-icon>
+                  <ion-label>{{item?.name}}</ion-label>
                 </ion-item>
-                <div class="ion-padding" slot="content">
-                  <ion-menu-toggle auto-hide="false" *ngFor="let item of departmentAllData">
-                    <ion-item lines="none"   [routerLink]="['/class-list/'+ item?.slug ]">
-                      <mat-icon aria-hidden="false" fontIcon="class"></mat-icon>
-                      <ion-label>{{item?.name}}</ion-label>
+                <div class="ion-padding" slot="content" *ngIf="item.child.length > 0">
+                  <ion-menu-toggle auto-hide="false" *ngFor="let subItem of item.child">
+                    <ion-item lines="none"   [routerLink]="[subItem?.app_slug]">
+                      <mat-icon aria-hidden="false" fontIcon="{{subItem?.icon_name}}"></mat-icon>
+                      <ion-label>{{subItem?.name}}</ion-label>
                     </ion-item>
                   </ion-menu-toggle>
                 </div>
               </ion-accordion>
-              <ion-accordion value="event">
+              <!-- dynamic main menu end -->
+              <!-- <ion-accordion value="event">
                 <ion-item [routerLink]="['/event']" slot="header"  class="no-subMenu">
                   <mat-icon aria-hidden="false" fontIcon="event"></mat-icon>
                   <ion-label>Event</ion-label>
@@ -121,7 +123,7 @@
                     <ion-label>Contact Us</ion-label>
                   </ion-item>
                 </div>
-              </ion-accordion>
+              </ion-accordion> -->
             </ion-accordion-group>
 
             <ion-item class="profile-box" *ngIf="checkAuthentication">

@@ -36,10 +36,10 @@ export class AppComponent {
   userDetailsApi:any;
   private userDetailsSubscribe: Subscription | undefined;
 
-  private departmentDataSubscribe: Subscription | undefined;
-  departmentLoadData:any;
-  department_url:any;
-  departmentAllData:any;
+  private mainMenuDataSubscribe: Subscription | undefined;
+  mainMenuLoadData:any;
+  mainMenu_url:any;
+  mainMenuAllData:any;
   
   constructor(
     private platform: Platform,
@@ -105,8 +105,8 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.department_url = 'fetch_categories';
-    this.departmentData();
+    this.mainMenu_url = 'main_menu';
+    this.mainMenuData();
     this.platform.ready().then(() => {
       // this.loginCheck();
     });
@@ -160,17 +160,17 @@ export class AppComponent {
   /* logout functionlity end */
 
   /* --------Department start-------- */
-  departmentData(){
-    this.departmentLoadData = true;
-    this.departmentDataSubscribe = this.http.get(this.department_url).subscribe(
+  mainMenuData(){
+    this.mainMenuLoadData = true;
+    this.mainMenuDataSubscribe = this.http.get(this.mainMenu_url).subscribe(
       (res:any) => {
-        this.departmentLoadData = false;
-        this.departmentAllData = res.return_data;
+        this.mainMenuLoadData = false;
+        this.mainMenuAllData = res.return_data;
 
-        console.log('this.departmentAllData>>', this.departmentAllData);
+        console.log('this.mainMenuAllData>>', this.mainMenuAllData);
       },
       errRes => {
-        this.departmentLoadData = false;
+        this.mainMenuLoadData = false;
       }
     );
   }
